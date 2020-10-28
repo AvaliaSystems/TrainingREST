@@ -1,5 +1,6 @@
 package io.avalia.fruits.configuration;
 
+import com.fasterxml.jackson.core.type.ResolvedType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,10 +30,11 @@ public class SwaggerDocumentationConfig {
 
     @Bean
     public Docket customImplementation(){
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .select()
                     .apis(RequestHandlerSelectors.basePackage("io.avalia.fruits.api"))
                     .build()
+                .directModelSubstitute(Void.class, Void.class)
                 //.directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
                 //.directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)
                 .apiInfo(apiInfo());

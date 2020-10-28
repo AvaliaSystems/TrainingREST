@@ -24,7 +24,7 @@ public class FruitsApiController implements FruitsApi {
     @Autowired
     FruitRepository fruitRepository;
 
-    public ResponseEntity<Object> createFruit(@ApiParam(value = "", required = true) @Valid @RequestBody Fruit fruit) {
+    public ResponseEntity<Void> createFruit(@ApiParam(value = "", required = true) @Valid @RequestBody Fruit fruit) {
         FruitEntity newFruitEntity = toFruitEntity(fruit);
         fruitRepository.save(newFruitEntity);
         Long id = newFruitEntity.getId();
