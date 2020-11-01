@@ -34,7 +34,7 @@ components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
       type: http
-      scheme: bearer
+      scheme: bearer       # warning: it HAS TO be a lowercase b for the swagger ui version used in springfox
       bearerFormat: JWT    # optional, arbitrary value for documentation purposes
   schemas:
     Fruit:

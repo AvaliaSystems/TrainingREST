@@ -17,12 +17,10 @@ public class Environment {
         properties.load(this.getClass().getClassLoader().getResourceAsStream("environment.properties"));
         String url = properties.getProperty("io.avalia.fruits.server.url");
         api.getApiClient().setBasePath(url);
-
     }
 
     public DefaultApi getApi() {
         return api;
     }
-
 
 }

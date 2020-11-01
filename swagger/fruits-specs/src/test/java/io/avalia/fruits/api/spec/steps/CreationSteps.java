@@ -40,7 +40,11 @@ public class CreationSteps {
 
     @Given("^I have a fruit payload$")
     public void i_have_a_fruit_payload() throws Throwable {
-        fruit = new io.avalia.fruits.api.dto.Fruit();
+        fruit = new io.avalia.fruits.api.dto.Fruit()
+          .kind("banana")
+          .colour("yellow")
+          .size("medium")
+          .weight("light");
     }
 
     @When("^I POST it to the /fruits endpoint$")
