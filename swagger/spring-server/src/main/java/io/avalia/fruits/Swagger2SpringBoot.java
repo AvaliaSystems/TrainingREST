@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "io.avalia.fruits", "io.avalia.fruits.api" })
-public class Swagger2SpringBoot implements CommandLineRunner {
+public class    Swagger2SpringBoot implements CommandLineRunner {
 
     @Override
     public void run(String... arg0) throws Exception {

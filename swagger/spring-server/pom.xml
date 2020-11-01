@@ -50,6 +50,7 @@
                             <language>spring</language>
                             <configOptions>
                                 <useBeanValidation>true</useBeanValidation>
+                                <swaggerDocketConfig>false</swaggerDocketConfig>
                                 <interfaceOnly>true</interfaceOnly>
                                 <delegatePattern>false</delegatePattern>
                                 <apiPackage>io.avalia.fruits.api</apiPackage>
@@ -90,6 +91,15 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <!--SpringFox dependencies -->
         <dependency>

@@ -3,6 +3,8 @@ info:
   version: '0.1.0'
   title: Fruits API
   description: An API to demonstrate Swagger and Spring Boot
+security:
+  - bearerAuth: []
 paths:
   /fruits:
     post:
@@ -29,6 +31,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Fruit'
 components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
   schemas:
     Fruit:
       type: object

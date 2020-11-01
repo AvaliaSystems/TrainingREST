@@ -6,9 +6,11 @@ import io.avalia.fruits.api.model.Fruit;
 import io.avalia.fruits.repositories.FruitRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -24,6 +26,7 @@ public class FruitsApiController implements FruitsApi {
     @Autowired
     FruitRepository fruitRepository;
 
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createFruit(@ApiParam(value = "", required = true) @Valid @RequestBody Fruit fruit) {
         FruitEntity newFruitEntity = toFruitEntity(fruit);
         fruitRepository.save(newFruitEntity);
