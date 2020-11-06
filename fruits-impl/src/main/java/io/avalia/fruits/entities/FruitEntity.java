@@ -1,15 +1,16 @@
 package io.avalia.fruits.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.io.Serializable;
+import lombok.Data;
 
-/**
- * Created by Olivier Liechti on 26/07/17.
- */
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
 @Entity
+@Data
 public class FruitEntity implements Serializable {
 
     @Id
@@ -19,32 +20,12 @@ public class FruitEntity implements Serializable {
     private String kind;
     private String size;
     private String colour;
+    private String weight;
 
-    public long getId() {
-        return id;
-    }
+    @Column(columnDefinition = "DATE")
+    private LocalDate expirationDate;
 
-    public String getKind() {
-        return kind;
-    }
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime expirationDateTime;
 
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getColour() {
-        return colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
 }

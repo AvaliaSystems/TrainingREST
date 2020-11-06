@@ -23,7 +23,6 @@ import java.util.function.Predicate;
 
 import static java.util.Collections.singletonList;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
 
 @Configuration
 public class SwaggerDocumentationConfig {
@@ -43,35 +42,31 @@ public class SwaggerDocumentationConfig {
                 .apis(RequestHandlerSelectors.basePackage("io.avalia.fruits.api"))
                 .build()
             .directModelSubstitute(Void.class, Void.class)
-            //.directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
-            //.directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)
             .securitySchemes(singletonList(securityScheme()))
             .securityContexts(singletonList(securityContext()))
             .apiInfo(apiInfo());
     }
 
     private SecurityScheme securityScheme() {
+        /*
         return new HttpAuthenticationBuilder()
           .name("BearerAuthorization")
           .scheme("bearer")
           .build();
+         */
+        return new ApiKey("X-API-KEY", "api_key", "header");
     }
 
     private SecurityContext securityContext() {
         return SecurityContext.builder()
-          .operationSelector(new Predicate<OperationContext>() {
-              @Override
-              public boolean test(OperationContext operationContext) {
-                  return true;
-              }
-          })
           .securityReferences(securityReferences())
           .build();
     }
 
     private List<SecurityReference> securityReferences() {
         return singletonList(
-          new SecurityReference("BearerAuthorization", new AuthorizationScope[] {}));
+          new SecurityReference("X-API-KEY", new AuthorizationScope[] {}));
+          // new SecurityReference("BearerAuthorization", new AuthorizationScope[] {}));
     }
 
     @Bean

@@ -6,9 +6,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
 @SpringBootApplication
 @ComponentScan(basePackages = { "io.avalia.fruits", "io.avalia.fruits.api" })
 public class    Swagger2SpringBoot implements CommandLineRunner {
+
+    @PostConstruct
+    void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
 
     @Override
     public void run(String... arg0) throws Exception {
@@ -28,6 +36,6 @@ public class    Swagger2SpringBoot implements CommandLineRunner {
         public int getExitCode() {
             return 10;
         }
-
     }
+
 }
