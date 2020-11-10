@@ -1,4 +1,4 @@
-package io.avalia.fruits.api.util;
+package ch.heigvd.gamification.api.util;
 
 import javax.xml.bind.annotation.XmlTransient;
 
