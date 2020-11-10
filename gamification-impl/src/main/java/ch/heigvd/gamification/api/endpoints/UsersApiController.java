@@ -66,6 +66,7 @@ public class UsersApiController implements UsersApi {
 
     private User toUser(UserEntity entity) {
         User user = new User();
+        //need to controle type into spec yaml
         //user.setId(entity.getId());
         user.setUsername(entity.getUsername());
 
