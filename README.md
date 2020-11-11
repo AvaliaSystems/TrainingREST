@@ -1,5 +1,18 @@
 # TrainingREST
 
+# Start-up services
+## Running REST-API
+```bash
+cd scripts
+./runREST_API.sh
+```
+
+## Running REST-API latest (from github registry
+```bash
+cd scripts
+./pullREST_API.sh
+```
+
 # Build and run the Fruit microservice
 
 You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8080.
