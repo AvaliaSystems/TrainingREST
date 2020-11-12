@@ -1,0 +1,42 @@
+name: CI
+on:
+  push:
+    branches:
+      - package
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: General informations
+        run: |
+          echo "$GITHUB_WORKFLOW workflow is running"
+          echo "Hi $GITHUB_ACTOR !"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      # copie bete de la vidéo https://youtu.be/jrTIZBMmqhI?t=630
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Maven build
+        run: cd fruits-impl && mvn clean package && cd ..           
+
+      - name: Build Docker image and push it to ghcr
+        # build a partir d'une image officielle mais tag renomme cette image
+        run: |
+          echo ${{ secrets.PUSH_IMAGES_TO_GHCR_SECRET }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+          docker-compose build
+          docker tag openjdk ghcr.io/AMT-Project/apiREST
+          docker push ghcr.io/AMT-Project/apiREST
+
