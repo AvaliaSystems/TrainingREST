@@ -1,12 +1,13 @@
 openapi: '3.0.3'
 info:
   version: '0.1.0'
-  title: Fruits API
-  description: An API to demonstrate Swagger and Spring Boot
+  title: Gamification API
+  description: An API to add a gamification process to a simple site with Swagger and Spring Boot
 security:
   #  - bearerAuth: []
   - apiKeyAuth: []
 paths:
+  #  FRUITS
   /fruits:
     post:
       description: create a fruit
@@ -48,6 +49,48 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Fruit'
+  # BADGES
+  /badges:
+    post:
+      description: create a badge
+      operationId: createBadge
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Badge'
+      responses:
+        '201':
+          description: created
+    get:
+      description: get the list of all badges
+      operationId: getBadges
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+  /badges/{id}:
+    get:
+      description: get one badge, by id
+      operationId: getBadge
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Badge'
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -59,6 +102,7 @@ components:
       in: header
       name: X-API-KEY
   schemas:
+    # FRUITS
     Fruit:
       type: object
       properties:
@@ -77,3 +121,15 @@ components:
         expirationDateTime:
           type: string
           format: date-time
+    # BADGES
+    Badge:
+      type: object
+      properties:
+        level:
+          type: string
+        description:
+          type: string
+        obtainedOnDate:
+          type: string
+          format: date
+          nullable: false

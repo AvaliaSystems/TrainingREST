@@ -53,6 +53,7 @@
                                 <swaggerDocketConfig>false</swaggerDocketConfig>
                                 <interfaceOnly>true</interfaceOnly>
                                 <delegatePattern>false</delegatePattern>
+
                                 <apiPackage>io.avalia.fruits.api</apiPackage>
                                 <configPackage>io.avalia.fruits.config</configPackage>
                                 <basePackage>io.avalia.fruits</basePackage>
