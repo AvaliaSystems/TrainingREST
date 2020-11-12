@@ -53,10 +53,10 @@
                                 <swaggerDocketConfig>false</swaggerDocketConfig>
                                 <interfaceOnly>true</interfaceOnly>
                                 <delegatePattern>false</delegatePattern>
-                                <apiPackage>io.avalia.fruits.api</apiPackage>
-                                <configPackage>io.avalia.fruits.config</configPackage>
-                                <basePackage>io.avalia.fruits</basePackage>
-                                <modelPackage>io.avalia.fruits.api.model</modelPackage>
+                                <apiPackage>io.avalia.events.api</apiPackage>
+                                <configPackage>io.avalia.events.config</configPackage>
+                                <basePackage>io.avalia.events</basePackage>
+                                <modelPackage>io.avalia.events.api.model</modelPackage>
                             </configOptions>
                         </configuration>
                     </execution>

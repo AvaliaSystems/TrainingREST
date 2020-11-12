@@ -7,22 +7,21 @@ security:
   #  - bearerAuth: []
   - apiKeyAuth: []
 paths:
-  #BADGES
-  /badges:
+  /event:
     post:
-      description: create a badge
-      operationId: createBadge
+      description: create a event
+      operationId: createEvent
       requestBody:
         content:
           'application/json':
             schema:
-              $ref: '#/components/schemas/Badge'
+              $ref: '#/components/schemas/Event'
       responses:
         '201':
           description: created
     get:
-      description: get the list of all badges
-      operationId: getBadges
+      description: get the list of all events
+      operationId: getEvents
       responses:
         '200':
           description: success
@@ -31,12 +30,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Badge'
-
-  /badges/{id}:
+                  $ref: '#/components/schemas/Event'
+  /events/{id}:
     get:
-      description: get one badge, by id
-      operationId: getBadge
+      description: get one event, by id
+      operationId: getEvent
       parameters:
         - in: path
           name: id
@@ -49,51 +47,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Badge'
-
-#FRUITS SHIT TODO enlever moi cette partie de m**** ----------------------------------------------
-  /fruits:
-    post:
-      description: create a fruit
-      operationId: createFruit
-      requestBody:
-        content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/Fruit'
-      responses:
-        '201':
-          description: created
-    get:
-      description: get the list of all fruits
-      operationId: getFruits
-      responses:
-        '200':
-          description: success
-          content:
-            'application/json':
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Fruit'
-  /fruits/{id}:
-    get:
-      description: get one fruit, by id
-      operationId: getFruit
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-      responses:
-        '200':
-          description: success
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/Fruit'
-#fin FRUITS SHIT TODO enlever moi cette partie de m**** ----------------------------------------------
+                $ref: '#/components/schemas/Event'
 
 components:
   securitySchemes:
@@ -106,35 +60,10 @@ components:
       in: header
       name: X-API-KEY
   schemas:
-    #BADGE
-    Badge:
+    #EVENTS
+    Event:
       type: object
       properties:
-        level:
-          type: string
-        description:
-          type: string
-        obtainedOnDate:
-          type: string
-          format: date
+        id:
+          type: long
           nullable: false
-
-    #FRUIT
-    Fruit:
-      type: object
-      properties:
-        kind:
-          type: string
-        colour:
-          type: string
-        size:
-          type: string
-        weight:
-          type: string
-        expirationDate:
-          type: string
-          format: date
-          nullable: false
-        expirationDateTime:
-          type: string
-          format: date-time

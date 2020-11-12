@@ -1,25 +1,18 @@
-package io.avalia.fruits.configuration;
+package io.avalia.events.configuration;
 
-import com.fasterxml.jackson.core.type.ResolvedType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.HttpAuthenticationBuilder;
-import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.OperationContext;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 import static java.util.Collections.singletonList;
 
@@ -29,7 +22,7 @@ public class SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Fruits API")
+            .title("Events API")
             .description("An API to demonstrate Swagger and Spring Boot")
             .version("0.2.0")
             .build();
@@ -39,7 +32,7 @@ public class SwaggerDocumentationConfig {
     public Docket customImplementation(){
         return new Docket(DocumentationType.OAS_30)
             .select()
-                .apis(RequestHandlerSelectors.basePackage("io.avalia.fruits.api"))
+                .apis(RequestHandlerSelectors.basePackage("io.avalia.events.api"))
                 .build()
             .directModelSubstitute(Void.class, Void.class)
             .securitySchemes(singletonList(securityScheme()))
