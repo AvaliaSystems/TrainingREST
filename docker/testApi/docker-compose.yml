@@ -1,0 +1,13 @@
+version: "3.7"
+services: 
+    springboot:
+        image: openjdk
+        environment:
+            - SPRING_BOOT_PORT=8080
+        ports:
+            - "8081:8081"
+        volumes:
+            - ./fruits-specs/target/fruits-specs-1.0.0.jar:/app.jar
+        # https://docs.docker.com/compose/compose-file/#entrypoint
+        entrypoint: ["java","-jar","/app.jar"]
+
