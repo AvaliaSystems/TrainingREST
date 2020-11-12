@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "io.avalia.fruits", "io.avalia.fruits.api" })
+@ComponentScan(basePackages = { "io.avalia.fruits", "io.avalia.fruits.api"})
 public class    Swagger2SpringBoot implements CommandLineRunner {
 
     @PostConstruct

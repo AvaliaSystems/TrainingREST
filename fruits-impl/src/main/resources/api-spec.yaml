@@ -1,12 +1,57 @@
 openapi: '3.0.3'
 info:
   version: '0.1.0'
-  title: Fruits API
+  title: Gamification API
   description: An API to demonstrate Swagger and Spring Boot
 security:
   #  - bearerAuth: []
   - apiKeyAuth: []
 paths:
+  #BADGES
+  /badges:
+    post:
+      description: create a badge
+      operationId: createBadge
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Badge'
+      responses:
+        '201':
+          description: created
+    get:
+      description: get the list of all badges
+      operationId: getBadges
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+
+  /badges/{id}:
+    get:
+      description: get one badge, by id
+      operationId: getBadge
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Badge'
+
+#FRUITS SHIT TODO enlever moi cette partie de m**** ----------------------------------------------
   /fruits:
     post:
       description: create a fruit
@@ -48,6 +93,8 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Fruit'
+#fin FRUITS SHIT TODO enlever moi cette partie de m**** ----------------------------------------------
+
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -59,6 +106,20 @@ components:
       in: header
       name: X-API-KEY
   schemas:
+    #BADGE
+    Badge:
+      type: object
+      properties:
+        level:
+          type: string
+        description:
+          type: string
+        obtainedOnDate:
+          type: string
+          format: date
+          nullable: false
+
+    #FRUIT
     Fruit:
       type: object
       properties:

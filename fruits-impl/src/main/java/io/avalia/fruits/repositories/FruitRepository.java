@@ -1,8 +1,8 @@
 package io.avalia.fruits.repositories;
 
-import io.avalia.fruits.entities.FruitEntity;
+import io.avalia.fruits.entities.BadgeEntity;
 import org.springframework.data.repository.CrudRepository;
 
-public interface FruitRepository extends CrudRepository<FruitEntity, Long> {
+public interface FruitRepository extends CrudRepository<BadgeEntity, Long> {
 
 }

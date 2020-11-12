@@ -1,9 +1,7 @@
 package io.avalia.fruits.api.endpoints;
 
 import io.avalia.fruits.api.FruitsApi;
-import io.avalia.fruits.api.exceptions.ApiException;
-import io.avalia.fruits.api.exceptions.NotFoundException;
-import io.avalia.fruits.entities.FruitEntity;
+import io.avalia.fruits.entities.BadgeEntity;
 import io.avalia.fruits.api.model.Fruit;
 import io.avalia.fruits.repositories.FruitRepository;
 import io.swagger.annotations.ApiParam;
@@ -19,7 +17,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +29,7 @@ public class FruitsApiController implements FruitsApi {
 
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createFruit(@ApiParam(value = "", required = true) @Valid @RequestBody Fruit fruit) {
-        FruitEntity newFruitEntity = toFruitEntity(fruit);
+        BadgeEntity newFruitEntity = toFruitEntity(fruit);
         fruitRepository.save(newFruitEntity);
         Long id = newFruitEntity.getId();
 
@@ -45,7 +42,7 @@ public class FruitsApiController implements FruitsApi {
 
     public ResponseEntity<List<Fruit>> getFruits() {
         List<Fruit> fruits = new ArrayList<>();
-        for (FruitEntity fruitEntity : fruitRepository.findAll()) {
+        for (BadgeEntity fruitEntity : fruitRepository.findAll()) {
             fruits.add(toFruit(fruitEntity));
         }
         return ResponseEntity.ok(fruits);
@@ -53,12 +50,12 @@ public class FruitsApiController implements FruitsApi {
 
     @Override
     public ResponseEntity<Fruit> getFruit(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
-        FruitEntity existingFruitEntity = fruitRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        BadgeEntity existingFruitEntity = fruitRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return ResponseEntity.ok(toFruit(existingFruitEntity));
     }
 
-    private FruitEntity toFruitEntity(Fruit fruit) {
-        FruitEntity entity = new FruitEntity();
+    private BadgeEntity toFruitEntity(Fruit fruit) {
+        BadgeEntity entity = new BadgeEntity();
         entity.setColour(fruit.getColour());
         entity.setKind(fruit.getKind());
         entity.setWeight(fruit.getWeight());
@@ -68,7 +65,7 @@ public class FruitsApiController implements FruitsApi {
         return entity;
     }
 
-    private Fruit toFruit(FruitEntity entity) {
+    private Fruit toFruit(BadgeEntity entity) {
         Fruit fruit = new Fruit();
         fruit.setColour(entity.getColour());
         fruit.setKind(entity.getKind());
