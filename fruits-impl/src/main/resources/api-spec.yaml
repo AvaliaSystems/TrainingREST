@@ -1,12 +1,35 @@
 openapi: '3.0.3'
 info:
-  version: '0.1.0'
-  title: Fruits API
-  description: An API to demonstrate Swagger and Spring Boot
+  version: '0.2.0'
+  title: Gamification
+  description: we're trying to make it work
 security:
   #  - bearerAuth: []
   - apiKeyAuth: []
 paths:
+  /score:
+    post:
+      description: create score
+      operationId: createScore
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Score'
+      responses:
+        '201':
+          description: updated
+  /score/{id}:
+    get:
+      description: get the score
+      operationId: getScore
+      responses:
+        '200':
+            description: success
+            content:
+              'application/json':
+                schema:
+                    $ref: '#/components/schemas/Score'
   /fruits:
     post:
       description: create a fruit
@@ -59,6 +82,11 @@ components:
       in: header
       name: X-API-KEY
   schemas:
+    Score:
+      type: object
+      properties:
+        value:
+          type: Integer
     Fruit:
       type: object
       properties:
