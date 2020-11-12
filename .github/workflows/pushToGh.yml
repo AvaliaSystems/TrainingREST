@@ -37,6 +37,6 @@ jobs:
         run: |
           echo ${{ secrets.PUSH_IMAGES_TO_GHCR_SECRET }} | docker login ghcr.io -u amt-project-dev --password-stdin
           docker-compose build
-          docker tag openjdk ghcr.io/AMT-Project/apiREST
+          docker tag openjdk ghcr.io/amt-project/apiREST
           docker push ghcr.io/AMT-Project/apiREST
 
