@@ -52,7 +52,9 @@ public class FruitsApiController implements FruitsApi {
 
     @Override
     public ResponseEntity<Fruit> getFruit(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
-        FruitEntity existingFruitEntity = fruitRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        FruitEntity existingFruitEntity = fruitRepository
+                .findById(Long.valueOf(id))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return ResponseEntity.ok(toFruit(existingFruitEntity));
     }
 
