@@ -16,3 +16,21 @@ badge curieux
 
 recompense pour premier post?
 recompense lors de réponse beaucoup upvotée?
+
+PV réu 12 Nov.
+
+Gamification
+
+- score pour commentaire et questions(= nbre d’interractions) : +1 par question ou commentaire
+- badge tous X points
+- score populaire  = nbre d’upvote global = +1 par upvote et -1 par downvote
+
+Endpoints
+
+- récuperer les infos gamifiés d’un user (un ou 3 séparés)
+- incrémenter ou décrémenter score interraction
+- incrémenter ou décrémenter score pop.
+- récuperer infos sur les badges
+
+
+
