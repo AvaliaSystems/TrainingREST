@@ -2,5 +2,5 @@
 echo "======================================="
 echo "=== Running REST API latest version ==="
 echo "======================================="
-cd ../docker
+docker pull ghcr.io/amt-project/trainingrest/apirest:latest
 docker-compose up
