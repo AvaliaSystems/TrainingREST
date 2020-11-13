@@ -1,0 +1,11 @@
+version: "3.7"
+services: 
+    springboot:
+        image: ghcr.io/amt-project/apirest
+        environment:
+            - SPRING_BOOT_PORT=8080
+        ports:
+            - "8080:8080"
+        # https://docs.docker.com/compose/compose-file/#entrypoint
+        entrypoint: ["java","-jar","/app.jar"]
+
