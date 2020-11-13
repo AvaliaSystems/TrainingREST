@@ -4,7 +4,6 @@
 echo "========================"
 echo "=== Testing REST API ==="
 echo "========================"
-sleep 10 # wait for API to start
+docker wait apirest
 cd ../fruits-specs
 mvn clean test
-

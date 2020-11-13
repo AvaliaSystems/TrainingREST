@@ -7,12 +7,18 @@ cd scripts
 ./runREST_API.sh
 ```
 
-## Running REST-API latest (from github registry
+## Running REST-API latest (from github registry)
 ```bash
 cd scripts
 ./pullREST_API.sh
 ```
 
+## Test REST-API
+```bash
+cd scripts
+./testREST_API.sh
+```
+**Note**: there is a 10s delay to run tests such that the REST API can start.
 # Build and run the Fruit microservice
 
 You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8080.
@@ -57,4 +63,3 @@ cd cd fruits-specs/
 mvn clean test
 ```
 You will see the test results in the console, but you can also open the file located in `./target/cucumber`
-
