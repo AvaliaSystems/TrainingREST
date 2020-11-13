@@ -7,21 +7,21 @@ security:
   #  - bearerAuth: []
   - apiKeyAuth: [ ]
 paths:
-  /fruits:
+  /badges:
     post:
-      description: create a fruit
-      operationId: createFruit
+      description: create a badge
+      operationId: createBadge
       requestBody:
         content:
           'application/json':
             schema:
-              $ref: '#/components/schemas/Fruit'
+              $ref: '#/components/schemas/Badge'
       responses:
         '201':
           description: created
     get:
-      description: get the list of all fruits
-      operationId: getFruits
+      description: get the list of all badges
+      operationId: getBadges
       responses:
         '200':
           description: success
@@ -30,11 +30,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Fruit'
-  /fruits/{id}:
+                  $ref: '#/components/schemas/Badge'
+  /badges/{id}:
     get:
-      description: get one fruit, by id
-      operationId: getFruit
+      description: get one badge, by id
+      operationId: getBadge
       parameters:
         - in: path
           name: id
@@ -47,7 +47,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Fruit'
+                $ref: '#/components/schemas/Badge'
   /events:
     post:
       description: create an event
@@ -71,24 +71,15 @@ components:
       in: header
       name: X-API-KEY
   schemas:
-    Fruit:
+    Badge:
       type: object
       properties:
-        kind:
+        badgeId:
           type: string
-        colour:
+        name:
           type: string
-        size:
+        description:
           type: string
-        weight:
-          type: string
-        expirationDate:
-          type: string
-          format: date
-          nullable: false
-        expirationDateTime:
-          type: string
-          format: date-time
     Event:
       type: object
       properties:

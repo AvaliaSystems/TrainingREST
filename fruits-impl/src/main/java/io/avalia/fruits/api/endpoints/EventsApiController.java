@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
-public class EventApiController implements EventsApi {
+public class EventsApiController implements EventsApi {
     // TODO : Créer et ajouter EventRepository et EventEntity?
 
     @ResponseStatus(HttpStatus.CREATED)
