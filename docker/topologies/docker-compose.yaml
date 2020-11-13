@@ -1,8 +1,21 @@
 version: '2.0'
 services:
-  pdgspringboot:
+
+
+  amtadminer:
+    image: amtadminer
+    build: ../images/adminer
+    restart: always
+    ports:
+      - "8080:8080"
+  amtdb:
+    image: amtdb
+    build: ../images/mysql
+    restart: always
+    ports:
+      - "3306:3306"
+  amtspringboot:
     image: amtspringboot
     build: ../images/springboot
     ports:
      - "8081:8080"
-
