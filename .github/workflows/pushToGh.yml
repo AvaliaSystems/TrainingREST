@@ -30,13 +30,12 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Maven build
-        run: cd fruits-impl && mvn clean package && cd ..           
+        run: cd fruits-impl && mvn clean package && cd ..
 
       - name: Build Docker image and push it to ghcr
         # build a partir d'une image officielle mais tag renomme cette image
         run: |
           echo ${{ secrets.PUSH_IMAGES_TO_GHCR_SECRET }} | docker login ghcr.io -u amt-project-dev --password-stdin
-          docker-compose up --no-start
-          docker tag openjdk:12 ghcr.io/amt-project/trainingrest/apirest
+          docker build -t amt-project/trainingrest/apirest ./docker/api
+          docker tag amt-project/trainingrest/apirest ghcr.io/amt-project/trainingrest/apirest
           docker push ghcr.io/amt-project/trainingrest/apirest
-
