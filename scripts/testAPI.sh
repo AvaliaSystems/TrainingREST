@@ -1,10 +1,10 @@
 #!/bin/bash
+./runREST_API.sh
+
 echo "========================"
 echo "=== Testing REST API ==="
 echo "========================"
+sleep 10 # wait for API to start
 cd ../fruits-specs
-mvn clean package # generate jar to copy
-cd ../docker/testApi
-docker-compose down -v
-docker-compose up
+mvn clean test
 
