@@ -30,7 +30,12 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Maven build
-        run: cd fruits-impl && mvn clean package && cd ..
+        run: |
+          cd fruits-impl
+          mvn clean package
+          cd target
+          mv fruits-impl-1.0.0.jar ../../docker/api/api.jar
+          cd ../..
 
       - name: Build Docker image and push it to ghcr
         # build a partir d'une image officielle mais tag renomme cette image
