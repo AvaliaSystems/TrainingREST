@@ -64,6 +64,22 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>http://repo.maven.apache.org/maven2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jcenter</id>
+            <name>JFrog Bintray</name>
+            <url>https://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
@@ -98,6 +114,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.14</version>
         </dependency>
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
