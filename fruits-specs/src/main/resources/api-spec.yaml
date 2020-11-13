@@ -5,7 +5,7 @@ info:
   description: An API to demonstrate Swagger and Spring Boot
 security:
   #  - bearerAuth: []
-  - apiKeyAuth: []
+  - apiKeyAuth: [ ]
 paths:
   /fruits:
     post:
@@ -48,6 +48,18 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Fruit'
+  /events:
+    post:
+      description: create an event
+      operationId: createEvent
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '201':
+          description: created
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -77,3 +89,20 @@ components:
         expirationDateTime:
           type: string
           format: date-time
+    Event:
+      type: object
+      properties:
+        userId:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        type:
+          type: string
+        properties:
+          type: object
+          properties:
+            type:
+              type: string
+            quantity:
+              type: integer
