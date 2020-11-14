@@ -32,5 +32,10 @@ Endpoints
 - incrémenter ou décrémenter score pop.
 - récuperer infos sur les badges
 
+commandes de post et de get pour un score ATTENTION A L'ID
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{"value": 13}' 'http://localhost:8080/score'
+
+curl -X GET --header 'Accept: application/json' 'http://localhost:8080/score/{METTRE LA BONNE ID ICI}'
+
 
 
