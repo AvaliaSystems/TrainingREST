@@ -23,6 +23,12 @@ paths:
     get:
       description: get the score
       operationId: getScore
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       responses:
         '200':
             description: success
