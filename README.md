@@ -1,11 +1,34 @@
-# TrainingREST
+# AMT 2020 Gamification Engie
 
-# Build and run the Fruit microservice
+| Nom               | email                        |
+| ----------------- | ---------------------------- |
+| Alban Favre       | alban.favre@heig-vd.ch       |
+| Guillaume Zaretti | guillaume.zaretti@heig-vd.ch |
+| Sacha Perdrizat   | sacha.perdrizat@heig-vd.ch   |
+| Maximillian Vogel | maximillian.vogel@heig-vd.ch  |
+
+## Introduction
+The aim of this project is to bring to application developper a basic Gamification Engine through an API Rest
+
+## Technical detail
+
+Our application is build over the Jakarta EE standard (Java EE). We are using the following tools/technology to bring this project up:)
+
+| Component                     | Name                                                      | Version      |
+| ----------------------------- | --------------------------------------------------------- | ------------ |
+| Web FrameWork                 | [Spring-Boot](https://spring.io/projects/spring-boot)     | __>=2.3__    |
+| IDE                           | [IntelliJ Idea Ultimate](https://www.jetbrains.com/idea/) | __>=2020.2__ |
+| Build/dependency Manager      | [Maven](https://maven.apache.org/)                        | __>= 3.6__   |
+| testing tools                 | [cucumber](https://cucumber.io/)                          | __>=2.6__    |
+| Unit Testing Framework        | [Junit](https://junit.org/junit5/)                        | __>= 5.6__   |
+| Containerization tools        | [Docker](https://www.docker.com/)                         | __>= 19.03__ |
+
+# Build and run the Gamification MicroService
 
 You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8080.
 
 ```
-cd fruits-impl/
+cd gamification-impl/
 mvn spring-boot:run
 ```
 
@@ -16,31 +39,12 @@ You can then access:
 
 You can use curl to invoke the endpoints:
 
-* To retrieve the list of fruits previously created:
-
-```
-curl -X GET --header 'Accept: application/json' 'http://localhost:8080/fruits'
-```
-
-* To create a new fruit (beware that in the live documentation, there are extra \ line separators in the JSON payload that cause issues in some shells)
-
-```
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{
-  "colour": "red",
-  "expirationDate": "2020-11-06",
-  "expirationDateTime": "2020-11-06T05:43:27.909Z",
-  "kind": "apple",
-  "size": "small",
-  "weight": "light"
-}' 'http://localhost:8080/fruits'
-```
-
-# Test the Fruit microservice by running the executable specification
+# Test the Gamification microservice by running the executable specification
 
 You can use the Cucumber project to validate the API implementation. Do this when the server is running.
 
 ```
-cd cd fruits-specs/
+cd cd gamification-specs/
 mvn clean test
 ```
 You will see the test results in the console, but you can also open the file located in `./target/cucumber`
