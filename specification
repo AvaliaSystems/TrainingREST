@@ -25,12 +25,31 @@ Gamification
 - badge tous X points
 - score populaire  = nbre d’upvote global = +1 par upvote et -1 par downvote
 
-Endpoints
 
-- récuperer les infos gamifiés d’un user (un ou 3 séparés)
-- incrémenter ou décrémenter score interraction
-- incrémenter ou décrémenter score pop.
-- récuperer infos sur les badges
+Endpoints :
+
+-un endpoint pour enregistrer son application dans le moteur de gamification 
+	prend un JSON contenant le nom de l'app et retourne une API key (unique, peut être un UID). Tous les autres endpoints devront utiliser l'API key.
+
+-un endpoint pour définir un score propre à son application
+	prend un JSON contenant le nom du score. Un score sera basiquement un nom et une valeur (peut être une description) appartenant à une application.
+-un endpoint pour lister les scores d'une application
+-un endpoint pour obtenir les infos sur un Score
+
+-un endpoint pour définir un badge propre à son application
+	prend un JSON contenant le nom du badge. Un score sera basiquement un nom (peut être une description) appartenant à une application.
+-un endpoint pour lister les badges d'une application
+-un endpoint pour obtenir les infos sur un badge
+
+(- un endpoint pour définir ses règles de gamification
+	ici, je ne suis pas assez renseigné sur les règles, donc je dirais à voir plus tard
+-un endpoint pour lister les règles d'une application
+-un endpoint pour obtenir les infos sur une règle)
+
+- un endpoints pour récuperer toutes les infos gamifiées d'un utilisateur
+
+(-un endpoint pour récuperer des événements là aussi, je ne suis pas au fait de comment et ce qu'il faut y mettre)
+
 
 commandes de post et de get pour un score ATTENTION A L'ID
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{"value": 13}' 'http://localhost:8080/score'
