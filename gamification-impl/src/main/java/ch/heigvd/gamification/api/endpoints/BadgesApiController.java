@@ -13,6 +13,8 @@ import ch.heigvd.gamification.api.model.Badge;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -24,12 +26,25 @@ public class BadgesApiController implements BadgesApi {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createBadge(@ApiParam(value = "", required = true) Badge badge){
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
+        badgeRepository.save(newBadgeEntity);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newBadgeEntity.getId()).toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @Override
+    public ResponseEntity<List<Badge>> getBadges() {
+
+        List<Badge> badges = new ArrayList<Badge>();
+
+        for (BadgeEntity badgeEntity : badgeRepository.findAll()) {
+            badges.add(toBadge(badgeEntity));
+        }
+
+        return ResponseEntity.ok(badges);
     }
 
     private BadgeEntity toBadgeEntity(Badge badge){
@@ -39,6 +54,14 @@ public class BadgesApiController implements BadgesApi {
             badgeEntity.setColor(badge.getColor());
             badgeEntity.setDescription(badge.getDescription());
             return badgeEntity;
+    }
+
+    private Badge toBadge(BadgeEntity badgeEntity){
+        Badge badge = new Badge();
+        badge.setId(badgeEntity.getId().intValue());
+        badge.setColor(badgeEntity.getColor());
+        badge.setDescription(badgeEntity.getDescription());
+        return badge;
     }
 
 }
