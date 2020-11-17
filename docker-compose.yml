@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+  database:
+    image: mysql:8.0.21
+    restart: always
+    environment:
+      MYSQL_USER: 'APIUser'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: 'DBProjet2'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
