@@ -7,6 +7,21 @@ security:
   #  - bearerAuth: []
   - apiKeyAuth: []
 paths:
+  /applications:
+    post:
+      description: register an application
+      operationId: registerApplication
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '201':
+          description: registered successfully
+
+  
+
   /score:
     post:
       description: create score
@@ -83,11 +98,19 @@ components:
     #      type: http
     #      scheme: bearer       # warning: it HAS TO be a lowercase b for the swagger ui version used in springfox
     #      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+
     apiKeyAuth:
       type: apiKey
       in: header
       name: X-API-KEY
   schemas:
+    Application:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: apiKey
     Score:
       type: object
       properties:
@@ -111,3 +134,4 @@ components:
         expirationDateTime:
           type: string
           format: date-time
+
