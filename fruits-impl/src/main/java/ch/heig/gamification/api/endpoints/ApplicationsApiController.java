@@ -20,12 +20,12 @@ import java.net.URI;
 public class ApplicationsApiController implements ApplicationsApi {
 
     @Autowired
-    ApplicationsRepository applicationsRepository;
+    ApplicationRepository applicationRepository;
 
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Long> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
         ApplicationEntity newApplicationEntity = toApplicationEntity(application);
-        applicationsRepository.save(newApplicationEntity);
+        applicationRepository.save(newApplicationEntity);
         Long id = newApplicationEntity.getId();
 
 //        URI location = ServletUriComponentsBuilder
