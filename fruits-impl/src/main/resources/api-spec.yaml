@@ -17,10 +17,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Application'
       responses:
-        '201':
-          description: registered successfully
-
-
+        '200':
+          description: Application registered successfully
+          content:
+            'application/json':
+              schema:
+               type: UUID
 
   /score:
     post:

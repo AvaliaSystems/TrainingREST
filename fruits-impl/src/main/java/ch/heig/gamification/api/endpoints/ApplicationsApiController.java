@@ -11,10 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import java.util.UUID;
 import javax.validation.Valid;
-import java.net.URI;
 
 @Controller
 public class ApplicationsApiController implements ApplicationsApi {
@@ -23,16 +21,16 @@ public class ApplicationsApiController implements ApplicationsApi {
     ApplicationRepository applicationRepository;
 
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Long> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
+    public ResponseEntity<UUID> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
         ApplicationEntity newApplicationEntity = toApplicationEntity(application);
         applicationRepository.save(newApplicationEntity);
-        Long id = newApplicationEntity.getId();
+//        Long id = newApplicationEntity.getId();
 
 //        URI location = ServletUriComponentsBuilder
 //                .fromCurrentRequest().path("/{id}")
 //                .buildAndExpand(newApplicationEntity.getId()).toUri();
 
-        return ResponseEntity.ok(id);
+        return ResponseEntity.ok(newApplicationEntity.getApiKey());
     }
     private ApplicationEntity toApplicationEntity(Application application){
         ApplicationEntity entity = new ApplicationEntity();
