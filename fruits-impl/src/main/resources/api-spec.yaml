@@ -20,7 +20,7 @@ paths:
         '201':
           description: registered successfully
 
-  
+
 
   /score:
     post:
@@ -109,8 +109,7 @@ components:
       properties:
         name:
           type: string
-        key:
-          type: apiKey
+
     Score:
       type: object
       properties:
