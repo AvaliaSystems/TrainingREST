@@ -16,6 +16,8 @@ import org.springframework.security.core.AuthenticationException;
 @Order(1)
 public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
+    // default Hardcoded value can be set in properties file
+
     @Value("X-API-KEY")
     private String principalRequestHeader;
 
@@ -24,6 +26,11 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+        // TODO
+        // get API-key from Database or any persistence storage
+        // It would be nice if application A cannot send request to application B
+
         APIKeyAuthFilter filter = new APIKeyAuthFilter(principalRequestHeader);
         filter.setAuthenticationManager(new AuthenticationManager() {
 
