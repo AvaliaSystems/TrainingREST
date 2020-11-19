@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.avalia.fruits</groupId>
-  <artifactId>fruits-specs</artifactId>
+  <groupId>ch.heigvd.gamification</groupId>
+  <artifactId>api-specs</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <properties>
@@ -42,10 +42,11 @@
               <language>java</language>
               <library>okhttp-gson</library>
               <configOptions>
-                <sourceFolder>.</sourceFolder>
-                <modelPackage>io.avalia.fruits.api.dto</modelPackage>
-                <apiPackage>io.avalia.fruits.api</apiPackage>
-                <dateLibrary>java8</dateLibrary>
+                <sourceFolder>src/gen/java/main</sourceFolder>
+                <basePackage>ch.heigvd.gamification</basePackage>
+                <modelPackage>ch.heigvd.gamification.api.dto</modelPackage>
+                <apiPackage>ch.heigvd.gamification.api</apiPackage>
+                <dateLibrary>java11</dateLibrary>
               </configOptions>
               <output>target/generated-sources/openapi</output>
             </configuration>

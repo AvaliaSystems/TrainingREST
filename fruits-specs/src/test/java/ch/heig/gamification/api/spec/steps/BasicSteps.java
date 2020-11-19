@@ -1,10 +1,10 @@
 package ch.heig.gamification.api.spec.steps;
 
 import ch.heig.gamification.api.spec.helpers.Environment;
-import io.avalia.fruits.ApiException;
-import io.avalia.fruits.ApiResponse;
-import io.avalia.fruits.api.DefaultApi;
-import io.avalia.fruits.api.dto.Fruit;
+import ch.heig.gamification.ApiException;
+import ch.heig.gamification.ApiResponse;
+import ch.heig.gamification.api.DefaultApi;
+import ch.heig.gamification.api.dto.Application;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -21,8 +21,8 @@ public class BasicSteps {
 
     private Environment environment;
     private DefaultApi api;
-
-    Fruit fruit;
+    
+    Application application;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
@@ -30,33 +30,28 @@ public class BasicSteps {
     private int lastStatusCode;
 
     private String lastReceivedLocationHeader;
-    private Fruit lastReceivedFruit;
+    private Application lastReceivedApplication;
 
     public BasicSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
     }
 
-    @Given("there is a Fruits server")
-    public void there_is_a_Fruits_server() throws Throwable {
+    @Given("there is an Application server")
+    public void there_is_an_Application_server() throws Throwable {
         assertNotNull(api);
     }
 
-    @Given("I have a fruit payload")
-    public void i_have_a_fruit_payload() throws Throwable {
-        fruit = new io.avalia.fruits.api.dto.Fruit()
-          .kind("banana")
-          .colour("yellow")
-          .size("medium")
-          .weight("light")
-          .expirationDate(LocalDate.now())
-          .expirationDateTime(OffsetDateTime.now());
+    @Given("I have an application payload")
+    public void i_have_an_application_payload() throws Throwable {
+        application = new ch.heig.gamification.api.dto.Application()
+          .name("Application42");
     }
 
-    @When("^I POST the fruit payload to the /fruits endpoint$")
-    public void i_POST_the_fruit_payload_to_the_fruits_endpoint() throws Throwable {
+    @When("^I POST the application payload to the /applications endpoint$")
+    public void i_POST_the_application_payload_to_the_applications_endpoint() throws Throwable {
         try {
-            lastApiResponse = api.createFruitWithHttpInfo(fruit);
+            lastApiResponse = api.createApplicationWithHttpInfo(application);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
@@ -68,10 +63,10 @@ public class BasicSteps {
         assertEquals(expectedStatusCode, lastStatusCode);
     }
 
-    @When("^I send a GET to the /fruits endpoint$")
-    public void iSendAGETToTheFruitsEndpoint() {
+    @When("^I send a GET to the /applications endpoint$")
+    public void iSendAGETToTheApplicationsEndpoint() {
         try {
-            lastApiResponse = api.getFruitsWithHttpInfo();
+            lastApiResponse = api.getApplicationsWithHttpInfo();
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
@@ -86,17 +81,17 @@ public class BasicSteps {
     public void iSendAGETToTheURLInTheLocationHeader() {
         Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
         try {
-            lastApiResponse = api.getFruitWithHttpInfo(id);
+            lastApiResponse = api.getApplicationWithHttpInfo(id);
             processApiResponse(lastApiResponse);
-            lastReceivedFruit = (Fruit)lastApiResponse.getData();
+            lastReceivedApplication = (Application) lastApiResponse.getData();
         } catch (ApiException e) {
             processApiException(e);
         }
     }
 
-    @And("I receive a payload that is the same as the fruit payload")
-    public void iReceiveAPayloadThatIsTheSameAsTheFruitPayload() {
-        assertEquals(fruit, lastReceivedFruit);
+    @And("I receive a payload that is the same as the application payload")
+    public void iReceiveAPayloadThatIsTheSameAsTheApplicationPayload() {
+        assertEquals(application, lastReceivedApplication);
     }
 
     private void processApiResponse(ApiResponse apiResponse) {
