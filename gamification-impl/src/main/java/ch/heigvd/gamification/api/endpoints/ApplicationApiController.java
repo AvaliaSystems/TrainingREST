@@ -1,6 +1,7 @@
 package ch.heigvd.gamification.api.endpoints;
 
 import ch.heigvd.gamification.api.ApplicationsApi;
+import ch.heigvd.gamification.api.model.ApiKey;
 import ch.heigvd.gamification.api.model.Application;
 import ch.heigvd.gamification.entities.ApplicationEntity;
 import ch.heigvd.gamification.repositories.ApplicationRepository;
@@ -24,11 +25,16 @@ public class ApplicationApiController implements ApplicationsApi {
     ApplicationRepository applicationRepository;
 
     @Override
-    public ResponseEntity<Void> createApplication(@ApiParam(value = "",required=true) @Valid Application application) {
+    public ResponseEntity<ApiKey> createApplication(@ApiParam(value = "",required=true) @Valid Application application) {
         ApplicationEntity newApplicationEntity = new ApplicationEntity();
+        ApiKey apiKey = new ApiKey();
 
-        newApplicationEntity.setApiKey(UUID.randomUUID().toString());
+        apiKey.setKey(UUID.randomUUID().toString());
+
+        newApplicationEntity.setApiKey(apiKey.getKey());
         newApplicationEntity.setName(application.getName());
+
+
 
         applicationRepository.save(newApplicationEntity);
 
@@ -36,7 +42,7 @@ public class ApplicationApiController implements ApplicationsApi {
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newApplicationEntity.getId()).toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(apiKey);
     }
 
     @Override
