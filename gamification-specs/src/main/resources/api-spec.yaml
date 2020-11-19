@@ -126,3 +126,5 @@ components:
       properties:
         name:
           type: string
+        key:
+          type: string

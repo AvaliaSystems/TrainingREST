@@ -17,8 +17,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class ApplicationsApiController implements ApplicationsApi {
@@ -29,14 +31,9 @@ public class ApplicationsApiController implements ApplicationsApi {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
         ApplicationEntity newApplicationEntity = toApplicationEntity(application);
+        String key = UUID.randomUUID().toString();
         applicationRepository.save(newApplicationEntity);
-        Long id = newApplicationEntity.getId();
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newApplicationEntity.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.ok().header("X-API-KEY",key).build();
     }
 
     public ResponseEntity<List<Application>> getApplications() {
