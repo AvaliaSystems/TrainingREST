@@ -5,5 +5,5 @@ echo "========================"
 echo "=== Testing REST API ==="
 echo "========================"
 docker wait apirest
-cd ../fruits-specs
+cd ../gamification-specs
 mvn clean test
