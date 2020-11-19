@@ -35,13 +35,11 @@ public class BadgeSteps {
 
     @Given("there is a Badges server")
     public void there_is_a_badges_server() {
-        // Write code here that turns the phrase above into concrete actions
         assertNotNull(api);
     }
 
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() {
-        // Write code here that turns the phrase above into concrete actions
         badge = new ch.heigvd.amt.gamification.api.dto.Badge()
                 .badgeId("mockId")
                 .name("mock name")
@@ -65,8 +63,12 @@ public class BadgeSteps {
 
     @When("I send a GET to the \\/badges endpoint")
     public void i_send_a_get_to_the_badges_endpoint() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        try {
+            lastApiResponse = api.getBadgesWithHttpInfo();
+            processApiResponse(lastApiResponse);
+        } catch (ApiException e) {
+            processApiException(e);
+        }
     }
 
     private void processApiResponse(ApiResponse apiResponse) {
