@@ -1,6 +1,6 @@
 package ch.heigvd.gamification.api.spec.helpers;
 
-import io.avalia.fruits.api.DefaultApi;
+import ch.heigvd.gamification.api.DefaultApi;
 
 import java.io.IOException;
 import java.util.Properties;
