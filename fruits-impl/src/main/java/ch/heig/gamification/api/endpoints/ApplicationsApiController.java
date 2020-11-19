@@ -20,7 +20,6 @@ public class ApplicationsApiController implements ApplicationsApi {
     @Autowired
     ApplicationRepository applicationRepository;
 
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
         ApplicationEntity newApplicationEntity = toApplicationEntity(application);
         applicationRepository.save(newApplicationEntity);
