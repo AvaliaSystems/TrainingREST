@@ -1,12 +1,58 @@
 openapi: '3.0.3'
 info:
-  version: '0.1.0'
-  title: Fruits API
-  description: An API to demonstrate Swagger and Spring Boot
+  version: '0.2.0'
+  title: Gamification
+  description: we're trying to make it work
 security:
   #  - bearerAuth: []
   - apiKeyAuth: []
 paths:
+  /applications:
+    post:
+      description: register an application
+      operationId: registerApplication
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '200':
+          description: Application registered successfully
+          content:
+            'application/json':
+              schema:
+                type: UUID
+
+  /score:
+    post:
+      description: create score
+      operationId: createScore
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Score'
+      responses:
+        '201':
+          description: updated
+  /score/{id}:
+    get:
+      description: get the score
+      operationId: getScore
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Score'
   /fruits:
     post:
       description: create a fruit
@@ -54,11 +100,23 @@ components:
     #      type: http
     #      scheme: bearer       # warning: it HAS TO be a lowercase b for the swagger ui version used in springfox
     #      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+
     apiKeyAuth:
       type: apiKey
       in: header
       name: X-API-KEY
   schemas:
+    Application:
+      type: object
+      properties:
+        name:
+          type: string
+
+    Score:
+      type: object
+      properties:
+        value:
+          type: Integer
     Fruit:
       type: object
       properties:
@@ -77,3 +135,4 @@ components:
         expirationDateTime:
           type: string
           format: date-time
+

@@ -21,7 +21,7 @@ public class BasicSteps {
 
     private Environment environment;
     private DefaultApi api;
-    
+
     Application application;
 
     private ApiResponse lastApiResponse;
