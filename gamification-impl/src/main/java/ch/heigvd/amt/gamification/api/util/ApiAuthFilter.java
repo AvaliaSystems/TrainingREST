@@ -35,6 +35,7 @@ public class ApiAuthFilter implements javax.servlet.Filter {
 
         ApplicationEntity applicationEntity = applicationRepository.findAllByKey(apiKey);
 
+
         try {
             if(applicationEntity != null){
                 req.setAttribute("applicationEntity", applicationEntity);
