@@ -39,34 +39,34 @@ public class BadgesApiController implements BadgesApi {
         Long id = newBadgeEntity.getId();
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newBadgeEntity.getId()).toUri();
+            .fromCurrentRequest().path("/{id}")
+            .buildAndExpand(newBadgeEntity.getId()).toUri();
 
         return ResponseEntity.created(location).build();
     }
 
     public ResponseEntity<List<Badge>> getBadges() {
         List<Badge> badges = new ArrayList<>();
-        for (BadgeEntity badgeEntity : badgeRepository.findAllByApplication((ApplicationEntity) request.getAttribute("applicationEntity"))) {
+        for(BadgeEntity badgeEntity : badgeRepository.findAllByApplication((ApplicationEntity) request.getAttribute("applicationEntity"))) {
             badges.add(toBadge(badgeEntity));
         }
         return ResponseEntity.ok(badges);
     }
 
     @Override
-    public ResponseEntity<Badge> getBadge(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
+    public ResponseEntity<Badge> getBadge(@ApiParam(value = "", required = true) @PathVariable("id") Integer id) {
         BadgeEntity existingBadgeEntity = badgeRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return ResponseEntity.ok(toBadge(existingBadgeEntity));
     }
 
-    private BadgeEntity toBadgeEntity(Badge badge){
+    private BadgeEntity toBadgeEntity(Badge badge) {
         BadgeEntity entity = new BadgeEntity();
         entity.setName(badge.getName());
         entity.setDescription(badge.getDescription());
         return entity;
     }
 
-    private Badge toBadge(BadgeEntity entity){
+    private Badge toBadge(BadgeEntity entity) {
         Badge badge = new Badge();
         badge.setName(entity.getName());
         badge.setDescription(entity.getDescription());
