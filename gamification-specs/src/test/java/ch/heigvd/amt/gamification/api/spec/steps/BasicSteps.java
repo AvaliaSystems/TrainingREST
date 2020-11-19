@@ -1,9 +1,9 @@
 package ch.heigvd.amt.gamification.api.spec.steps;
 
-import ch.heigvd.amt.gamification.api.exception.ApiException;
-import ch.heigvd.amt.gamification.fruits.ApiResponse;
-import ch.heigvd.amt.gamification.fruits.api.DefaultApi;
-import ch.heigvd.amt.gamification.api.dto.Fruit;
+import ch.heigvd.amt.gamification.ApiException;
+import ch.heigvd.amt.gamification.ApiResponse;
+import ch.heigvd.amt.gamification.api.DefaultApi;
+import ch.heigvd.amt.gamification.api.dto.Badge;
 import ch.heigvd.amt.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -22,7 +22,7 @@ public class BasicSteps {
     private Environment environment;
     private DefaultApi api;
 
-    Fruit fruit;
+    Badge badge;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
@@ -30,33 +30,29 @@ public class BasicSteps {
     private int lastStatusCode;
 
     private String lastReceivedLocationHeader;
-    private Fruit lastReceivedFruit;
+    private Badge lastReceivedBadge;
 
     public BasicSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
     }
 
-    @Given("there is a Fruits server")
-    public void there_is_a_Fruits_server() throws Throwable {
+    @Given("there is a Badges server")
+    public void there_is_a_Badges_server() throws Throwable {
         assertNotNull(api);
     }
 
-    @Given("I have a fruit payload")
-    public void i_have_a_fruit_payload() throws Throwable {
-        fruit = new ch.heigvd.amt.gamification.fruits.api.dto.Fruit()
-          .kind("banana")
-          .colour("yellow")
-          .size("medium")
-          .weight("light")
-          .expirationDate(LocalDate.now())
-          .expirationDateTime(OffsetDateTime.now());
+    @Given("I have a badge payload")
+    public void i_have_a_badge_payload() throws Throwable {
+        badge = new ch.heigvd.amt.gamification.api.dto.Badge()
+          .name("mockName")
+          .description("mockdesc");
     }
 
-    @When("^I POST the fruit payload to the /fruits endpoint$")
-    public void i_POST_the_fruit_payload_to_the_fruits_endpoint() throws Throwable {
+    @When("^I POST the badge payload to the /badges endpoint$")
+    public void i_POST_the_badge_payload_to_the_badges_endpoint() throws Throwable {
         try {
-            lastApiResponse = api.createFruitWithHttpInfo(fruit);
+            lastApiResponse = api.createBadgeWithHttpInfo(badge);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
@@ -68,10 +64,10 @@ public class BasicSteps {
         assertEquals(expectedStatusCode, lastStatusCode);
     }
 
-    @When("^I send a GET to the /fruits endpoint$")
-    public void iSendAGETToTheFruitsEndpoint() {
+    @When("^I send a GET to the /badges endpoint$")
+    public void iSendAGETToTheBadgesEndpoint() {
         try {
-            lastApiResponse = api.getFruitsWithHttpInfo();
+            lastApiResponse = api.getBadgesWithHttpInfo();
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
@@ -86,17 +82,17 @@ public class BasicSteps {
     public void iSendAGETToTheURLInTheLocationHeader() {
         Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
         try {
-            lastApiResponse = api.getFruitWithHttpInfo(id);
+            lastApiResponse = api.getBadgeWithHttpInfo(id);
             processApiResponse(lastApiResponse);
-            lastReceivedFruit = (Fruit)lastApiResponse.getData();
+            lastReceivedBadge = (Badge) lastApiResponse.getData();
         } catch (ApiException e) {
             processApiException(e);
         }
     }
 
-    @And("I receive a payload that is the same as the fruit payload")
-    public void iReceiveAPayloadThatIsTheSameAsTheFruitPayload() {
-        assertEquals(fruit, lastReceivedFruit);
+    @And("I receive a payload that is the same as the badge payload")
+    public void iReceiveAPayloadThatIsTheSameAsTheBadgePayload() {
+        assertEquals(badge, lastReceivedBadge);
     }
 
     private void processApiResponse(ApiResponse apiResponse) {
