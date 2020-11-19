@@ -1,7 +1,7 @@
 openapi: '3.0.3'
 info:
   version: '0.1.0'
-  title: Fruits API
+  title: Gamification API
   description: An API to demonstrate Swagger and Spring Boot
 security:
   #  - bearerAuth: []
@@ -60,6 +60,30 @@ paths:
       responses:
         '201':
           description: created
+  /applications:
+    post:
+      description: register an application
+      operationId: registerApplication
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '201':
+          description: created
+    get:
+      description: get the list of all applications
+      operationId: getApplications
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Application'
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -97,3 +121,8 @@ components:
               type: string
             quantity:
               type: integer
+    Application:
+      type: object
+      properties:
+        name:
+          type: string
