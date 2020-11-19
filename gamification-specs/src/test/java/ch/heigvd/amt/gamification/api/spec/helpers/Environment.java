@@ -13,7 +13,7 @@ public class Environment {
     public Environment() throws IOException {
         Properties properties = new Properties();
         properties.load(this.getClass().getClassLoader().getResourceAsStream("environment.properties"));
-        String url = properties.getProperty("ch.heigvd.amt.gamification.server.url");
+        String url = properties.getProperty("ch.heigvd.amt.gamification.api.server.url");
         api.getApiClient().setBasePath(url);
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
