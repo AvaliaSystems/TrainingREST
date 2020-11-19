@@ -1,4 +1,4 @@
-package io.avalia.fruits.api.spec.helpers;
+package ch.heigvd.gamification.api.spec.helpers;
 
 import io.avalia.fruits.api.DefaultApi;
 
