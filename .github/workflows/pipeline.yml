@@ -1,3 +1,5 @@
+
+
 name: build and publish Docker image
 
 on: 
@@ -10,8 +12,6 @@ jobs:
   build: 
     runs-on: ubuntu-latest
     steps:
-    - name: test
-      run: echo $GITHUB_ACTOR
 
     - uses: actions/checkout@v2
 
@@ -31,7 +31,7 @@ jobs:
 
 
     - name: Build Dockerimage
-
+      run: |
        echo ${{ secrets.AMT_14_TEAM_ACCESS_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
        docker build -t amt-14/Project2_image .
        docker tag amt-14/Project2_image ghcr.io/amt-14/Project2_image
