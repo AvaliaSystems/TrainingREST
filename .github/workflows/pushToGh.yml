@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - Dockerisation
 
 jobs:
   build:
