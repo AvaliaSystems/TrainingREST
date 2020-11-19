@@ -84,7 +84,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Badge'
+  /Applications:
+    post:
+      description: create an application
+      operationId: createApplication
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '201':
+          description: created
 
+  /Applications/{id}:
+    get:
+      description: get an application, by id
+      operationId: getApplication
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Application'
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -118,7 +147,7 @@ components:
         description:
           type: string
 
-    # Scheme for Events
+    # Scheme for User
     User:
       type: object
       properties:
@@ -126,3 +155,11 @@ components:
           type: integer
         username:
           type: string
+    Application:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
