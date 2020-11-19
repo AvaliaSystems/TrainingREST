@@ -1,5 +1,6 @@
 package ch.heigvd.amt.gamification.entities;
 
+import ch.heigvd.amt.gamification.api.model.Application;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,5 +16,8 @@ public class BadgeEntity implements Serializable {
 
     private String name;
     private String description;
+
+    @ManyToOne
+    private ApplicationEntity application;
 
 }

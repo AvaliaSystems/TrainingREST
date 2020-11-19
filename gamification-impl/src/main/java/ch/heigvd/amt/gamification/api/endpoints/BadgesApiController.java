@@ -2,6 +2,7 @@ package ch.heigvd.amt.gamification.api.endpoints;
 
 import ch.heigvd.amt.gamification.api.BadgesApi;
 import ch.heigvd.amt.gamification.api.model.Badge;
+import ch.heigvd.amt.gamification.entities.ApplicationEntity;
 import ch.heigvd.amt.gamification.entities.BadgeEntity;
 import ch.heigvd.amt.gamification.repositories.BadgeRepository;
 import io.swagger.annotations.ApiParam;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
@@ -26,9 +28,13 @@ public class BadgesApiController implements BadgesApi {
     @Autowired
     BadgeRepository badgeRepository;
 
+    @Autowired
+    ServletRequest request;
+
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge) {
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
+        newBadgeEntity.setApplication((ApplicationEntity) request.getAttribute("applicationEntity"));
         badgeRepository.save(newBadgeEntity);
         Long id = newBadgeEntity.getId();
 
@@ -41,7 +47,7 @@ public class BadgesApiController implements BadgesApi {
 
     public ResponseEntity<List<Badge>> getBadges() {
         List<Badge> badges = new ArrayList<>();
-        for (BadgeEntity badgeEntity : badgeRepository.findAll()) {
+        for (BadgeEntity badgeEntity : badgeRepository.findAllByApplication((ApplicationEntity) request.getAttribute("applicationEntity"))) {
             badges.add(toBadge(badgeEntity));
         }
         return ResponseEntity.ok(badges);
