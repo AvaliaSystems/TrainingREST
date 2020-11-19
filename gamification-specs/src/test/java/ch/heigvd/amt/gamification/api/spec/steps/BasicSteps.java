@@ -81,9 +81,9 @@ public class BasicSteps {
 
     @When("I send a GET to the URL in the location header")
     public void iSendAGETToTheURLInTheLocationHeader() {
-        //Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
+        Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
         try {
-            lastApiResponse = api.getBadgesWithHttpInfo();
+            lastApiResponse = api.getBadgeWithHttpInfo(id);
             processApiResponse(lastApiResponse);
             lastReceivedBadge = (Badge) lastApiResponse.getData();
         } catch (ApiException e) {
