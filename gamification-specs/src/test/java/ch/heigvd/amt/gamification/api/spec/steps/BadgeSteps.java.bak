@@ -1,24 +1,20 @@
 package ch.heigvd.amt.gamification.api.spec.steps;
 
+import ch.heigvd.amt.gamification.api.spec.helpers.Environment;
+import ch.heigvd.amt.gamification.api.DefaultApi;
 import ch.heigvd.amt.gamification.ApiException;
 import ch.heigvd.amt.gamification.ApiResponse;
-import ch.heigvd.amt.gamification.api.DefaultApi;
 import ch.heigvd.amt.gamification.api.dto.Badge;
-import ch.heigvd.amt.gamification.api.spec.helpers.Environment;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class BasicSteps {
-
+public class BadgeSteps {
     private Environment environment;
     private DefaultApi api;
 
@@ -30,28 +26,28 @@ public class BasicSteps {
     private int lastStatusCode;
 
     private String lastReceivedLocationHeader;
-    private Badge lastReceivedBadge;
+    private Badge   lastReceivedBadge;
 
-    public BasicSteps(Environment environment) {
+    public BadgeSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
     }
 
     @Given("there is a Badges server")
-    public void there_is_a_Badges_server() throws Throwable {
+    public void there_is_a_badges_server() {
         assertNotNull(api);
     }
 
     @Given("I have a badge payload")
-    public void i_have_a_badge_payload() throws Throwable {
+    public void i_have_a_badge_payload() {
         badge = new ch.heigvd.amt.gamification.api.dto.Badge()
-          .badgeId("mockId")
-          .name("mockName")
-          .description("mockdesc");
+                .badgeId("mockId")
+                .name("mock name")
+                .description("mock description");
     }
 
-    @When("^I POST the badge payload to the /badges endpoint$")
-    public void i_POST_the_badge_payload_to_the_badges_endpoint() throws Throwable {
+    @When("I POST the badge payload to the \\/badges endpoint")
+    public void i_post_the_badge_payload_to_the_badges_endpoint() {
         try {
             lastApiResponse = api.createBadgeWithHttpInfo(badge);
             processApiResponse(lastApiResponse);
@@ -61,39 +57,18 @@ public class BasicSteps {
     }
 
     @Then("I receive a {int} status code")
-    public void i_receive_a_status_code(int expectedStatusCode) throws Throwable {
-        assertEquals(expectedStatusCode, lastStatusCode);
+    public void i_receive_a_status_code(Integer expectedStatusCode) {
+        assertEquals((long) expectedStatusCode, lastStatusCode);
     }
 
-    @When("^I send a GET to the /badges endpoint$")
-    public void iSendAGETToTheBadgesEndpoint() {
+    @When("I send a GET to the \\/badges endpoint")
+    public void i_send_a_get_to_the_badges_endpoint() {
         try {
             lastApiResponse = api.getBadgesWithHttpInfo();
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
         }
-    }
-
-    @Then("I receive a {int} status code with a location header")
-    public void iReceiveAStatusCodeWithALocationHeader(int arg0) {
-    }
-
-    @When("I send a GET to the URL in the location header")
-    public void iSendAGETToTheURLInTheLocationHeader() {
-        //Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
-        try {
-            lastApiResponse = api.getBadgesWithHttpInfo();
-            processApiResponse(lastApiResponse);
-            lastReceivedBadge = (Badge) lastApiResponse.getData();
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
-
-    @And("I receive a payload that is the same as the badge payload")
-    public void iReceiveAPayloadThatIsTheSameAsTheBadgePayload() {
-        assertEquals(badge, lastReceivedBadge);
     }
 
     private void processApiResponse(ApiResponse apiResponse) {
@@ -111,5 +86,4 @@ public class BasicSteps {
         lastApiException = apiException;
         lastStatusCode = lastApiException.getCode();
     }
-
 }
