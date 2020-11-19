@@ -48,6 +48,20 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/User'
+  /events:
+    post:
+      description: submit an event
+      operationId: createEvent
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '201':
+          description: created
+
+
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -59,6 +73,17 @@ components:
       in: header
       name: X-API-KEY
   schemas:
+    # Scheme for Events
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+    # Scheme for Events
     User:
       type: object
       properties:
