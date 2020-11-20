@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 
@@ -24,10 +25,15 @@ public class ScoreScalesApiController implements ScoreScalesApi {
     @Autowired
     ScoreScaleRepository scoreScaleRepository;
 
+    @Autowired
+    ServletRequest servletRequest;
+
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createScoreScale(@ApiParam(name = "", required = true) @Valid @RequestBody ScoreScale scoreScale) {
         ScoreScaleEntity newScoreScaleEntity = toScoreScaleEntity(scoreScale);
         scoreScaleRepository.save(newScoreScaleEntity);
+
+        servletRequest.getAttribute("scoreScaleEntitiy");
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -44,14 +50,14 @@ public class ScoreScalesApiController implements ScoreScalesApi {
     private ScoreScaleEntity toScoreScaleEntity(ScoreScale scoreScale) {
         ScoreScaleEntity entity = new ScoreScaleEntity();
         entity.setName(scoreScale.getName());
-        entity.setApplicationID(scoreScale.getApplicationID());
+        //entity.setApplicationEntity(scoreScale.get());
         return entity;
     }
 
     private ScoreScale toScoreScale(ScoreScaleEntity entity) {
         ScoreScale scoreScale = new ScoreScale();
         scoreScale.setName(entity.getName());
-        scoreScale.setApplicationID(entity.getApplicationID());
+        //scoreScale.setApplicationEntity(entity.getApplicationEntity());
         return scoreScale;
     }
 }

@@ -1,14 +1,9 @@
 package ch.heig.gamification.entities;
 
-import jdk.jfr.Enabled;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -19,5 +14,7 @@ public class ScoreScaleEntity implements Serializable {
 
     private String name;
 
-    private UUID applicationID;
+    @ManyToOne
+    private ApplicationEntity applicationEntity;
+
 }
