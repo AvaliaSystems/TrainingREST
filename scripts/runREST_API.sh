@@ -1,11 +1,18 @@
 #!/bin/bash
+
+echo "========================="
+echo "=== Building REST API ==="
+echo "========================="
+cd ../gamification-impl
+mvn clean package # generate jar to copy
+cd target
+mv gamification-impl-1.0.0.jar ../../docker/api/api.jar
+cd ../..
+docker-compose down -v
 echo "============================"
 echo "=== Starting up REST API ==="
 echo "============================"
-cd ../fruits-impl
-mvn clean package # generate jar to copy
-cd target
-mv fruits-impl-1.0.0.jar ../../docker/api/api.jar
-cd ../..
-docker-compose down -v
-docker-compose up &
+# had a bug where image was reused instead of being recreated
+# I manually removed the image but I hope --force-recreate will
+# prevent this
+docker-compose up --force-recreate &

@@ -31,10 +31,10 @@ jobs:
 
       - name: Maven build
         run: |
-          cd fruits-impl
+          cd gamification-impl
           mvn clean package
           cd target
-          mv fruits-impl-1.0.0.jar ../../docker/api/api.jar
+          mv gamification-impl-1.0.0.jar ../../docker/api/api.jar
           cd ../..
 
       - name: Build Docker image and push it to ghcr
