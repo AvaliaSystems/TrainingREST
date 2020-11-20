@@ -3,10 +3,48 @@ info:
   version: '0.2.0'
   title: Gamification
   description: we're trying to make it work
-security:
-  #  - bearerAuth: []
-  - apiKeyAuth: []
+#security:
+  # - bearerAuth: []
+  # - apiKeyAuth: []
 paths:
+  /scoreScales:
+    post:
+      description: Register a score scale for a specifique api
+      operationId: createScoreScale
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/ScoreScale'
+      responses:
+        '201':
+          description: score scale created
+  /scoreScales/{id}:
+    get:
+      description: Get the score corresponding to the id for a specifique api
+      operationId: getScoreScale
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      security:
+       - ApiKeyAuth: []
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/ScoreScale'
+      responses:
+        '200':
+          description: scoreScale successfully provided
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ScoreScale'
   /applications:
     post:
       description: register an application
@@ -55,10 +93,10 @@ paths:
                     $ref: '#/components/schemas/Score'
 components:
   securitySchemes:
-    #    bearerAuth:            # arbitrary name for the security scheme
-    #      type: http
-    #      scheme: bearer       # warning: it HAS TO be a lowercase b for the swagger ui version used in springfox
-    #      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+    # bearerAuth:            # arbitrary name for the security scheme
+    #  type: http
+    #  scheme: bearer       # warning: it HAS TO be a lowercase b for the swagger ui version used in springfox
+    #  bearerFormat: JWT    # optional, arbitrary value for documentation purposes
 
     apiKeyAuth:
       type: apiKey
@@ -70,10 +108,15 @@ components:
       properties:
         name:
           type: string
-
+    ScoreScale:
+      type: object
+      properties:
+        name:
+          type: string
+        applicationID:
+          type: UUID
     Score:
       type: object
       properties:
         value:
           type: Integer
-
