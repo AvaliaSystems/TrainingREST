@@ -1,5 +1,6 @@
 package ch.heigvd.amt.gamification.api.spec.steps;
 
+import ch.heigvd.amt.gamification.ApiClient;
 import ch.heigvd.amt.gamification.ApiException;
 import ch.heigvd.amt.gamification.ApiResponse;
 import ch.heigvd.amt.gamification.api.DefaultApi;
@@ -48,8 +49,8 @@ public class BasicSteps {
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
         badge = new ch.heigvd.amt.gamification.api.dto.Badge()
-          .name("mockName")
-          .description("mockdesc");
+                .name("mockName")
+                .description("mockdesc");
     }
 
     @When("^I POST the badge payload to the /badges endpoint$")
@@ -169,10 +170,10 @@ public class BasicSteps {
                 .quantity(0)
                 .type("mockPropertyType");
 
-       event = new Event().properties(eventProperties)
-                        //.timestamp();
-                        .type("mockType")
-                        .userId("mockUserIs");
+        event = new Event().properties(eventProperties)
+                //.timestamp();
+                .type("mockType")
+                .userId("mockUserIs");
     }
 
     @When("I POST the event payload to the \\/events endpoint")
@@ -192,10 +193,9 @@ public class BasicSteps {
 
     @When("I POST the event payload to the \\/events endpoint with app-key in the x-api-key header")
     public void i_post_the_event_payload_to_the_events_endpoint_with_app_key_in_the_x_api_key_header() {
-        String apiKey = lastReceivedApiKeyHeader;
-        //TODO add api key to request headers
+        api.getApiClient().addDefaultHeader("x-api-key", lastReceivedApiKeyHeader);
 
-      try {
+        try {
             lastApiResponse = api.createEventWithHttpInfo(event);
             processApiResponse(lastApiResponse);
             //lastReceivedBadge = (Badge) lastApiResponse.getData();

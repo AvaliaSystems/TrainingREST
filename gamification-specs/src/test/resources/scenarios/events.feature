@@ -15,4 +15,4 @@ Feature: Basic operations on events
     Then I receive a 200 status code with an x-api-key header
     Given I have an event payload
     When I POST the event payload to the /events endpoint with app-key in the x-api-key header
-    Then I receive a 200 status code
+    Then I receive a 201 status code
