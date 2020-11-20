@@ -98,8 +98,6 @@ components:
     Badge:
       type: object
       properties:
-        badgeId:
-          type: string
         name:
           type: string
         description:
@@ -125,4 +123,6 @@ components:
       type: object
       properties:
         name:
+          type: string
+        key:
           type: string

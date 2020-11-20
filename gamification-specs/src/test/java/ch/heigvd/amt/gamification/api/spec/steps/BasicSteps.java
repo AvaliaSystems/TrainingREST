@@ -45,7 +45,6 @@ public class BasicSteps {
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
         badge = new ch.heigvd.amt.gamification.api.dto.Badge()
-          .badgeId("mockId")
           .name("mockName")
           .description("mockdesc");
     }
