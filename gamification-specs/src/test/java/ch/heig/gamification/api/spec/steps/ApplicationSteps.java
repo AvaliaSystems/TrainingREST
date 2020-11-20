@@ -14,8 +14,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class ApplicationSteps {
 
@@ -46,7 +45,7 @@ public class ApplicationSteps {
 
     @Given("^I have an application payload$")
     public void i_have_an_application_payload() throws Throwable {
-        application = Application();
+        application = new Application();
         application.setName("Application42");
     }
 
