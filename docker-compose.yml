@@ -20,4 +20,5 @@ services:
       - database
     environment:
       MYSQL_HOST: 'database'
+    command: ["./wait-for-it.sh", "database:3306"]
 
