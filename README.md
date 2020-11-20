@@ -1,7 +1,7 @@
 # Database
 
 First, you need to run the database (from the root of all three project) with :
-```docker-compose up```
+```docker-compose up database```
 
 # Run API
 
