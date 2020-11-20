@@ -105,6 +105,11 @@ public class BasicSteps {
         lastStatusCode = lastApiResponse.getStatusCode();
         List<String> locationHeaderValues = (List<String>)lastApiResponse.getHeaders().get("Location");
         lastReceivedLocationHeader = locationHeaderValues != null ? locationHeaderValues.get(0) : null;
+
+
+        //======== EVENTS ============
+        List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get("x-api-key");
+        lastReceivedApiKeyHeader = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
     }
 
     private void processApiException(ApiException apiException) {
@@ -151,6 +156,7 @@ public class BasicSteps {
 
     // ============================= EVENTS ==================================
     Event event;
+    private String lastReceivedApiKeyHeader;
 
     @Given("there is an Events server")
     public void there_is_an_events_server() {
@@ -174,6 +180,25 @@ public class BasicSteps {
         try {
             lastApiResponse = api.createEventWithHttpInfo(event);
             processApiResponse(lastApiResponse);
+        } catch (ApiException e) {
+            processApiException(e);
+        }
+    }
+
+    @Then("I receive a {int} status code with an x-api-key header")
+    public void i_receive_a_status_code_with_an_x_api_key_header(Integer expectedStatusCode) {
+        assertEquals((long)expectedStatusCode, lastStatusCode);
+    }
+
+    @When("I POST the event payload to the \\/events endpoint with app-key in the x-api-key header")
+    public void i_post_the_event_payload_to_the_events_endpoint_with_app_key_in_the_x_api_key_header() {
+        String apiKey = lastReceivedApiKeyHeader;
+        //TODO add api key to request headers
+
+      try {
+            lastApiResponse = api.createEventWithHttpInfo(event);
+            processApiResponse(lastApiResponse);
+            //lastReceivedBadge = (Badge) lastApiResponse.getData();
         } catch (ApiException e) {
             processApiException(e);
         }
