@@ -18,10 +18,14 @@ import static org.junit.Assert.*;
 
 public class ApplicationSteps {
 
-
+//    public class ApplicationSummary{
+//        private Application application;
+//
+//
+//    }
     private final DefaultApi api = new DefaultApi();
     private Application application;
-    private List<ApplicationSummary> applications;
+    private List<Application> applications;
     //
 //    Application application;
 //
@@ -51,8 +55,8 @@ public class ApplicationSteps {
 
     @When("^I POST it to the /applications endpoint$")
     public void i_POST_it_to_the_applications_endpoint() throws Throwable {
-        api.registrationPost(application);
-        ApiResponse response = api.applicationsPostWithHttpInfo(application);
+        api.registerApplication(application);
+        ApiResponse response = api.registerApplicationWithHttpInfo(application);
         statusCode = response.getStatusCode();
     }
 
@@ -61,17 +65,17 @@ public class ApplicationSteps {
         assertEquals(expectedStatusCode, statusCode);
     }
 
-    @When("^I ask for a list of registered applications with a GET on the /registrations endpoint$")
-    public void i_ask_for_a_list_of_registered_applications_with_a_GET_on_the_registrations_endpoint() throws Throwable {
-        applications = api.applicationsGet();
-    }
+//    @When("^I ask for a list of registered applications with a GET on the /registrations endpoint$")
+//    public void i_ask_for_a_list_of_registered_applications_with_a_GET_on_the_registrations_endpoint() throws Throwable {
+//        applications = api.applicationsGet();
+//    }
 
     @Then("^I see my application in the list$")
     public void i_see_my_application_in_the_list() throws Throwable {
-        ApplicationSummary expected = new ApplicationSummary();
+        Application expected = new Application();
         expected.setName(application.getName());
 
-        assertThat(applications).extracting("name").contains("Application42");
+        assert(applications).contains("Application42");
 
     }
 //
