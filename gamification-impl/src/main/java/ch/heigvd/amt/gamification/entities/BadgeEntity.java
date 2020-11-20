@@ -1,6 +1,5 @@
 package ch.heigvd.amt.gamification.entities;
 
-import ch.heigvd.amt.gamification.api.model.Application;
 import lombok.Data;
 
 import javax.persistence.*;

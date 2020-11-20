@@ -36,11 +36,11 @@ public class SwaggerDocumentationConfig {
     }
 
     @Bean
-    public Docket customImplementation(){
+    public Docket customImplementation() {
         return new Docket(DocumentationType.OAS_30)
             .select()
-                .apis(RequestHandlerSelectors.basePackage("ch.heigvd.amt.gamification.api"))
-                .build()
+            .apis(RequestHandlerSelectors.basePackage("ch.heigvd.amt.gamification.api"))
+            .build()
             .directModelSubstitute(Void.class, Void.class)
             .securitySchemes(singletonList(securityScheme()))
             .securityContexts(singletonList(securityContext()))
@@ -59,14 +59,14 @@ public class SwaggerDocumentationConfig {
 
     private SecurityContext securityContext() {
         return SecurityContext.builder()
-          .securityReferences(securityReferences())
-          .build();
+            .securityReferences(securityReferences())
+            .build();
     }
 
     private List<SecurityReference> securityReferences() {
         return singletonList(
-          new SecurityReference("X-API-KEY", new AuthorizationScope[] {}));
-          // new SecurityReference("BearerAuthorization", new AuthorizationScope[] {}));
+            new SecurityReference("X-API-KEY", new AuthorizationScope[]{}));
+        // new SecurityReference("BearerAuthorization", new AuthorizationScope[] {}));
     }
 
     @Bean

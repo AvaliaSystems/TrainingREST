@@ -45,7 +45,6 @@ public class BasicSteps {
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
         badge = new ch.heigvd.amt.gamification.api.dto.Badge()
-          .badgeId("mockId")
           .name("mockName")
           .description("mockdesc");
     }
@@ -81,9 +80,9 @@ public class BasicSteps {
 
     @When("I send a GET to the URL in the location header")
     public void iSendAGETToTheURLInTheLocationHeader() {
-        //Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
+        Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
         try {
-            lastApiResponse = api.getBadgesWithHttpInfo();
+            lastApiResponse = api.getBadgeWithHttpInfo(id);
             processApiResponse(lastApiResponse);
             lastReceivedBadge = (Badge) lastApiResponse.getData();
         } catch (ApiException e) {
