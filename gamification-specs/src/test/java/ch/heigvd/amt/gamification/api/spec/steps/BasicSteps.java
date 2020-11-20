@@ -5,6 +5,8 @@ import ch.heigvd.amt.gamification.ApiResponse;
 import ch.heigvd.amt.gamification.api.DefaultApi;
 import ch.heigvd.amt.gamification.api.dto.Application;
 import ch.heigvd.amt.gamification.api.dto.Badge;
+import ch.heigvd.amt.gamification.api.dto.Event;
+import ch.heigvd.amt.gamification.api.dto.EventProperties;
 import ch.heigvd.amt.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -141,6 +143,36 @@ public class BasicSteps {
     public void i_post_the_application_payload_to_the_applications_endpoint() {
         try {
             lastApiResponse = api.registerApplicationWithHttpInfo(application);
+            processApiResponse(lastApiResponse);
+        } catch (ApiException e) {
+            processApiException(e);
+        }
+    }
+
+    // ============================= EVENTS ==================================
+    Event event;
+
+    @Given("there is an Events server")
+    public void there_is_an_events_server() {
+        assertNotNull(api);
+    }
+
+    @Given("I have an event payload")
+    public void i_have_an_event_payload() {
+        EventProperties eventProperties = new EventProperties()
+                .quantity(0)
+                .type("mockPropertyType");
+
+       event = new Event().properties(eventProperties)
+                        //.timestamp();
+                        .type("mockType")
+                        .userId("mockUserIs");
+    }
+
+    @When("I POST the event payload to the \\/events endpoint")
+    public void i_post_the_event_payload_to_the_events_endpoint() {
+        try {
+            lastApiResponse = api.createEventWithHttpInfo(event);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
