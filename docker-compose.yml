@@ -13,7 +13,7 @@ services:
     expose:
       - '3306'
   api:
-    image: ghcr.io/amt-14/gamificationapi_image:latest
+    build: ./docker/images/API
     ports:
       - '8080:8080'
     depends_on: 
