@@ -13,12 +13,11 @@ services:
     expose:
       - '3306'
   api:
-    build: ./docker/images/API
+    image: ghcr.io/amt-14/gamificationapi_image:latest
     ports:
       - '8080:8080'
     depends_on: 
       - database
     environment:
       MYSQL_HOST: 'database'
-    command: ["./wait-for-it.sh", "database:3306"]
 
