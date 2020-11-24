@@ -34,8 +34,6 @@ public class ApplicationApiController implements ApplicationsApi {
         newApplicationEntity.setApiKey(apiKey.getKey());
         newApplicationEntity.setName(application.getName());
 
-
-
         applicationRepository.save(newApplicationEntity);
 
         URI location = ServletUriComponentsBuilder

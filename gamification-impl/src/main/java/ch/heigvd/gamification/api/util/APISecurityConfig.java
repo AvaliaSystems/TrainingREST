@@ -1,15 +1,21 @@
 package ch.heigvd.gamification.api.util;
+import ch.heigvd.gamification.repositories.ApplicationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -17,12 +23,20 @@ import org.springframework.security.core.AuthenticationException;
 public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
     // default Hardcoded value can be set in properties file
-
     @Value("X-API-KEY")
     private String principalRequestHeader;
 
-    @Value("password1234")
-    private String principalRequestValue;
+    @Autowired
+    private ApplicationRepository applicationRepository;
+
+    private Set<String> keyList = new HashSet<>();
+
+    @Override
+    public void init(WebSecurity web) throws Exception {
+        applicationRepository.findAll().forEach(application -> keyList.add(application.getApiKey()));
+        super.init(web);
+    }
+
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -37,7 +51,7 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public Authentication authenticate(Authentication authentication) throws AuthenticationException {
                 String principal = (String) authentication.getPrincipal();
-                if (!principalRequestValue.equals(principal))
+                if (!keyList.contains(principal))
                 {
                     throw new BadCredentialsException("The API key was not found or not the expected value.");
                 }

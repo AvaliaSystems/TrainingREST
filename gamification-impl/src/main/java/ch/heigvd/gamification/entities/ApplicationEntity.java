@@ -2,9 +2,7 @@ package ch.heigvd.gamification.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -15,6 +13,8 @@ public class ApplicationEntity {
     private Long id;
 
     private String name;
+
+    @Column(unique=true)
     private String apiKey;
 
 }
