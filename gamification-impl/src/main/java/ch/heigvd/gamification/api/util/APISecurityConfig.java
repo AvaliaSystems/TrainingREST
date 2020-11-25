@@ -35,7 +35,6 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void init(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(HttpMethod.POST,"/applications");
-        applicationRepository.findAll().forEach(application -> this.keyList.add(application.getApiKey()));
         super.init(web);
     }
 
@@ -48,6 +47,7 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
             @Override
             public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+                applicationRepository.findAll().forEach(application -> keyList.add(application.getApiKey()));
                 String principal = (String) authentication.getPrincipal();
                 if (!keyList.contains(principal))
                 {
