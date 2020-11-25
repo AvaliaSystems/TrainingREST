@@ -30,8 +30,6 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ApplicationRepository applicationRepository;
 
-    private Set<String> keyList = new HashSet<>();
-
     @Override
     public void init(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(HttpMethod.POST,"/applications");
@@ -47,9 +45,8 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
             @Override
             public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-                applicationRepository.findAll().forEach(application -> keyList.add(application.getApiKey()));
                 String principal = (String) authentication.getPrincipal();
-                if (!keyList.contains(principal))
+                if (applicationRepository.findByApiKey(principal) == null)
                 {
                     throw new BadCredentialsException("The API key was not found or not the expected value.");
                 }
