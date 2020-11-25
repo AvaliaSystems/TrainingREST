@@ -1,3 +1,9 @@
+on:
+  push:
+    branches: [ create-pipline ]
+  pull_request:
+    branches: [ create-pipline ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
