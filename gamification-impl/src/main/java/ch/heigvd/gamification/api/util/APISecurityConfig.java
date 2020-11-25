@@ -34,7 +34,7 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void init(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.POST,"/applications/**");
+        web.ignoring().antMatchers(HttpMethod.POST,"/applications");
         applicationRepository.findAll().forEach(application -> this.keyList.add(application.getApiKey()));
         super.init(web);
     }
@@ -58,9 +58,9 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
             }
         });
         httpSecurity.
-                antMatcher("/users/**").
-                antMatcher("/badges/**").
-                antMatcher("/applications/**").
+                antMatcher("/users").
+                antMatcher("/badges").
+                antMatcher("/applications").
                 csrf().disable().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 and().addFilter(filter).authorizeRequests().anyRequest().authenticated();
