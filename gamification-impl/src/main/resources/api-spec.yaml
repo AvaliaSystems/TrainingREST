@@ -11,6 +11,15 @@ paths:
     post:
       description: create a user
       operationId: createUser
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
       requestBody:
         content:
           'application/json':
@@ -22,6 +31,15 @@ paths:
     get:
       description: get the list of all users
       operationId: getUsers
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
       responses:
         '200':
           description: success
@@ -35,6 +53,8 @@ paths:
     get:
       description: get one user, by id
       operationId: getUser
+      security:
+        - apiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -52,6 +72,13 @@ paths:
     post:
       description: submit an event
       operationId: createEvent
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
       requestBody:
         content:
           'application/json':
@@ -64,6 +91,8 @@ paths:
     post:
       description: create a badge
       operationId: createBadge
+      security:
+        - apiKeyAuth: []
       parameters:
         - in : header
           name: X-API-KEY
@@ -116,16 +145,17 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ApiKey'
-
-  /applications/{id}:
     get:
       description: get an application, by id
       operationId: getApplication
+      security:
+        - apiKeyAuth: []
       parameters:
-        - in: path
-          name: id
+        - in: header
+          name: X-API-KEY
           schema:
-            type: integer
+            type: string
+            format: uuid
           required: true
       responses:
         '200':

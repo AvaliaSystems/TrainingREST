@@ -44,8 +44,8 @@ public class ApplicationApiController implements ApplicationsApi {
     }
 
     @Override
-    public ResponseEntity<Application> getApplication(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
-        ApplicationEntity applicationEntity = applicationRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Application> getApplication(UUID X_API_KEY) {
+        ApplicationEntity applicationEntity = applicationRepository.findByApiKey(X_API_KEY.toString());
 
         Application app = new Application();
 
@@ -54,4 +54,5 @@ public class ApplicationApiController implements ApplicationsApi {
 
         return ResponseEntity.ok(app);
     }
+
 }

@@ -71,17 +71,6 @@ public class BadgesApiController implements BadgesApi {
     }
 
 
-/*    public ResponseEntity<List<Badge>> getBadges() {
-
-        List<Badge> badges = new ArrayList<Badge>();
-
-        for (BadgeEntity badgeEntity : badgeRepository.findAll()) {
-            badges.add(toBadge(badgeEntity));
-        }
-
-        return ResponseEntity.ok(badges);
-    }*/
-
     private BadgeEntity toBadgeEntity(Badge badge){
             BadgeEntity badgeEntity = new BadgeEntity();
 

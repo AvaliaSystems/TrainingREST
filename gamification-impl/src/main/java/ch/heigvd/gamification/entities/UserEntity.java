@@ -1,5 +1,6 @@
 package ch.heigvd.gamification.entities;
 
+import ch.heigvd.gamification.api.model.Application;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,8 +16,10 @@ public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String username;
 
+    @ManyToOne
+    private ApplicationEntity applicationEntity;
 }
