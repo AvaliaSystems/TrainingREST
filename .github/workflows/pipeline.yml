@@ -25,3 +25,10 @@ jobs:
         run: |
              cd gamification-impl
              mvn clean package
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: mouve jar
+        run: ls gamification-impl
