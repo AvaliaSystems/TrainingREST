@@ -48,9 +48,9 @@ jobs:
          key: ${{runner.os}}-maven-${{hashFiles('**/pom.xml')}}
          restore-keys:
           ${{runner.os}}-maven-
-     - name: mouve jar
-       run: ls      
-     - uses: actions/upload-artifact@v2
+     - uses: actions/download-artifact@v2
        with:
         name: Package
         path: staging
+     - name: mouve jar
+       run: ls 
