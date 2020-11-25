@@ -23,5 +23,6 @@ jobs:
 
       - name: Build with maven
         run: |
+            ls
             cd ./Gamification-Engine-AMT/gamification-impl 
             mvn clean package
