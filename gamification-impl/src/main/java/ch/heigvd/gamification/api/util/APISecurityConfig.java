@@ -22,7 +22,7 @@ import java.util.Set;
 @Order(1)
 public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // default Hardcoded value can be set in properties file
+    // default Hardcoded value but can be set in properties file
     @Value("X-API-KEY")
     private String principalRequestHeader;
 
@@ -33,7 +33,7 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void init(WebSecurity web) throws Exception {
-        applicationRepository.findAll().forEach(application -> keyList.add(application.getApiKey()));
+        applicationRepository.findAll().forEach(application -> this.keyList.add(application.getApiKey()));
         super.init(web);
     }
 
@@ -60,7 +60,7 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
             }
         });
         httpSecurity.
-                antMatcher("/applications/**").
+                antMatcher("/bob/**").
                 csrf().disable().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 and().addFilter(filter).authorizeRequests().anyRequest().authenticated();

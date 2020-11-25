@@ -64,6 +64,13 @@ paths:
     post:
       description: create a badge
       operationId: createBadge
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
       requestBody:
         content:
           'application/json':
@@ -75,6 +82,15 @@ paths:
     get:
       description: get all badger for the application
       operationId: getBadges
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
       responses:
         '200':
           description: success
@@ -171,3 +187,4 @@ components:
       properties:
         key:
           type: string
+          format: uuid

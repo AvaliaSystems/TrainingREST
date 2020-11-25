@@ -1,12 +1,10 @@
 package ch.heigvd.gamification.entities;
 
+import ch.heigvd.gamification.api.model.Application;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -20,4 +18,8 @@ public class BadgeEntity implements Serializable {
     private String name;
     private String color;
     private String description;
+
+    @ManyToOne
+    private ApplicationEntity applicationEntity;
+
 }

@@ -29,9 +29,9 @@ public class ApplicationApiController implements ApplicationsApi {
         ApplicationEntity newApplicationEntity = new ApplicationEntity();
         ApiKey apiKey = new ApiKey();
 
-        apiKey.setKey(UUID.randomUUID().toString());
+        apiKey.setKey(UUID.randomUUID());
 
-        newApplicationEntity.setApiKey(apiKey.getKey());
+        newApplicationEntity.setApiKey(apiKey.getKey().toString());
         newApplicationEntity.setName(application.getName());
 
         applicationRepository.save(newApplicationEntity);
