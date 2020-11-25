@@ -49,4 +49,8 @@ jobs:
          restore-keys:
           ${{runner.os}}-maven-
      - name: mouve jar
-       run: ls
+       run: ls      
+     - uses: actions/upload-artifact@v2
+       with:
+        name: Package
+        path: staging
