@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +34,7 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void init(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(HttpMethod.POST,"/applications/**");
         applicationRepository.findAll().forEach(application -> this.keyList.add(application.getApiKey()));
         super.init(web);
     }
@@ -40,10 +42,6 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-
-        // TODO
-        // get API-key from Database or any persistence storage
-        // It would be nice if application A cannot send request to application B
 
         APIKeyAuthFilter filter = new APIKeyAuthFilter(principalRequestHeader);
         filter.setAuthenticationManager(new AuthenticationManager() {
@@ -60,7 +58,9 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
             }
         });
         httpSecurity.
-                antMatcher("/bob/**").
+                antMatcher("/users/**").
+                antMatcher("/badges/**").
+                antMatcher("/applications/**").
                 csrf().disable().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 and().addFilter(filter).authorizeRequests().anyRequest().authenticated();
