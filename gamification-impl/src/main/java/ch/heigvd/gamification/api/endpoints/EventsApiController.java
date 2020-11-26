@@ -36,9 +36,6 @@ import java.util.UUID;
 public class EventsApiController implements EventsApi {
 
     @Autowired
-    private ApplicationRepository applicationRepository;
-
-    @Autowired
     private EventProcessorService eventProcessorService;
 
 
@@ -48,11 +45,9 @@ public class EventsApiController implements EventsApi {
         // check for event type
         String username = event.getEventparams().getUsername();
         Date date = new Date();
-        String dateFormated = RFC3339DateFormat.getDateTimeInstance().format(date);
-        event.setTimestamp(dateFormated);
+        event.setTimestamp(date.getTime());
 
-        System.out.println("receive event at " + event.getTimestamp());
-
+        System.out.println("receive event type "+ event.getEventType() +" at " + event.getTimestamp());
         eventProcessorService.addBadgetoUser(X_API_KEY.toString(),username);
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);

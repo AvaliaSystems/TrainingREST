@@ -44,9 +44,7 @@ public class EventProcessorServiceImpl implements EventProcessorService{
         }
 
         userBadges = currentUser.getBadgeEntitys();
-
         userBadges.add(badges.get(0)); // get the first element
-
         currentUser.setBadgeEntitys(userBadges);
 
         userRepository.save(currentUser);
