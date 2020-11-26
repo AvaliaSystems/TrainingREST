@@ -1,4 +1,4 @@
-# AMT 2020 Gamification Engie
+# AMT 2020 Gamification Engine
 
 | Nom               | email                        |
 | ----------------- | ---------------------------- |
@@ -29,6 +29,8 @@ You can use maven to build and run the REST API implementation from the command 
 
 ```
 cd gamification-impl/
+cp ../.envexample .env
+docker-compose -f ./docker/topologies/docker-compose.yaml up -d amtdb amtadminer
 mvn spring-boot:run
 ```
 

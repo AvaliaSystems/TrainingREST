@@ -185,6 +185,7 @@ components:
           type: string
         description:
           type: string
+    # Scheme for Badges
     Badge:
       type: object
       properties:
@@ -196,7 +197,6 @@ components:
           type: string
         description:
           type: string
-
     # Scheme for User
     User:
       type: object

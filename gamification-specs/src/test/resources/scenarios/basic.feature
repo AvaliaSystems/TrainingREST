@@ -1,13 +1,13 @@
-Feature: Basic operations on fruits
+Feature: Basic operations on users
 
   Background:
-    Given there is a Fruits server
+    Given there is a Gamification server
 
-  Scenario: create a fruit
-    Given I have a fruit payload
-    When I POST the fruit payload to the /fruits endpoint
+  Scenario: create a user
+    Given I have a user payload
+    When I POST the user payload to the /users endpoint
     Then I receive a 201 status code
 
-  Scenario: get the list of fruits
-    When I send a GET to the /fruits endpoint
+  Scenario: get the list of users
+    When I send a GET to the /users endpoint
     Then I receive a 200 status code
