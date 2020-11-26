@@ -21,7 +21,7 @@ public class ApiOriginFilter implements Filter {
         res.addHeader("Access-Control-Allow-Origin", "*");
         res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
         res.addHeader("Access-Control-Allow-Headers", "Content-Type");
-        System.out.println("pass through " + ApiOriginFilter.class.getSimpleName());
+        // System.out.println("pass through " + ApiOriginFilter.class.getSimpleName());
         chain.doFilter(request, response);
     }
 

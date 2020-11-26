@@ -1,19 +1,15 @@
 package ch.heigvd.gamification.entities;
 
+import ch.heigvd.gamification.RFC3339DateFormat;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
 @Data
-public class EventEntity implements Serializable {
+public class EventEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String name;
+    private String timestamp;
     private String description;
 
     @ManyToOne
