@@ -3,6 +3,7 @@ package ch.heigvd.gamification.api.spec.steps;
 import ch.heigvd.gamification.ApiException;
 import ch.heigvd.gamification.ApiResponse;
 import ch.heigvd.gamification.api.DefaultApi;
+import ch.heigvd.gamification.api.dto.ApiKey;
 import ch.heigvd.gamification.api.dto.Application;
 import ch.heigvd.gamification.api.dto.User;
 import ch.heigvd.gamification.api.spec.helpers.Environment;
@@ -25,6 +26,7 @@ public class BasicSteps {
     User user;
     Application application;
     UUID apiKey;
+    UUID randomApiKey;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
@@ -133,6 +135,16 @@ public class BasicSteps {
     @When("^I send a GET to the /applications endpoint without a correct API Key$")
     public void iSendAGETToTheApplicationsEndpoint() {
         try {
+            lastApiResponse = api.getApplicationWithHttpInfo(randomApiKey);
+            processApiResponse(lastApiResponse);
+        } catch (ApiException e) {
+            processApiException(e);
+        }
+    }
+
+    @When("^I send a GET to the /applications endpoint with a correct API Key")
+    public void iSendAGETToTheApplicationsEndpointWithCorrectAPIKey() {
+        try {
             lastApiResponse = api.getApplicationWithHttpInfo(apiKey);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
@@ -142,6 +154,12 @@ public class BasicSteps {
 
     @Given("I have a random API Key")
     public void iHaveARandomAPIKey() {
-        apiKey = UUID.randomUUID();
+        randomApiKey = UUID.randomUUID();
+    }
+
+    @Given("I have a correct API key")
+    public void iHaveACorrectAPIKey(){
+        // sorry nothing
+        apiKey = ((ApiKey) lastApiResponse.getData()).getKey();
     }
 }
