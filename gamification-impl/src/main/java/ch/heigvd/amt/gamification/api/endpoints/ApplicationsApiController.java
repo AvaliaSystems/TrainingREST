@@ -2,7 +2,10 @@ package ch.heigvd.amt.gamification.api.endpoints;
 
 import ch.heigvd.amt.gamification.api.ApplicationsApi;
 import ch.heigvd.amt.gamification.api.model.Application;
+import ch.heigvd.amt.gamification.api.model.ApplicationRegistration;
 import ch.heigvd.amt.gamification.entities.ApplicationEntity;
+import ch.heigvd.amt.gamification.entities.ApplicationRegistrationEntity;
+import ch.heigvd.amt.gamification.repositories.ApplicationRegistrationRepository;
 import ch.heigvd.amt.gamification.repositories.ApplicationRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +29,12 @@ public class ApplicationsApiController implements ApplicationsApi {
     ApplicationRepository applicationRepository;
 
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
-        ApplicationEntity newApplicationEntity = toApplicationEntity(application);
-        String key = UUID.randomUUID().toString();
-        newApplicationEntity.setKey(key);
+    public ResponseEntity<Void> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody ApplicationRegistration applicationRegistration) {
+        ApplicationEntity newApplicationEntity = toApplicationEntity(applicationRegistration);
+        System.out.println("CLE REGISTER="+newApplicationEntity.getKey());
         applicationRepository.save(newApplicationEntity);
 
-        return ResponseEntity.ok().header("X-API-KEY", key).build();
+        return ResponseEntity.ok().header("X-API-KEY", newApplicationEntity.getKey()).build();
     }
 
     public ResponseEntity<List<Application>> getApplications() {
@@ -49,15 +51,19 @@ public class ApplicationsApiController implements ApplicationsApi {
         return ResponseEntity.ok(toApplication(existingApplicationEntity));
     }
 
-    private ApplicationEntity toApplicationEntity(Application application) {
+    private ApplicationEntity toApplicationEntity(ApplicationRegistration applicationRegistration) {
         ApplicationEntity entity = new ApplicationEntity();
-        entity.setName(application.getName());
+        String key = UUID.randomUUID().toString();
+        entity.setKey(key);
+        entity.setName(applicationRegistration.getName());
+        System.out.println("CLE TOAPPENT="+key);
         return entity;
     }
 
     private Application toApplication(ApplicationEntity entity) {
         Application application = new Application();
         application.setName(entity.getName());
+        application.setKey(entity.getKey());
         return application;
     }
 
