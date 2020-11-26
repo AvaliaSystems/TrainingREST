@@ -7,6 +7,30 @@ security:
   #  - bearerAuth: []
   - apiKeyAuth: [ ]
 paths:
+  /applications:
+    post:
+      description: register an application
+      operationId: registerApplication
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '201':
+          description: created
+    get:
+      description: get the list of all applications
+      operationId: getApplications
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Application'
   /badges:
     post:
       description: create a badge
@@ -60,21 +84,10 @@ paths:
       responses:
         '201':
           description: created
-  /applications:
-    post:
-      description: register an application
-      operationId: registerApplication
-      requestBody:
-        content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/Application'
-      responses:
-        '201':
-          description: created
+  /users:
     get:
-      description: get the list of all applications
-      operationId: getApplications
+      description: get the list of all users
+      operationId: getUsers
       responses:
         '200':
           description: success
@@ -83,7 +96,24 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Application'
+                  $ref: '#/components/schemas/User'
+  /users/{id}:
+    get:
+      description: get one user, by id
+      operationId: getUser
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/User'
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -95,6 +125,13 @@ components:
       in: header
       name: X-API-KEY
   schemas:
+    Application:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
     Badge:
       type: object
       properties:
@@ -119,10 +156,8 @@ components:
               type: string
             quantity:
               type: integer
-    Application:
+    User:
       type: object
       properties:
-        name:
-          type: string
-        key:
+        userId:
           type: string

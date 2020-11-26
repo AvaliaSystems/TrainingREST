@@ -20,7 +20,7 @@ import java.net.URI;
 
 @Controller
 public class EventsApiController implements EventsApi {
-    // TODO : Créer et ajouter EventRepository et EventEntity?
+    @Autowired
     EventProcessorService eventProcessorService;
 
     @Autowired
@@ -48,14 +48,14 @@ public class EventsApiController implements EventsApi {
 
     private EventEntity toEventEntity(Event event) {
         EventEntity entity = new EventEntity();
-        entity.setUserId(Integer.parseInt(event.getUserId()));
+        entity.setUserId(event.getUserId());
         entity.setType(event.getType());
         return entity;
     }
 
     private Event toEvent(EventEntity entity) {
         Event event = new Event();
-        event.setUserId(String.valueOf(entity.getUserId()));
+        event.setUserId(entity.getUserId());
         event.setType(entity.getType());
         return event;
     }

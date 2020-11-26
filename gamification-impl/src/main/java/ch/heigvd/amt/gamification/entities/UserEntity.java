@@ -4,22 +4,20 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
-public class EventEntity implements Serializable {
+public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String userId;
-    private String type;
 
-    @ManyToOne
-    private BadgeEntity badge;
-
-    @ManyToOne
+    @OneToMany
+    private List<BadgeEntity> badges;
+    @OneToOne
     private ApplicationEntity application;
-
 }
