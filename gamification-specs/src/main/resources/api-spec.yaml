@@ -11,6 +11,15 @@ paths:
     post:
       description: create a user
       operationId: createUser
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
       requestBody:
         content:
           'application/json':
@@ -20,8 +29,17 @@ paths:
         '201':
           description: created
     get:
-      description: get the list of all users
+      description: get the list of users for the application
       operationId: getUsers
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
       responses:
         '200':
           description: success
@@ -35,6 +53,8 @@ paths:
     get:
       description: get one user, by id
       operationId: getUser
+      security:
+        - apiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -48,6 +68,102 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/User'
+  /events:
+    post:
+      description: submit an event
+      operationId: createEvent
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '201':
+          description: created
+  /badges:
+    post:
+      description: create a badge
+      operationId: createBadge
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Badge'
+      responses:
+        '201':
+          description: created
+    get:
+      description: get all badger for the application
+      operationId: getBadges
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+  /applications:
+    post:
+      description: create an application
+      operationId: createApplication
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '201':
+          description: created
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+    get:
+      description: get the application info
+      operationId: getApplication
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Application'
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -59,6 +175,29 @@ components:
       in: header
       name: X-API-KEY
   schemas:
+    # Scheme for Events
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+    # Scheme for Badges
+    Badge:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        color:
+          type: string
+        description:
+          type: string
+    # Scheme for User
     User:
       type: object
       properties:
@@ -66,3 +205,16 @@ components:
           type: integer
         username:
           type: string
+    Application:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    ApiKey:
+      type: object
+      properties:
+        key:
+          type: string
+          format: uuid
