@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
     Iterable<UserEntity> findByApplicationEntity_ApiKey(String applicationEntity_apiKey);
     Optional<UserEntity> findByApplicationEntity_ApiKeyAndUsername(String applicationEntity_apiKey, String username);
+    Optional<UserEntity> findByApplicationEntity_ApiKeyAndId(String applicationEntity_apiKey, Long id);
 }

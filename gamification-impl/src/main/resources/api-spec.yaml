@@ -61,6 +61,12 @@ paths:
           schema:
             type: integer
           required: true
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
       responses:
         '200':
           description: success
@@ -68,6 +74,34 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/User'
+
+  /users/{id}/badges:
+    get:
+      description: get all user's badges
+      operationId: getUsersBadges
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
   /events:
     post:
       description: submit an event

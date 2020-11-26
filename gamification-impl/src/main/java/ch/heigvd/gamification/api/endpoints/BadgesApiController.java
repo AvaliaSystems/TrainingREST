@@ -71,7 +71,7 @@ public class BadgesApiController implements BadgesApi {
     }
 
 
-    private BadgeEntity toBadgeEntity(Badge badge){
+    public static BadgeEntity toBadgeEntity(Badge badge){
             BadgeEntity badgeEntity = new BadgeEntity();
 
             badgeEntity.setName(badge.getName());
@@ -80,7 +80,7 @@ public class BadgesApiController implements BadgesApi {
             return badgeEntity;
     }
 
-    private Badge toBadge(BadgeEntity badgeEntity){
+    public static Badge toBadge(BadgeEntity badgeEntity){
         Badge badge = new Badge();
         badge.setId(badgeEntity.getId().intValue());
         badge.setColor(badgeEntity.getColor());

@@ -3,6 +3,7 @@ package ch.heigvd.gamification.api.endpoints;
 
 import ch.heigvd.gamification.api.UsersApi;
 import ch.heigvd.gamification.api.model.Application;
+import ch.heigvd.gamification.api.model.Badge;
 import ch.heigvd.gamification.api.model.User;
 import ch.heigvd.gamification.entities.ApplicationEntity;
 import ch.heigvd.gamification.entities.UserEntity;
@@ -72,9 +73,23 @@ public class UsersApiController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<User> getUser(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
-        UserEntity existingUserEntity = userRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ResponseEntity<User> getUser(Integer id, UUID X_API_KEY) {
+        UserEntity existingUserEntity = userRepository
+                .findByApplicationEntity_ApiKeyAndId(X_API_KEY.toString(),Long.valueOf(id))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         return ResponseEntity.ok(toUser(existingUserEntity));
+    }
+
+    @Override
+    public ResponseEntity<List<Badge>> getUsersBadges(Integer id, UUID X_API_KEY) {
+        List<Badge> badges = new ArrayList<>();
+        UserEntity existingUserEntity = userRepository
+                .findByApplicationEntity_ApiKeyAndId(X_API_KEY.toString(),Long.valueOf(id))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        existingUserEntity.getBadgeEntitys().forEach(badgeEntity -> badges.add(BadgesApiController.toBadge(badgeEntity)));
+        return ResponseEntity.ok(badges);
     }
 
     private UserEntity toUserEntity(User user) {
