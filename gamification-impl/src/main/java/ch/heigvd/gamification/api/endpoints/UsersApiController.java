@@ -2,9 +2,12 @@ package ch.heigvd.gamification.api.endpoints;
 
 
 import ch.heigvd.gamification.api.UsersApi;
+import ch.heigvd.gamification.api.model.Application;
 import ch.heigvd.gamification.api.model.User;
+import ch.heigvd.gamification.entities.ApplicationEntity;
 import ch.heigvd.gamification.entities.UserEntity;
 
+import ch.heigvd.gamification.repositories.ApplicationRepository;
 import ch.heigvd.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class UsersApiController implements UsersApi {
@@ -29,17 +33,34 @@ public class UsersApiController implements UsersApi {
     @Autowired
     UserRepository userRepository;
 
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> createUser(@ApiParam(value = "", required = true) @Valid @RequestBody User user) {
-        UserEntity newUserEntity = toUserEntity(user);
-        userRepository.save(newUserEntity);
-        Long id = newUserEntity.getId();
+    @Autowired
+    ApplicationRepository applicationRepository;
 
+    @Override
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Void> createUser(UUID X_API_KEY, @Valid User user) {
+        UserEntity newUserEntity = toUserEntity(user);
+        ApplicationEntity applicationEntity = applicationRepository.findByApiKey(X_API_KEY.toString());
+        newUserEntity.setApplicationEntity(applicationEntity);
+
+        userRepository.save(newUserEntity);
+
+        Long id = newUserEntity.getId();
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newUserEntity.getId()).toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @Override
+    public ResponseEntity<List<User>> getUsers(UUID X_API_KEY) {
+        List<User> users = new ArrayList<>();
+
+        userRepository.findByApplicationEntity_ApiKey(X_API_KEY.toString())
+                .forEach(userEntity -> users.add(toUser(userEntity)));
+
+        return ResponseEntity.ok(users);
     }
 
     public ResponseEntity<List<User>> getUsers() {
@@ -58,18 +79,14 @@ public class UsersApiController implements UsersApi {
 
     private UserEntity toUserEntity(User user) {
         UserEntity entity = new UserEntity();
-        entity.setId(user.getId());
         entity.setUsername(user.getUsername());
-
         return entity;
     }
 
     private User toUser(UserEntity entity) {
         User user = new User();
-        //need to controle type into spec yaml
-        //user.setId(entity.getId());
         user.setUsername(entity.getUsername());
-
+        user.setId(entity.getId().intValue());
         return user;
     }
 
