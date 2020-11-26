@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static ch.heigvd.gamification.api.util.UserUtils.*;
+import static ch.heigvd.gamification.api.util.BadgeUtils.*;
+
+
 @Controller
 public class UsersApiController implements UsersApi {
 
@@ -88,21 +92,8 @@ public class UsersApiController implements UsersApi {
                 .findByApplicationEntity_ApiKeyAndId(X_API_KEY.toString(),Long.valueOf(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        existingUserEntity.getBadgeEntitys().forEach(badgeEntity -> badges.add(BadgesApiController.toBadge(badgeEntity)));
+        existingUserEntity.getBadgeEntitys().forEach(badgeEntity -> badges.add(toBadge(badgeEntity)));
         return ResponseEntity.ok(badges);
-    }
-
-    private UserEntity toUserEntity(User user) {
-        UserEntity entity = new UserEntity();
-        entity.setUsername(user.getUsername());
-        return entity;
-    }
-
-    private User toUser(UserEntity entity) {
-        User user = new User();
-        user.setUsername(entity.getUsername());
-        user.setId(entity.getId().intValue());
-        return user;
     }
 
 }
