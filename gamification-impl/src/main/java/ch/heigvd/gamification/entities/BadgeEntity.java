@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,4 +23,6 @@ public class BadgeEntity implements Serializable {
     @ManyToOne
     private ApplicationEntity applicationEntity;
 
+    @ManyToMany
+    private List<UserEntity> userEntitys;
 }

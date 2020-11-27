@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static ch.heigvd.gamification.api.util.BadgeUtils.*;
+
 
 @Controller
 public class BadgesApiController implements BadgesApi {
@@ -70,23 +72,5 @@ public class BadgesApiController implements BadgesApi {
         return ResponseEntity.ok(badges);
     }
 
-
-    private BadgeEntity toBadgeEntity(Badge badge){
-            BadgeEntity badgeEntity = new BadgeEntity();
-
-            badgeEntity.setName(badge.getName());
-            badgeEntity.setColor(badge.getColor());
-            badgeEntity.setDescription(badge.getDescription());
-            return badgeEntity;
-    }
-
-    private Badge toBadge(BadgeEntity badgeEntity){
-        Badge badge = new Badge();
-        badge.setId(badgeEntity.getId().intValue());
-        badge.setColor(badgeEntity.getColor());
-        badge.setName(badgeEntity.getName());
-        badge.setDescription(badgeEntity.getDescription());
-        return badge;
-    }
 
 }

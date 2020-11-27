@@ -1,5 +1,6 @@
 package ch.heigvd.gamification.repositories;
 
+import ch.heigvd.gamification.api.model.Badge;
 import ch.heigvd.gamification.entities.BadgeEntity;
 import org.springframework.data.repository.CrudRepository;
 
