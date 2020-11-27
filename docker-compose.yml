@@ -32,7 +32,7 @@ services:
 
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
-      container_name: lksadhlskhda
+      container_name: phpmyadmin
       environment:
         - PMA_HOST=impl_db
       restart: unless-stopped
