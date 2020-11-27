@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - 12-cucumber-pipeline
 jobs:
   build:
     runs-on: ubuntu-latest
