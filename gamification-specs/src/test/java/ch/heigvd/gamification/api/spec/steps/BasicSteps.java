@@ -26,7 +26,6 @@ public class BasicSteps {
     User user;
     Application application;
     UUID apiKey;
-    UUID randomApiKey;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
@@ -132,18 +131,8 @@ public class BasicSteps {
         }
     }
 
-    @When("^I send a GET to the /applications endpoint without a correct API Key$")
-    public void iSendAGETToTheApplicationsEndpoint() {
-        try {
-            lastApiResponse = api.getApplicationWithHttpInfo(randomApiKey);
-            processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
-
-    @When("^I send a GET to the /applications endpoint with a correct API Key")
-    public void iSendAGETToTheApplicationsEndpointWithCorrectAPIKey() {
+    @When("^I send a GET to the /applications endpoint with an API Key")
+    public void iSendAGETToTheApplicationsEndpointWithAnAPIKey() {
         try {
             lastApiResponse = api.getApplicationWithHttpInfo(apiKey);
             processApiResponse(lastApiResponse);
@@ -154,12 +143,11 @@ public class BasicSteps {
 
     @Given("I have a random API Key")
     public void iHaveARandomAPIKey() {
-        randomApiKey = UUID.randomUUID();
+        apiKey = UUID.randomUUID();
     }
 
     @Given("I have a correct API key")
     public void iHaveACorrectAPIKey(){
-        // sorry nothing
         apiKey = ((ApiKey) lastApiResponse.getData()).getKey();
     }
 }

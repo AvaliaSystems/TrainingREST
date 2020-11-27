@@ -12,11 +12,11 @@ Feature: Basic operations on applications
     Given I have an application payload
     When I POST the application payload to the /applications endpoint
     Given I have a correct API key
-    When I send a GET to the /applications endpoint with a correct API Key
+    When I send a GET to the /applications endpoint with an API Key
     Then I receive a 200 status code
 
   Scenario: get the application info without the appropriate key
     Given I have a random API Key
-    When I send a GET to the /applications endpoint without a correct API Key
+    When I send a GET to the /applications endpoint with an API Key
     Then I receive a 403 status code
 
