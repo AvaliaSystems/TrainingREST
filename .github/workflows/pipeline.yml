@@ -31,8 +31,6 @@ jobs:
         with:
           name: Package
           path: staging
-
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -52,5 +50,13 @@ jobs:
        with:
         name: Package
         path: staging
-     - name: mouve jar
-       run: ls 
+     - name: Login to github registry
+       run: echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
+     - name: move jar
+       run: cp staging/*.jar ./docker/images/springboot/apps
+     - name: build images and publish
+       run: |
+         cd ./docker/images/springboot
+         docker build --pull -t "dev-zaretti/stackoverflowsimpleversion/gamificationengine" .
+         docker push "dev-zaretti/stackoverflowsimpleversion/gamificationengine:latest"
+             
