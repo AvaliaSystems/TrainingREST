@@ -1,8 +1,8 @@
 on:
   push:
-    branches: [ create-pipline ]
+    branches: [ master ]
   pull_request:
-    branches: [ create-pipline ]
+    branches: [ master ]
 
 jobs:
   build:
