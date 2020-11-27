@@ -71,7 +71,7 @@ paths:
   /events:
     post:
       description: submit an event
-      operationId: createEvent
+      operationId: processEvent
       parameters:
         - in : header
           name: X-API-KEY
@@ -179,12 +179,17 @@ components:
     Event:
       type: object
       properties:
-        id:
+        timestamp:
           type: integer
-        name:
-          type: string
-        description:
-          type: string
+          format: int64
+        eventType:
+          type: integer
+        eventparams:
+          type: object
+          properties:
+            username: # identity convention between client and GameEngine to identify uniquely a user
+              type: string
+
     # Scheme for Badges
     Badge:
       type: object
