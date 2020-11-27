@@ -3,6 +3,8 @@ package ch.heigvd.gamification.api.spec.steps;
 import ch.heigvd.gamification.ApiException;
 import ch.heigvd.gamification.ApiResponse;
 import ch.heigvd.gamification.api.DefaultApi;
+import ch.heigvd.gamification.api.dto.ApiKey;
+import ch.heigvd.gamification.api.dto.Application;
 import ch.heigvd.gamification.api.dto.User;
 import ch.heigvd.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.And;
@@ -11,6 +13,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -21,6 +24,8 @@ public class BasicSteps {
     private DefaultApi api;
 
     User user;
+    Application application;
+    UUID apiKey;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
@@ -51,7 +56,7 @@ public class BasicSteps {
     @When("^I POST the user payload to the /users endpoint$")
     public void i_POST_the_user_payload_to_the_users_endpoint() throws Throwable {
         try {
-            lastApiResponse = api.createUserWithHttpInfo(user);
+            lastApiResponse = api.createUserWithHttpInfo(apiKey, user);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
@@ -66,7 +71,7 @@ public class BasicSteps {
     @When("^I send a GET to the /users endpoint$")
     public void iSendAGETToTheUsersEndpoint() {
         try {
-            lastApiResponse = api.getUsersWithHttpInfo();
+            lastApiResponse = api.getUsersWithHttpInfo(apiKey);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
@@ -110,4 +115,39 @@ public class BasicSteps {
         lastStatusCode = lastApiException.getCode();
     }
 
+    @Given("I have an application payload")
+    public void iHaveAnApplicationPayload() {
+        application = new ch.heigvd.gamification.api.dto.Application()
+                .name("testApp");
+    }
+
+    @When("^I POST the application payload to the /applications endpoint$")
+    public void i_POST_the_application_payload_to_the_applications_endpoint() throws Throwable {
+        try {
+            lastApiResponse = api.createApplicationWithHttpInfo(application);
+            processApiResponse(lastApiResponse);
+        } catch (ApiException e) {
+            processApiException(e);
+        }
+    }
+
+    @When("^I send a GET to the /applications endpoint with an API Key")
+    public void iSendAGETToTheApplicationsEndpointWithAnAPIKey() {
+        try {
+            lastApiResponse = api.getApplicationWithHttpInfo(apiKey);
+            processApiResponse(lastApiResponse);
+        } catch (ApiException e) {
+            processApiException(e);
+        }
+    }
+
+    @Given("I have a random API Key")
+    public void iHaveARandomAPIKey() {
+        apiKey = UUID.randomUUID();
+    }
+
+    @Given("I have a correct API key")
+    public void iHaveACorrectAPIKey(){
+        apiKey = ((ApiKey) lastApiResponse.getData()).getKey();
+    }
 }
