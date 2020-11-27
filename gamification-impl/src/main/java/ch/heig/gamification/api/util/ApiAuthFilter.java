@@ -55,9 +55,8 @@ public class ApiAuthFilter implements Filter {
     @Bean
     public FilterRegistrationBean<ApiAuthFilter> urlFilter() {
         FilterRegistrationBean<ApiAuthFilter> registrationBean = new FilterRegistrationBean<>();
-
         registrationBean.setFilter(new ApiAuthFilter());
-        //registrationBean.addUrlPatterns("/score/*"); // ou badge ?
+        registrationBean.addUrlPatterns("/scoreScales/*"); // badge ?
         return registrationBean;
     }
 }
