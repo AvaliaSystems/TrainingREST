@@ -36,12 +36,12 @@ jobs:
           cd target
           mv gamification-impl-1.0.0.jar ../../docker/api/api.jar
           cd ../..
-          
+
       - name: cucumber tests
         run: |
           ls
           cd scripts
-          sh testREST_API.sh
+          sh testREST_API_pipeline.sh
 
       - name: Build Docker image and push it to ghcr
         # build a partir d'une image officielle mais tag renomme cette image
