@@ -1,9 +1,9 @@
 #!/bin/bash
-./runREST_API.sh
+./runREST_API.sh &
+sleep 30
 
 echo "========================"
 echo "=== Testing REST API ==="
 echo "========================"
-docker wait apirest
 cd ../gamification-specs
-mvn clean test
+mvn clean package test
