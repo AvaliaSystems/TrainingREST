@@ -3,8 +3,15 @@ on:
   push:
     branches:
       - master
-
+      - 12-cucumber-pipeline
 jobs:
+  cucumber-test:
+    runs-on: ubuntu-latest
+    steps:
+      run: |
+        cd scripts
+        sh testREST_API.sh
+
   build:
     runs-on: ubuntu-latest
     steps:
