@@ -57,6 +57,6 @@ jobs:
      - name: build images and publish
        run: |
          cd ./docker/images/springboot
-         docker build --pull -t "dev-zaretti/stackoverflowsimpleversion/gamificationengine" .
-         docker push "dev-zaretti/stackoverflowsimpleversion/gamificationengine:latest"
+         docker build --pull -t "dev-zaretti/gamificationengine/engine" .
+         docker push "dev-zaretti/gamificationengine/engine"
              
