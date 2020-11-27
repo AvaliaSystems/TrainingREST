@@ -9,12 +9,13 @@ services:
         depends_on:
           - impl_db
         environment:
-          - MYSQL_HOST=impl_db
+      #    - MYSQL_HOST=impl_db
           - DATABASE_HOST=impl_db
           - DATABASE_NAME=amt-db
-          - DATABASE_USER=amt-user
+          - DATABASE_USER=amt-usr
           - DATABASE_PASSWORD=amt-pw
           - DATABASE_PORT=3306
+          - SPRING_SERVER_PORT=8080
 
     impl_db:
       image: mysql
@@ -32,7 +33,7 @@ services:
 
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
-      container_name: phpmyadmin
+      container_name: m_phpmyadmin
       environment:
         - PMA_HOST=impl_db
       restart: unless-stopped
