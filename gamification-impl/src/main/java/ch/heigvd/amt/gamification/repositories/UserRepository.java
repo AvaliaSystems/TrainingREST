@@ -12,5 +12,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
     List<UserEntity> findAllByApplication(ApplicationEntity applicationEntity);
     UserEntity findByUserId(String userId);
-    // TODO : Add findByUserIdAndApplicationId
+    // TODO : Optimiser en ne passant que l'applicationId et pas toute l'application?
+    UserEntity findByUserIdAndApplication(String userId, ApplicationEntity applicationEntity);
 }

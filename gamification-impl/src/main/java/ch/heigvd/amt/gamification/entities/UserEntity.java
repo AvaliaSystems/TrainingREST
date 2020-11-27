@@ -15,9 +15,12 @@ public class UserEntity implements Serializable {
     private long id;
 
     private String userId;
+    private int nbBadges;
 
-    @OneToMany
+    // TODO : à changer en @OneToMany une fois qu'on vérifie que le badge n'est pas déjà attribué à l'user
+    @ManyToMany
     private List<BadgeEntity> badges;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_id", nullable = false)
     private ApplicationEntity application;
 }

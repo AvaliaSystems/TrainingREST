@@ -31,12 +31,12 @@ public class ApplicationsApiController implements ApplicationsApi {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody ApplicationRegistration applicationRegistration) {
         ApplicationEntity newApplicationEntity = toApplicationEntity(applicationRegistration);
-        System.out.println("CLE REGISTER="+newApplicationEntity.getKey());
         applicationRepository.save(newApplicationEntity);
 
         return ResponseEntity.ok().header("X-API-KEY", newApplicationEntity.getKey()).build();
     }
 
+    // TODO : Enlever l'endpoint GET sur /applications (on le laisse pour le debug)
     public ResponseEntity<List<Application>> getApplications() {
         List<Application> applications = new ArrayList<>();
         for(ApplicationEntity applicationEntity : applicationRepository.findAll()) {
@@ -56,7 +56,6 @@ public class ApplicationsApiController implements ApplicationsApi {
         String key = UUID.randomUUID().toString();
         entity.setKey(key);
         entity.setName(applicationRegistration.getName());
-        System.out.println("CLE TOAPPENT="+key);
         return entity;
     }
 

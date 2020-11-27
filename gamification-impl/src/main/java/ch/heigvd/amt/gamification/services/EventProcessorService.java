@@ -27,17 +27,22 @@ public class EventProcessorService {
         String eventUserId = eventEntity.getUserId();
 
         // TODO : Find users of application
-        UserEntity user = userRepository.findByUserId(eventUserId);
+        UserEntity user = userRepository.findByUserIdAndApplication(eventUserId, eventEntity.getApplication());
         if(user == null) {
             user = new UserEntity();
             user.setUserId(eventUserId);
             user.setApplication(eventEntity.getApplication());
+            user.setNbBadges(0);
         }
 
         List<BadgeEntity> badges = new ArrayList<>();
         // Attribue seulement le premier badge (temporaire FIXME)
         badges.add(badgeRepository.findAllByApplication(eventEntity.getApplication()).get(0));
         user.setBadges(badges);
+
+        int nbBadges = user.getNbBadges();
+        System.out.println("nbBadgesAfter="+nbBadges);
+        user.setNbBadges(++nbBadges);
 
         userRepository.save(user);
 
