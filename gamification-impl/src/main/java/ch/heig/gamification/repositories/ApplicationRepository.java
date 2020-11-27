@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.UUID;
 
 public interface ApplicationRepository extends CrudRepository<ApplicationEntity, UUID> {
-    ApplicationEntity findByApiKey(UUID apiKey);
+    ApplicationEntity findByApiKey(String apiKey);
 }
