@@ -57,6 +57,7 @@ jobs:
      - name: build images and publish
        run: |
          cd ./docker/images/springboot
-         docker build --pull -t "dev-zaretti/gamificationengine/engine" .
-         docker push "dev-zaretti/gamificationengine/engine"
+         docker build --pull -t gusamaal/gamificationengine .
+         docker tag gusamaal/gamificationengine ghcr.io/gusamaal/gamification-engine-amt/gamificationengine:latest
+         docker push ghcr.io/gusamaal/gamification-engine-amt/gamificationengine:latest
              
