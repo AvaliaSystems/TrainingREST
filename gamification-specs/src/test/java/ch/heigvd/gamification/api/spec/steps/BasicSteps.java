@@ -5,6 +5,7 @@ import ch.heigvd.gamification.ApiResponse;
 import ch.heigvd.gamification.api.DefaultApi;
 import ch.heigvd.gamification.api.dto.ApiKey;
 import ch.heigvd.gamification.api.dto.Application;
+import ch.heigvd.gamification.api.dto.Badge;
 import ch.heigvd.gamification.api.dto.User;
 import ch.heigvd.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.And;
@@ -26,6 +27,7 @@ public class BasicSteps {
     User user;
     Application application;
     UUID apiKey;
+    Badge badge;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
@@ -149,5 +151,34 @@ public class BasicSteps {
     @Given("I have a correct API key")
     public void iHaveACorrectAPIKey(){
         apiKey = ((ApiKey) lastApiResponse.getData()).getKey();
+    }
+
+    @Given("I have a badge payload")
+    public void i_have_a_badge_payload() throws Throwable {
+        badge = new ch.heigvd.gamification.api.dto.Badge()
+                .id(24)
+                .color("red")
+                .description("for good bois only")
+                .name("good boi badge");
+    }
+
+    @When("^I POST the badge payload to the /badges endpoint$")
+    public void i_POST_the_badge_payload_to_the_badges_endpoint() throws Throwable {
+        try {
+            lastApiResponse = api.createBadgeWithHttpInfo(apiKey, badge);
+            processApiResponse(lastApiResponse);
+        } catch (ApiException e) {
+            processApiException(e);
+        }
+    }
+
+    @When("^I send a GET to the /badges endpoint$")
+    public void iSendAGETToTheBadgesEndpoint() {
+        try {
+            lastApiResponse = api.getBadgesWithHttpInfo(apiKey);
+            processApiResponse(lastApiResponse);
+        } catch (ApiException e) {
+            processApiException(e);
+        }
     }
 }
