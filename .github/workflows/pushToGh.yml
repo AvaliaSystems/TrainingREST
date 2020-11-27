@@ -10,6 +10,7 @@ jobs:
     steps:
         - name: cucumber tests
           run: |
+            ls
             cd scripts
             sh testREST_API.sh
 
