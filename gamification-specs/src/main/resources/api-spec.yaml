@@ -124,5 +124,5 @@ components:
       properties:
         name:
           type: string
-        key:
+        api_key:
           type: string

@@ -135,7 +135,7 @@ public class BasicSteps {
     @Given("I have a application payload")
     public void i_have_a_application_payload() {
         application = new ch.heigvd.amt.gamification.api.dto.Application()
-                .key("mockAppKey")
+                .apiKey("mockAppKey")
                 .name("mockAppnName");
     }
 
