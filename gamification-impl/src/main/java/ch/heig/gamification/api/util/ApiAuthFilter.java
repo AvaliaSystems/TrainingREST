@@ -5,14 +5,16 @@ import ch.heig.gamification.repositories.ApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@Order(1)
+
+@Component
 public class ApiAuthFilter implements Filter {
 
     @Autowired
@@ -28,20 +30,25 @@ public class ApiAuthFilter implements Filter {
 
         //Fetch API-Key
         String apiKey = req.getHeader("X-API-KEY");
+        boolean errorFlag = false;
 
-        ApplicationEntity appEntity = applicationRepository.findByApiKey(apiKey);
+        System.out.println(apiKey);
 
-        if (appEntity == null){
 
-            res.sendError(HttpServletResponse.SC_FORBIDDEN, "API-KEY is invalid");
+        if(apiKey != null) {
+            ApplicationEntity appEntity = applicationRepository.findByApiKey(UUID.fromString(apiKey));
+            if (appEntity != null) {
+                req.setAttribute("appEntity", appEntity);
+                chain.doFilter(request, response);
+            } else {
+                errorFlag = true;
+            }
         } else {
-
-            req.setAttribute("appEntity", appEntity);
-            chain.doFilter(request, response);
-
+            errorFlag = true;
         }
-
-        //chain.doFilter(request, response);
+        if(errorFlag) {
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "API-KEY is invalid");
+        }
     }
 
     @Override
