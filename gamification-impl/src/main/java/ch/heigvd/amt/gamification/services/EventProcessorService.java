@@ -40,7 +40,6 @@ public class EventProcessorService {
         user.setBadges(badges);
 
         int nbBadges = user.getNbBadges();
-        System.out.println("nbBadgesAfter="+nbBadges);
         user.setNbBadges(++nbBadges);
 
         userRepository.save(user);
