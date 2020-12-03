@@ -26,7 +26,6 @@ public class EventProcessorService {
     public void processEvent(EventEntity eventEntity) {
         String eventUserId = eventEntity.getUserId();
 
-        // TODO : Find users of application
         UserEntity user = userRepository.findByUserIdAndApplication(eventUserId, eventEntity.getApplication());
         if(user == null) {
             user = new UserEntity();
