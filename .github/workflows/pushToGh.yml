@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - 23-wait-for-it
 jobs:
   build:
     runs-on: ubuntu-latest

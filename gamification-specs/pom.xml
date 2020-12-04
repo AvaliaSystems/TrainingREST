@@ -28,7 +28,7 @@
         <filtering>true</filtering>
       </testResource>
     </testResources>
-    <plugins>    
+    <plugins>
       <plugin>
         <groupId>org.openapitools</groupId>
         <artifactId>openapi-generator-maven-plugin</artifactId>
