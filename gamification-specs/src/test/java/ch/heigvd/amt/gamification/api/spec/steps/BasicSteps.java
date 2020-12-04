@@ -108,11 +108,6 @@ public class BasicSteps {
         lastStatusCode = lastApiResponse.getStatusCode();
         List<String> locationHeaderValues = (List<String>)lastApiResponse.getHeaders().get("Location");
         lastReceivedLocationHeader = locationHeaderValues != null ? locationHeaderValues.get(0) : null;
-
-
-        //======== EVENTS ============
-        //List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get("x-api-key");
-        //lastReceivedApiKeyHeader = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
     }
 
     private void processApiException(ApiException apiException) {
@@ -193,19 +188,6 @@ public class BasicSteps {
         try {
             lastApiResponse = api.createEventWithHttpInfo(event);
             processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
-
-    @When("I POST the event payload to the \\/events endpoint with app-key in the x-api-key header")
-    public void i_post_the_event_payload_to_the_events_endpoint_with_app_key_in_the_x_api_key_header() {
-        api.getApiClient().addDefaultHeader("x-api-key", myApiKey);
-
-        try {
-            lastApiResponse = api.createEventWithHttpInfo(event);
-            processApiResponse(lastApiResponse);
-            //lastReceivedBadge = (Badge) lastApiResponse.getData();
         } catch (ApiException e) {
             processApiException(e);
         }
