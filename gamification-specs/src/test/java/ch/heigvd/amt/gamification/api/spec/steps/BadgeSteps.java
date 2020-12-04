@@ -1,45 +1,31 @@
 package ch.heigvd.amt.gamification.api.spec.steps;
 
-import ch.heigvd.amt.gamification.ApiClient;
 import ch.heigvd.amt.gamification.ApiException;
 import ch.heigvd.amt.gamification.ApiResponse;
 import ch.heigvd.amt.gamification.api.DefaultApi;
-import ch.heigvd.amt.gamification.api.dto.Application;
 import ch.heigvd.amt.gamification.api.dto.Badge;
-import ch.heigvd.amt.gamification.api.dto.Event;
-import ch.heigvd.amt.gamification.api.dto.EventProperties;
 import ch.heigvd.amt.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class BasicSteps {
+public class BadgeSteps {
 
     private Environment environment;
     private DefaultApi api;
 
-    Badge badge;
 
     private ApiResponse lastApiResponse;
-    private ApiException lastApiException;
-    private boolean lastApiCallThrewException;
-  //  private int lastStatusCode;
-
     private String lastReceivedLocationHeader;
+
     private Badge lastReceivedBadge;
+    private Badge badge;
 
-    private final String API_KEY_HEADER = "X-API-KEY";
-    private String myApiKey;
-
-    public BasicSteps(Environment environment) {
+    public BadgeSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
     }
@@ -82,7 +68,9 @@ public class BasicSteps {
     }
 
     @Then("I receive a {int} status code with a location header")
-    public void iReceiveAStatusCodeWithALocationHeader(int arg0) {
+    public void iReceiveAStatusCodeWithALocationHeader(int expectedStatusCode) {
+        //TODO check location header
+        assertEquals(expectedStatusCode, environment.getLastStatusCode());
     }
 
     @When("I send a GET to the URL in the location header")
@@ -102,11 +90,4 @@ public class BasicSteps {
     public void iReceiveAPayloadThatIsTheSameAsTheBadgePayload() {
         assertEquals(badge, lastReceivedBadge);
     }
-
-    // ================= APPLICATIONS ====================================
-   
-
-
-    // ============================= EVENTS ==================================
-
 }
