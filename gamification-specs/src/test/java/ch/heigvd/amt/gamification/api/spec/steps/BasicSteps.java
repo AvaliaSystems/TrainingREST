@@ -111,8 +111,8 @@ public class BasicSteps {
 
 
         //======== EVENTS ============
-        List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get("x-api-key");
-        lastReceivedApiKeyHeader = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
+        //List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get("x-api-key");
+        //lastReceivedApiKeyHeader = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
     }
 
     private void processApiException(ApiException apiException) {
@@ -158,16 +158,18 @@ public class BasicSteps {
     }
 
     @Then("I receive a {int} status code with an x-api-key header")
-    public void i_receive_a_status_code_with_an_x_api_key_header(Integer int1) {
+    public void i_receive_a_status_code_with_an_x_api_key_header(Integer expectedStatusCode) {
         List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get(API_KEY_HEADER);
-        String myApiKeyHeader = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
-        api.getApiClient().addDefaultHeader(API_KEY_HEADER, myApiKeyHeader);
+        myApiKey = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
+        api.getApiClient().addDefaultHeader(API_KEY_HEADER, myApiKey);
+        assertEquals((long)expectedStatusCode, lastStatusCode);
     }
 
 
     // ============================= EVENTS ==================================
     Event event;
-    private String lastReceivedApiKeyHeader;
+    //private String lastReceivedApiKeyHeader;
+    private String myApiKey;
 
     @Given("there is an Events server")
     public void there_is_an_events_server() {
@@ -196,14 +198,9 @@ public class BasicSteps {
         }
     }
 
-    @Then("I receive a {int} status code with an x-api-key header")
-    public void i_receive_a_status_code_with_an_x_api_key_header(Integer expectedStatusCode) {
-        assertEquals((long)expectedStatusCode, lastStatusCode);
-    }
-
     @When("I POST the event payload to the \\/events endpoint with app-key in the x-api-key header")
     public void i_post_the_event_payload_to_the_events_endpoint_with_app_key_in_the_x_api_key_header() {
-        api.getApiClient().addDefaultHeader("x-api-key", lastReceivedApiKeyHeader);
+        api.getApiClient().addDefaultHeader("x-api-key", myApiKey);
 
         try {
             lastApiResponse = api.createEventWithHttpInfo(event);
