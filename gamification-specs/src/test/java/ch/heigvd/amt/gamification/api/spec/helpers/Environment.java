@@ -24,9 +24,6 @@ public class Environment {
 
     private String lastReceivedLocationHeader;
 
-    private final String API_KEY_HEADER = "X-API-KEY";
-    private String myApiKey;
-
     public Environment() throws IOException {
         Properties properties = new Properties();
         properties.load(this.getClass().getClassLoader().getResourceAsStream("environment.properties"));
