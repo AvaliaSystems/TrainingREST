@@ -106,15 +106,15 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
 
-  /users/{inAppId}:
+  /users/{id}:
     get:
       description: get one user, with inAppId
       operationId: getUser
       parameters:
         - in: path
-          name: inAppId
+          name: id
           schema:
-            type: UUID
+            type: integer
           required: true
       responses:
         '200':
@@ -154,8 +154,6 @@ components:
     User:
       type: object
       properties:
-        inAppId:
-          type: string
         badges:
           type: array
           items:

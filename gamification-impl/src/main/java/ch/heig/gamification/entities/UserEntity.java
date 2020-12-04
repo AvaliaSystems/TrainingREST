@@ -16,11 +16,6 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(columnDefinition = "BINARY(16)", length = 16)
-    private UUID inAppId;
-
     @ManyToOne
     private ApplicationEntity appEntity;
 

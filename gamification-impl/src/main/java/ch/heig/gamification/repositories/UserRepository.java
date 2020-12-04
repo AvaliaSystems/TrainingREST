@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
-    UserEntity findByInAppIdAndApiKey(UUID inAppId, UUID apiKey);
+    UserEntity findByIdAndApiKey(long id, UUID apiKey);
     List<UserEntity> findAllByApiKey(UUID apiKey);
 }

@@ -38,14 +38,32 @@ public class UsersApiController implements UsersApi {
     }
 
 
-    public ResponseEntity<User> getUser(@ApiParam(value = "", required = true) @PathVariable("inAppId") String inAppId){
+    public ResponseEntity<User> getUser(@ApiParam(value = "", required = true) @PathVariable("id") String id){
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
-        UserEntity userEntity = userRepository.findByInAppIdAndApiKey(inAppId, applicationEntity.getApiKey());
+        UserEntity userEntity = userRepository.findByIdAndApiKey(id, applicationEntity.getApiKey());
         if(userEntity != null){
             return ResponseEntity.ok(toUser(userEntity));
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    private Badge toBadge(BadgeEntity badgeEntity){
+        Badge badge = new Badge();
+        badge.setName(badgeEntity.getName());
+        return badge;
+    }
+
+    private toUser(UserEntity userEntity){
+        User user = new User();
+        List<Badge> badges = new ArrayList<>();
+        for(BadgeEntity badgeEntity : userEntity.getBadges()){
+            badges.add(toBadge(badgeEntity));
+        }
+        user.setBadges(badges);
+        return user;
+    }
+
+
 
 }
