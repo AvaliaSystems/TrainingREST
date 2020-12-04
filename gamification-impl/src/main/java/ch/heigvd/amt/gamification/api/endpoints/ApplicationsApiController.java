@@ -29,8 +29,7 @@ public class ApplicationsApiController implements ApplicationsApi {
     public ResponseEntity<Void> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
         ApplicationEntity newApplicationEntity = toApplicationEntity(application);
         String key = UUID.randomUUID().toString();
-
-        newApplicationEntity.setKey(key);
+        newApplicationEntity.setApiKey(key);
         applicationRepository.save(newApplicationEntity);
 
         return ResponseEntity.ok().header("X-API-KEY", key).build();

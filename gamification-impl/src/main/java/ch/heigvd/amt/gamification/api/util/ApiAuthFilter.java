@@ -31,7 +31,7 @@ public class ApiAuthFilter implements javax.servlet.Filter {
 
         // Get API key from request and obtain related Application entity
         String apiKey = req.getHeader("X-API-KEY");
-        ApplicationEntity applicationEntity = applicationRepository.findAllByKey(apiKey);
+        ApplicationEntity applicationEntity = applicationRepository.findAllByApiKey(apiKey);
 
         System.out.println(req.getRequestURI());
         System.out.println(req.getMethod());

@@ -1,6 +1,6 @@
 #!/bin/bash
 ./runREST_API.sh &
-sleep 30
+sleep 90 # yes, it's pretty thrashy but this will do for now
 
 echo "========================"
 echo "=== Testing REST API ==="
