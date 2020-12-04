@@ -45,6 +45,8 @@ cmake-build-debug/
 
 ## File-based project format:
 *.iws
+*.iml
+.attach_pid*
 
 ## Plugin-specific files:
 
@@ -65,3 +67,5 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+full-project/full-project.ipr

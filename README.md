@@ -18,6 +18,7 @@ cd scripts
 cd scripts
 ./testREST_API.sh
 ```
+**Note**: for faster local testing (from 1m30 to 5s), you can `cd` into `/gamification-specs`, change the url of `pom.xml` (l22) from http://api:8080 to http://localhost:8080 then run `mvn clean test`. Because this url is used in the pipeline, please donc forget to change it back when pushing to master.
 
 # Build and run the Fruit microservice
 

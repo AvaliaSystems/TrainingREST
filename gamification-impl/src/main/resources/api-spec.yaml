@@ -142,7 +142,7 @@ components:
       properties:
         name:
           type: string
-        key:
+        apiKey:
           type: string
     ApplicationRegistration:
       type: object
@@ -156,7 +156,6 @@ components:
           type: string
         description:
           type: string
-
     Event:
       type: object
       properties:
@@ -181,7 +180,6 @@ components:
           type: string
         nbBadges:
           type: integer
-
     Rule:
       type: object
       properties:

@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ApplicationRepository extends CrudRepository<ApplicationEntity, Long> {
 
-    ApplicationEntity findAllByKey(String apiKey); //findByKey
+    ApplicationEntity findAllByApiKey(String apiKey);
 }

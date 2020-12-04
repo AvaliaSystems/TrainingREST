@@ -27,7 +27,7 @@ public class ApplicationsApiController implements ApplicationsApi {
         ApplicationEntity newApplicationEntity = toApplicationEntity(applicationRegistration);
         applicationRepository.save(newApplicationEntity);
 
-        return ResponseEntity.ok().header("X-API-KEY", newApplicationEntity.getKey()).build();
+        return ResponseEntity.ok().header("X-API-KEY", newApplicationEntity.getApiKey()).build();
     }
 
     // FIXME : Enlever l'endpoint GET sur /applications (on le laisse pour le debug)
@@ -47,8 +47,8 @@ public class ApplicationsApiController implements ApplicationsApi {
 
     private ApplicationEntity toApplicationEntity(ApplicationRegistration applicationRegistration) {
         ApplicationEntity entity = new ApplicationEntity();
-        String key = UUID.randomUUID().toString();
-        entity.setKey(key);
+        String apiKey = UUID.randomUUID().toString();
+        entity.setApiKey(apiKey);
         entity.setName(applicationRegistration.getName());
         return entity;
     }
@@ -56,7 +56,7 @@ public class ApplicationsApiController implements ApplicationsApi {
     private Application toApplication(ApplicationEntity entity) {
         Application application = new Application();
         application.setName(entity.getName());
-        application.setKey(entity.getKey());
+        application.setApiKey(entity.getApiKey());
         return application;
     }
 
