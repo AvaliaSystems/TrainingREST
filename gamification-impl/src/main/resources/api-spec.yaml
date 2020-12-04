@@ -91,6 +91,39 @@ paths:
               'application/json':
                 schema:
                     $ref: '#/components/schemas/Score'
+
+  /users:
+    get:
+      description: get all users
+      operationId: getUsers
+      responses:
+        '200':
+          description: sucess
+          content:
+            'spplication/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{inAppId}:
+    get:
+      description: get one user, with inAppId
+      operationId: getUser
+      parameters:
+        - in: path
+          name: inAppId
+          schema:
+            type: UUID
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/User'
+
 components:
   securitySchemes:
     # bearerAuth:            # arbitrary name for the security scheme
@@ -118,3 +151,12 @@ components:
       properties:
         value:
           type: Integer
+    User:
+      type: object
+      properties:
+        inAppId:
+          type: string
+        badges:
+          type: array
+          items:
+            $ref: '#/components/schema/Badge'
