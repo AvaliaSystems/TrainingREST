@@ -165,12 +165,12 @@ components:
         timestamp:
           type: string
           format: date-time
-        type:
+        eventType:
           type: string
         properties:
           type: object
           properties:
-            type:
+            subType:
               type: string
             quantity:
               type: integer
@@ -203,4 +203,4 @@ components:
                 pointScale:
                   type: string
                 amount:
-                  type: number
+                  type: integer

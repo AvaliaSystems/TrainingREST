@@ -22,5 +22,5 @@ public class UserEntity implements Serializable {
     private List<BadgeEntity> badges;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id", nullable = false)
-    private ApplicationEntity application;
+    private ApplicationEntity applicationEntity;
 }

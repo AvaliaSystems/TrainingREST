@@ -26,17 +26,17 @@ public class EventProcessorService {
     public void processEvent(EventEntity eventEntity) {
         String eventUserId = eventEntity.getUserId();
 
-        UserEntity user = userRepository.findByUserIdAndApplication(eventUserId, eventEntity.getApplication());
+        UserEntity user = userRepository.findByUserIdAndApplicationEntity(eventUserId, eventEntity.getApplicationEntity());
         if(user == null) {
             user = new UserEntity();
             user.setUserId(eventUserId);
-            user.setApplication(eventEntity.getApplication());
+            user.setApplicationEntity(eventEntity.getApplicationEntity());
             user.setNbBadges(0);
         }
 
         List<BadgeEntity> badges = new ArrayList<>();
         // Attribue seulement le premier badge (temporaire FIXME)
-        badges.add(badgeRepository.findAllByApplication(eventEntity.getApplication()).get(0));
+        badges.add(badgeRepository.findAllByApplicationEntity(eventEntity.getApplicationEntity()).get(0));
         user.setBadges(badges);
 
         int nbBadges = user.getNbBadges();
@@ -44,7 +44,7 @@ public class EventProcessorService {
 
         userRepository.save(user);
 
-        // Besoin de sauvegarder tous les events (la plupart
+        // TODO : Besoin de sauvegarder tous les events ou juste les traiter? (la plupart seront "vides")
         //eventRepository.save(eventEntity);
     }
 

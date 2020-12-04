@@ -1,13 +1,10 @@
 package ch.heigvd.amt.gamification.api.endpoints;
 
-import ch.heigvd.amt.gamification.api.EventsApi;
 import ch.heigvd.amt.gamification.api.RulesApi;
 import ch.heigvd.amt.gamification.api.model.*;
 import ch.heigvd.amt.gamification.entities.ApplicationEntity;
-import ch.heigvd.amt.gamification.entities.EventEntity;
 import ch.heigvd.amt.gamification.entities.RuleEntity;
 import ch.heigvd.amt.gamification.repositories.RuleRepository;
-import ch.heigvd.amt.gamification.services.EventProcessorService;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +29,7 @@ public class RulesApiController implements RulesApi {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createRule(@ApiParam(value = "", required = true) @Valid @RequestBody Rule rule) {
         RuleEntity newRuleEntity = toRuleEntity(rule);
-        newRuleEntity.setApplication((ApplicationEntity) request.getAttribute("applicationEntity"));
+        newRuleEntity.setApplicationEntity((ApplicationEntity) request.getAttribute("applicationEntity"));
         ruleRepository.save(newRuleEntity);
 
         Long id = newRuleEntity.getId();
@@ -50,6 +47,7 @@ public class RulesApiController implements RulesApi {
         entity.setType(rule.getIf().getRuleType());
         entity.setAwardBadge(rule.getThen().getAwardBadge());
         entity.setAwardPoints(rule.getThen().getAwardPoints().getPointScale());
+        entity.setAmount(rule.getThen().getAwardPoints().getAmount());
         return entity;
     }
 
@@ -62,11 +60,12 @@ public class RulesApiController implements RulesApi {
 
         RuleThen ruleThen = new RuleThen();
         ruleThen.setAwardBadge(entity.getAwardBadge());
+
         RuleThenAwardPoints ruleThenAwardPoints = new RuleThenAwardPoints();
         ruleThenAwardPoints.setPointScale(entity.getAwardPoints());
-
         ruleThenAwardPoints.setAmount(entity.getAmount());
         ruleThen.setAwardPoints(ruleThenAwardPoints);
+
         return rule;
     }
 }

@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -18,8 +17,8 @@ public class RuleEntity implements Serializable {
     private String type;
     private String awardBadge;
     private String awardPoints;
-    private BigDecimal amount;
+    private int amount;
 
     @ManyToOne
-    private ApplicationEntity application; //TODO application->applicationEntity
+    private ApplicationEntity applicationEntity;
 }

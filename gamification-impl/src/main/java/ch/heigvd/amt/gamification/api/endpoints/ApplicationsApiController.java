@@ -4,22 +4,16 @@ import ch.heigvd.amt.gamification.api.ApplicationsApi;
 import ch.heigvd.amt.gamification.api.model.Application;
 import ch.heigvd.amt.gamification.api.model.ApplicationRegistration;
 import ch.heigvd.amt.gamification.entities.ApplicationEntity;
-import ch.heigvd.amt.gamification.entities.ApplicationRegistrationEntity;
-import ch.heigvd.amt.gamification.repositories.ApplicationRegistrationRepository;
 import ch.heigvd.amt.gamification.repositories.ApplicationRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -43,13 +37,13 @@ public class ApplicationsApiController implements ApplicationsApi {
             applications.add(toApplication(applicationEntity));
         }
         return ResponseEntity.ok(applications);
-    }*/
+    }
 
-    //@Override ?
+    @Override
     public ResponseEntity<Application> getApplication(@ApiParam(value = "", required = true) @PathVariable("id") Integer id) {
         ApplicationEntity existingApplicationEntity = applicationRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return ResponseEntity.ok(toApplication(existingApplicationEntity));
-    }
+    }*/
 
     private ApplicationEntity toApplicationEntity(ApplicationRegistration applicationRegistration) {
         ApplicationEntity entity = new ApplicationEntity();
