@@ -156,7 +156,7 @@ components:
           type: string
         description:
           type: string
-    # TODO Mettre toutes les attributs au même niveau
+
     Event:
       type: object
       properties:
@@ -181,27 +181,26 @@ components:
           type: string
         nbBadges:
           type: integer
-            #Rule:
-            # type: object
-            #properties:
-            # if:
-            #  type: object
-            # properties:
-            #  type:
-            #   type: string
-          # then:
-          #  type: object
-          # properties:
-          #  awardBadge:
-          #   type: string
+
     Rule:
       type: object
       properties:
-        type:
-          type: string
-        quantity:
-          type: number
-        awardBadge:
-          type: string
-        awardPoints:
-          type: string
+        name:
+          type : string
+        if:
+          type: object
+          properties:
+            ruleType:
+              type: string
+        then:
+          type: object
+          properties:
+            awardBadge:
+              type: string
+            awardPoints:
+              type: object
+              properties:
+                pointScale:
+                  type: string
+                amount:
+                  type: number
