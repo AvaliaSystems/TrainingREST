@@ -15,23 +15,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class UsersApiController implements UsersApi {
 
     @Autowired
-    ServletRequest req;
+    ServletRequest request;
     @Autowired
     UserRepository userRepository;
 
     public ResponseEntity<List<User>> getUsers() {
-
+        HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
 
+        String apiKey = req.getHeader("X-API-KEY");
         List<User> users = new ArrayList<>();
-        for(UserEntity userEntity : userRepository.findAllByApiKey(applicationEntity.getApiKey())){
+        for(UserEntity userEntity : userRepository.findAllByApiKey(UUID.fromString(apiKey))){
             users.add(toUser(userEntity)); // transforme userEntity -> User
         }
         return ResponseEntity.ok(users);
@@ -39,8 +42,10 @@ public class UsersApiController implements UsersApi {
 
 
     public ResponseEntity<User> getUser(@ApiParam(value = "", required = true) @PathVariable("id") String id){
+        HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
-        UserEntity userEntity = userRepository.findByIdAndApiKey(id, applicationEntity.getApiKey());
+        String apiKey = req.getHeader("X-API-KEY");
+        UserEntity userEntity = userRepository.findByIdAndApiKey(Long.valueOf(id), UUID.fromString(apiKey));
         if(userEntity != null){
             return ResponseEntity.ok(toUser(userEntity));
         } else {
@@ -54,7 +59,7 @@ public class UsersApiController implements UsersApi {
         return badge;
     }
 
-    private toUser(UserEntity userEntity){
+    private User toUser(UserEntity userEntity){
         User user = new User();
         List<Badge> badges = new ArrayList<>();
         for(BadgeEntity badgeEntity : userEntity.getBadges()){
