@@ -156,14 +156,20 @@ public class BasicSteps {
     public void i_receive_a_status_code_with_an_x_api_key_header(Integer expectedStatusCode) {
         List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get(API_KEY_HEADER);
         myApiKey = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
-        api.getApiClient().addDefaultHeader(API_KEY_HEADER, myApiKey);
+        api.getApiClient().setApiKey(myApiKey);
         assertEquals((long)expectedStatusCode, lastStatusCode);
+    }
+
+    @Given("I have successfully registered my app")
+    public void i_have_successfully_registered_my_app() {
+        i_have_a_application_payload();
+        i_post_the_application_payload_to_the_applications_endpoint();
+        i_receive_a_status_code_with_an_x_api_key_header(200);
     }
 
 
     // ============================= EVENTS ==================================
     Event event;
-    //private String lastReceivedApiKeyHeader;
     private String myApiKey;
 
     @Given("there is an Events server")

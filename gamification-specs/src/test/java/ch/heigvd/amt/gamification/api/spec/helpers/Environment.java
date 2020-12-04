@@ -16,6 +16,7 @@ public class Environment {
         String url = properties.getProperty("ch.heigvd.amt.gamification.api.server.url");
         api.getApiClient().setBasePath(url);
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        api.getApiClient().setApiKey(null);
     }
 
     public DefaultApi getApi() {
