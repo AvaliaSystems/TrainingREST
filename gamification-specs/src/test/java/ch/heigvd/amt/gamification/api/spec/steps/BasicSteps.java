@@ -35,6 +35,8 @@ public class BasicSteps {
     private String lastReceivedLocationHeader;
     private Badge lastReceivedBadge;
 
+    private final String API_KEY_HEADER = "X-API-KEY";
+
     public BasicSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
@@ -125,7 +127,7 @@ public class BasicSteps {
     @When("I send a GET to the \\/applications endpoint")
     public void i_send_a_get_to_the_applications_endpoint() {
         try {
-            lastApiResponse = api.getBadgesWithHttpInfo();
+            lastApiResponse = api.getApplicationsWithHttpInfo();
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
@@ -148,6 +150,14 @@ public class BasicSteps {
             processApiException(e);
         }
     }
+
+    @Then("I receive a {int} status code with an x-api-key header")
+    public void i_receive_a_status_code_with_an_x_api_key_header(Integer int1) {
+        List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get(API_KEY_HEADER);
+        String myApiKeyHeader = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
+        api.getApiClient().addDefaultHeader(API_KEY_HEADER, myApiKeyHeader);
+    }
+
 
     // ============================= EVENTS ==================================
     Event event;
