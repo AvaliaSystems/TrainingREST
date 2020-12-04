@@ -41,3 +41,11 @@ services:
         - 8888:80
       depends_on:
         - impl_db
+
+    testcucumber:
+        build: docker/testCucumber
+        container_name: testCucumber
+        ports:
+          - 8081:8081
+        depends_on:
+          - api

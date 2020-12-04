@@ -17,4 +17,4 @@ echo "============================"
 # had a bug where image was reused instead of being recreated
 # I manually removed the image but I hope --force-recreate will
 # prevent this
-docker-compose up --build --force-recreate
+docker-compose up -d --build --force-recreate impl_db api phpmyadmin
