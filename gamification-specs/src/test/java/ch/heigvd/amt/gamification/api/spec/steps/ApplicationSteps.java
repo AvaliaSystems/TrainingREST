@@ -4,7 +4,6 @@ import ch.heigvd.amt.gamification.ApiException;
 import ch.heigvd.amt.gamification.ApiResponse;
 import ch.heigvd.amt.gamification.api.DefaultApi;
 import ch.heigvd.amt.gamification.api.dto.Application;
-import ch.heigvd.amt.gamification.api.dto.Badge;
 import ch.heigvd.amt.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,15 +18,12 @@ public class ApplicationSteps {
     private Environment environment;
     private DefaultApi api;
 
-    Application application;
-
     private ApiResponse lastApiResponse;
-    private ApiException lastApiException;
-    private boolean lastApiCallThrewException;
-    private int lastStatusCode;
+    private Application application;
 
-    private String lastReceivedLocationHeader;
-    private Badge lastReceivedBadge;
+
+    private final String API_KEY_HEADER = "X-API-KEY";
+    private String myApiKey;
 
     public ApplicationSteps(Environment environment) {
         this.environment = environment;
@@ -42,17 +38,17 @@ public class ApplicationSteps {
     @When("I send a GET to the \\/applications endpoint")
     public void i_send_a_get_to_the_applications_endpoint() {
         try {
-            lastApiResponse = api.getBadgesWithHttpInfo();
-            processApiResponse(lastApiResponse);
+            lastApiResponse = api.getApplicationsWithHttpInfo();
+            environment.processApiResponse(lastApiResponse);
         } catch (ApiException e) {
-            processApiException(e);
+            environment.processApiException(e);
         }
     }
 
     @Given("I have a application payload")
     public void i_have_a_application_payload() {
         application = new ch.heigvd.amt.gamification.api.dto.Application()
-                .key("mockAppKey")
+                .apiKey("mockAppKey")
                 .name("mockAppnName");
     }
 
@@ -60,32 +56,24 @@ public class ApplicationSteps {
     public void i_post_the_application_payload_to_the_applications_endpoint() {
         try {
             lastApiResponse = api.registerApplicationWithHttpInfo(application);
-            processApiResponse(lastApiResponse);
+            environment.processApiResponse(lastApiResponse);
         } catch (ApiException e) {
-            processApiException(e);
+            environment.processApiException(e);
         }
     }
 
-   /* @Then("I receive a {int} status code")
-    public void i_receive_a_status_code(int expectedStatusCode) throws Throwable {
-        assertEquals(expectedStatusCode, lastStatusCode);
-    }*/
-
-    private void processApiResponse(ApiResponse apiResponse) {
-        lastApiResponse = apiResponse;
-        lastApiCallThrewException = false;
-        lastApiException = null;
-        lastStatusCode = lastApiResponse.getStatusCode();
-        //List<String> locationHeaderValues = (List<String>)lastApiResponse.getHeaders().get("Location");
-        //lastReceivedLocationHeader = locationHeaderValues != null ? locationHeaderValues.get(0) : null;
+    @Then("I receive a {int} status code with an x-api-key header")
+    public void i_receive_a_status_code_with_an_x_api_key_header(Integer expectedStatusCode) {
+        List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get(API_KEY_HEADER);
+        myApiKey = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
+        api.getApiClient().setApiKey(myApiKey);
+        assertEquals((long)expectedStatusCode, environment.getLastStatusCode());
     }
 
-    private void processApiException(ApiException apiException) {
-        lastApiCallThrewException = true;
-        lastApiResponse = null;
-        lastApiException = apiException;
-        lastStatusCode = lastApiException.getCode();
+    @Given("I have successfully registered my app")
+    public void i_have_successfully_registered_my_app() {
+        i_have_a_application_payload();
+        i_post_the_application_payload_to_the_applications_endpoint();
+        i_receive_a_status_code_with_an_x_api_key_header(200);
     }
-
-
 }
