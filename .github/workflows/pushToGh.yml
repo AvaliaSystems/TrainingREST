@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - 23-wait-for-it
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,7 +41,7 @@ jobs:
         run: |
           ls
           cd scripts
-          sh testREST_API_pipeline.sh
+          sh testREST_API.sh
 
       - name: Build Docker image and push it to ghcr
         # build a partir d'une image officielle mais tag renomme cette image

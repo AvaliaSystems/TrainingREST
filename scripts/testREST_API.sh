@@ -2,7 +2,7 @@
 ./runREST_API.sh
 
 cd ../docker/testCucumber
-rm -rf gamification-specs
+rm -rf gamification-specs # cp n'overwrite pas, donc nécessaire
 cp -R ../../gamification-specs gamification-specs
 cd gamification-specs
 # https://stackoverflow.com/a/7456028
