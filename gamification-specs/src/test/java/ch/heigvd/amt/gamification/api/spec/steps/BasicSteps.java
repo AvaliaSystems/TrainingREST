@@ -31,12 +31,13 @@ public class BasicSteps {
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
     private boolean lastApiCallThrewException;
-    private int lastStatusCode;
+  //  private int lastStatusCode;
 
     private String lastReceivedLocationHeader;
     private Badge lastReceivedBadge;
 
     private final String API_KEY_HEADER = "X-API-KEY";
+    private String myApiKey;
 
     public BasicSteps(Environment environment) {
         this.environment = environment;
@@ -59,24 +60,24 @@ public class BasicSteps {
     public void i_POST_the_badge_payload_to_the_badges_endpoint() throws Throwable {
         try {
             lastApiResponse = api.createBadgeWithHttpInfo(badge);
-            processApiResponse(lastApiResponse);
+            environment.processApiResponse(lastApiResponse);
         } catch (ApiException e) {
-            processApiException(e);
+            environment.processApiException(e);
         }
     }
 
     @Then("I receive a {int} status code")
     public void i_receive_a_status_code(int expectedStatusCode) throws Throwable {
-        assertEquals(expectedStatusCode, lastStatusCode);
+        assertEquals(expectedStatusCode, environment.getLastStatusCode());
     }
 
     @When("^I send a GET to the /badges endpoint$")
     public void iSendAGETToTheBadgesEndpoint() {
         try {
             lastApiResponse = api.getBadgesWithHttpInfo();
-            processApiResponse(lastApiResponse);
+            environment.processApiResponse(lastApiResponse);
         } catch (ApiException e) {
-            processApiException(e);
+            environment.processApiException(e);
         }
     }
 
@@ -86,35 +87,20 @@ public class BasicSteps {
 
     @When("I send a GET to the URL in the location header")
     public void iSendAGETToTheURLInTheLocationHeader() {
+        lastReceivedLocationHeader = environment.getLastReceivedLocationHeader();
         Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
         try {
             lastApiResponse = api.getBadgeWithHttpInfo(id);
-            processApiResponse(lastApiResponse);
+            environment.processApiResponse(lastApiResponse);
             lastReceivedBadge = (Badge) lastApiResponse.getData();
         } catch (ApiException e) {
-            processApiException(e);
+            environment.processApiException(e);
         }
     }
 
     @And("I receive a payload that is the same as the badge payload")
     public void iReceiveAPayloadThatIsTheSameAsTheBadgePayload() {
         assertEquals(badge, lastReceivedBadge);
-    }
-
-    private void processApiResponse(ApiResponse apiResponse) {
-        lastApiResponse = apiResponse;
-        lastApiCallThrewException = false;
-        lastApiException = null;
-        lastStatusCode = lastApiResponse.getStatusCode();
-        List<String> locationHeaderValues = (List<String>)lastApiResponse.getHeaders().get("Location");
-        lastReceivedLocationHeader = locationHeaderValues != null ? locationHeaderValues.get(0) : null;
-    }
-
-    private void processApiException(ApiException apiException) {
-        lastApiCallThrewException = true;
-        lastApiResponse = null;
-        lastApiException = apiException;
-        lastStatusCode = lastApiException.getCode();
     }
 
     // ================= APPLICATIONS ====================================
@@ -129,9 +115,9 @@ public class BasicSteps {
     public void i_send_a_get_to_the_applications_endpoint() {
         try {
             lastApiResponse = api.getApplicationsWithHttpInfo();
-            processApiResponse(lastApiResponse);
+            environment.processApiResponse(lastApiResponse);
         } catch (ApiException e) {
-            processApiException(e);
+            environment.processApiException(e);
         }
     }
 
@@ -146,9 +132,9 @@ public class BasicSteps {
     public void i_post_the_application_payload_to_the_applications_endpoint() {
         try {
             lastApiResponse = api.registerApplicationWithHttpInfo(application);
-            processApiResponse(lastApiResponse);
+            environment.processApiResponse(lastApiResponse);
         } catch (ApiException e) {
-            processApiException(e);
+            environment.processApiException(e);
         }
     }
 
@@ -157,7 +143,7 @@ public class BasicSteps {
         List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get(API_KEY_HEADER);
         myApiKey = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
         api.getApiClient().setApiKey(myApiKey);
-        assertEquals((long)expectedStatusCode, lastStatusCode);
+        assertEquals((long)expectedStatusCode, environment.getLastStatusCode());
     }
 
     @Given("I have successfully registered my app")
@@ -169,34 +155,5 @@ public class BasicSteps {
 
 
     // ============================= EVENTS ==================================
-    Event event;
-    private String myApiKey;
-
-    @Given("there is an Events server")
-    public void there_is_an_events_server() {
-        assertNotNull(api);
-    }
-
-    @Given("I have an event payload")
-    public void i_have_an_event_payload() {
-        EventProperties eventProperties = new EventProperties()
-                .quantity(0)
-                .type("mockPropertyType");
-
-        event = new Event().properties(eventProperties)
-                //.timestamp();
-                .type("mockType")
-                .userId("mockUserIs");
-    }
-
-    @When("I POST the event payload to the \\/events endpoint")
-    public void i_post_the_event_payload_to_the_events_endpoint() {
-        try {
-            lastApiResponse = api.createEventWithHttpInfo(event);
-            processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
 
 }
