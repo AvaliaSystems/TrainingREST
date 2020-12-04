@@ -3,7 +3,9 @@ package ch.heigvd.amt.gamification.api.spec.steps;
 import ch.heigvd.amt.gamification.ApiException;
 import ch.heigvd.amt.gamification.ApiResponse;
 import ch.heigvd.amt.gamification.api.DefaultApi;
+import ch.heigvd.amt.gamification.api.dto.*;
 import ch.heigvd.amt.gamification.api.dto.Application;
+import ch.heigvd.amt.gamification.api.dto.ApplicationRegistration;
 import ch.heigvd.amt.gamification.api.dto.Badge;
 import ch.heigvd.amt.gamification.api.dto.Event;
 import ch.heigvd.amt.gamification.api.dto.EventProperties;
@@ -115,7 +117,7 @@ public class BasicSteps {
     }
 
     // ================= APPLICATIONS ====================================
-    Application application;
+    ApplicationRegistration applicationRegistration;
 
     @Given("there is an Applications server")
     public void there_is_an_applications_server() {
@@ -134,15 +136,14 @@ public class BasicSteps {
 
     @Given("I have a application payload")
     public void i_have_a_application_payload() {
-        application = new ch.heigvd.amt.gamification.api.dto.Application()
-                .key("mockAppKey")
+        applicationRegistration = new ch.heigvd.amt.gamification.api.dto.ApplicationRegistration()
                 .name("mockAppnName");
     }
 
     @When("I POST the application payload to the \\/applications endpoint")
     public void i_post_the_application_payload_to_the_applications_endpoint() {
         try {
-            lastApiResponse = api.registerApplicationWithHttpInfo(application);
+            lastApiResponse = api.registerApplicationWithHttpInfo(applicationRegistration);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
@@ -161,11 +162,11 @@ public class BasicSteps {
     public void i_have_an_event_payload() {
         EventProperties eventProperties = new EventProperties()
                 .quantity(0)
-                .type("mockPropertyType");
+                .subType("mockPropertyType");
 
        event = new Event().properties(eventProperties)
                         //.timestamp();
-                        .type("mockType")
+                        .eventType("mockType")
                         .userId("mockUserIs");
     }
 
