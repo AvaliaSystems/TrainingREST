@@ -34,11 +34,11 @@ public class EventsSteps {
     public void i_have_an_event_payload() {
         EventProperties eventProperties = new EventProperties()
                 .quantity(0)
-                .type("mockPropertyType");
+                .subType("mockPropertyType");
 
         event = new Event().properties(eventProperties)
                 //.timestamp();
-                .type("mockType")
+                .eventType("mockType")
                 .userId("mockUserIs");
     }
 
