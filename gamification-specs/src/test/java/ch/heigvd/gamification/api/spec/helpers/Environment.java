@@ -1,6 +1,7 @@
 package ch.heigvd.gamification.api.spec.helpers;
 
 import ch.heigvd.gamification.api.DefaultApi;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -11,9 +12,9 @@ public class Environment {
     private DefaultApi api = new DefaultApi();
 
     public Environment() throws IOException {
-        Properties properties = new Properties();
-        properties.load(this.getClass().getClassLoader().getResourceAsStream("environment.properties"));
-        String url = properties.getProperty("ch.heigvd.gamification.server.url");
+
+        Dotenv dotenv = Dotenv.load();
+        String url = dotenv.get("URL");
         api.getApiClient().setBasePath(url);
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
