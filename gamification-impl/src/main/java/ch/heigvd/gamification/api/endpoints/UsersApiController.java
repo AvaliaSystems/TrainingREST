@@ -4,8 +4,10 @@ package ch.heigvd.gamification.api.endpoints;
 import ch.heigvd.gamification.api.UsersApi;
 import ch.heigvd.gamification.api.model.Application;
 import ch.heigvd.gamification.api.model.Badge;
+import ch.heigvd.gamification.api.model.Pointscale;
 import ch.heigvd.gamification.api.model.User;
 import ch.heigvd.gamification.entities.ApplicationEntity;
+import ch.heigvd.gamification.entities.PointscaleEntity;
 import ch.heigvd.gamification.entities.UserEntity;
 
 import ch.heigvd.gamification.repositories.ApplicationRepository;
@@ -46,8 +48,9 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<Void> createUser(UUID X_API_KEY, @Valid User user) {
         UserEntity newUserEntity = toUserEntity(user);
         ApplicationEntity applicationEntity = applicationRepository.findByApiKey(X_API_KEY.toString());
+        newUserEntity.setPointscaleEntity(new PointscaleEntity());
+        newUserEntity.getPointscaleEntity().setPointCounter(0);
         newUserEntity.setApplicationEntity(applicationEntity);
-
         userRepository.save(newUserEntity);
 
         Long id = newUserEntity.getId();
@@ -96,4 +99,14 @@ public class UsersApiController implements UsersApi {
         return ResponseEntity.ok(badges);
     }
 
+    @Override
+    public ResponseEntity<Pointscale> getUsersPointScale(Integer id, UUID X_API_KEY) {
+        UserEntity existingUserEntity = userRepository
+                .findByApplicationEntity_ApiKeyAndId(X_API_KEY.toString(),Long.valueOf(id))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Pointscale pointscale =  new Pointscale();
+        pointscale.setPointCounter(existingUserEntity.getPointscaleEntity().getPointCounter());
+        return ResponseEntity.ok(pointscale);
+    }
 }

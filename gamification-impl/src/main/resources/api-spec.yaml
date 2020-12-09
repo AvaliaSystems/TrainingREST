@@ -102,6 +102,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Badge'
+
+  /users/{id}/pointscale:
+    get:
+      description: get all user's pointScales
+      operationId: getUsersPointScale
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Pointscale'
   /events:
     post:
       description: submit an event
@@ -119,8 +145,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Event'
       responses:
-        '200':
-          description: Event successfully processed
+        '201':
+          description: created
   /badges:
     post:
       description: create a badge
@@ -223,6 +249,11 @@ components:
           properties:
             username: # identity convention between client and GameEngine to identify uniquely a user
               type: string
+    Pointscale:
+      type: object
+      properties:
+        pointCounter:
+          type: integer
 
     # Scheme for Badges
     Badge:
