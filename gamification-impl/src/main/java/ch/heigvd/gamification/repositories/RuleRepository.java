@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface RuleRepository extends CrudRepository<RuleEntity,Long> {
     Iterable<RuleEntity> findByApplicationEntity_ApiKey(String applicationEntity_apiKey);
+    Iterable<RuleEntity> findByEventType(String eventType);
 }

@@ -260,7 +260,7 @@ components:
           type: integer
           format: int64
         eventType:
-          type: integer
+          type: string
         eventparams:
           type: object
           properties:
