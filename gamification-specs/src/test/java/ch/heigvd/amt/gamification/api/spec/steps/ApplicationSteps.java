@@ -3,7 +3,7 @@ package ch.heigvd.amt.gamification.api.spec.steps;
 import ch.heigvd.amt.gamification.ApiException;
 import ch.heigvd.amt.gamification.ApiResponse;
 import ch.heigvd.amt.gamification.api.DefaultApi;
-import ch.heigvd.amt.gamification.api.dto.Application;
+import ch.heigvd.amt.gamification.api.dto.ApplicationRegistration;
 import ch.heigvd.amt.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,7 +19,7 @@ public class ApplicationSteps {
     private DefaultApi api;
 
     private ApiResponse lastApiResponse;
-    private Application application;
+    private ApplicationRegistration applicationRegistration;
 
 
     private final String API_KEY_HEADER = "X-API-KEY";
@@ -35,6 +35,7 @@ public class ApplicationSteps {
         assertNotNull(api);
     }
 
+    // TODO : L'endpoint GET n'existe plus
     @When("I send a GET to the \\/applications endpoint")
     public void i_send_a_get_to_the_applications_endpoint() {
         try {
@@ -47,15 +48,14 @@ public class ApplicationSteps {
 
     @Given("I have a application payload")
     public void i_have_a_application_payload() {
-        application = new ch.heigvd.amt.gamification.api.dto.Application()
-                .apiKey("mockAppKey")
+        applicationRegistration = new ApplicationRegistration()
                 .name("mockAppnName");
     }
 
     @When("I POST the application payload to the \\/applications endpoint")
     public void i_post_the_application_payload_to_the_applications_endpoint() {
         try {
-            lastApiResponse = api.registerApplicationWithHttpInfo(application);
+            lastApiResponse = api.registerApplicationWithHttpInfo(applicationRegistration);
             environment.processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             environment.processApiException(e);

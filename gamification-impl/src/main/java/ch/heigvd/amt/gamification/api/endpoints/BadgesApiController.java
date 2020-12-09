@@ -34,7 +34,7 @@ public class BadgesApiController implements BadgesApi {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge) {
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
-        newBadgeEntity.setApplication((ApplicationEntity) request.getAttribute("applicationEntity"));
+        newBadgeEntity.setApplicationEntity((ApplicationEntity) request.getAttribute("applicationEntity"));
         badgeRepository.save(newBadgeEntity);
         Long id = newBadgeEntity.getId();
 
@@ -47,7 +47,7 @@ public class BadgesApiController implements BadgesApi {
 
     public ResponseEntity<List<Badge>> getBadges() {
         List<Badge> badges = new ArrayList<>();
-        for(BadgeEntity badgeEntity : badgeRepository.findAllByApplication((ApplicationEntity) request.getAttribute("applicationEntity"))) {
+        for(BadgeEntity badgeEntity : badgeRepository.findAllByApplicationEntity((ApplicationEntity) request.getAttribute("applicationEntity"))) {
             badges.add(toBadge(badgeEntity));
         }
         return ResponseEntity.ok(badges);
