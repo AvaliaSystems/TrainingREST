@@ -99,7 +99,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.14</version>
         </dependency>
-        <!-- variable d'environnement dans application.properties -->
+        <!-- variable d'environnement dans application.properties.old.new -->
         <dependency>
               <groupId>me.paulschwarz</groupId>
               <artifactId>spring-dotenv</artifactId>
