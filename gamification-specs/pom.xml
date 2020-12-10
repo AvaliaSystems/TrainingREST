@@ -18,7 +18,7 @@
     <okhttp-version>3.14.7</okhttp-version>
     <gson-version>2.8.6</gson-version>
     <gson-fire-version>1.8.4</gson-fire-version>
-    <ch.heigvd.gamification.server.url>http://localhost:8086</ch.heigvd.gamification.server.url>
+    <ch.heigvd.gamification.server.url></ch.heigvd.gamification.server.url>
   </properties>
   <build>
     <testResources>
@@ -54,6 +54,22 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>http://repo.maven.apache.org/maven2</url>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>jcenter</id>
+      <name>JFrog Bintray</name>
+      <url>https://jcenter.bintray.com</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>io.swagger</groupId>
@@ -76,6 +92,11 @@
       <version>${cucumber.version}</version>
     </dependency>
     <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>java-dotenv</artifactId>
+      <version>5.2.2</version>
+    </dependency>
+    <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-picocontainer</artifactId>
       <version>${cucumber.version}</version>
@@ -95,6 +116,12 @@
       <artifactId>gson</artifactId>
       <version>${gson-version}</version>
     </dependency>
+    <dependency>
+      <groupId>me.paulschwarz</groupId>
+      <artifactId>spring-dotenv</artifactId>
+      <version>2.3.0</version>
+    </dependency>
+
     <dependency>
       <groupId>io.gsonfire</groupId>
       <artifactId>gson-fire</artifactId>
