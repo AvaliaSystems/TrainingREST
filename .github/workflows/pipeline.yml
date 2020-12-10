@@ -63,6 +63,7 @@ jobs:
      - name : test image builded
        run: | 
           cd ./docker/topologiepiplinetest
+          docker-compose build --no-cache
           docker-compose up mvnruntest 
      - name: publish images
        run: |
