@@ -10,6 +10,4 @@ cd ../gamification-specs
 mvn install
 rm -rf ../docker/images/mvnruntest/gamification-specs
 cp -r ./ ../docker/images/mvnruntest/gamification-specs
-
-cd ../docker/topologietest
-docker-compose build --no-cache
+cd ../docker
