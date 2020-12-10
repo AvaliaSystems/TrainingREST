@@ -106,7 +106,7 @@ paths:
   /users/{id}/pointscale:
     get:
       description: get all user's pointScales
-      operationId: getUsersPointScale
+      operationId: getUsersPointScales
       security:
         - apiKeyAuth: []
       parameters:
@@ -127,7 +127,31 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Pointscale'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pointscale'
+  /pointscale:
+    post:
+      description: get all user's pointScales
+      operationId: createPointScales
+      security:
+        - apiKeyAuth: [ ]
+      parameters:
+        - in: header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Pointscale'
+      responses:
+        '201':
+          description: created
+
   /events:
     post:
       description: submit an event
@@ -252,6 +276,8 @@ components:
     Pointscale:
       type: object
       properties:
+        label:
+          type: string
         pointCounter:
           type: integer
 
