@@ -47,7 +47,6 @@ You can use the Cucumber project to validate the API implementation. Do this whe
 ```
 cd gamification-specs/
 cp ../.envexample .env
-cd cd gamification-specs/
 mvn clean test
 ```
 You will see the test results in the console, but you can also open the file located in `./target/cucumber`
