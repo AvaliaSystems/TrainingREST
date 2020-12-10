@@ -61,7 +61,9 @@ jobs:
          cd ./docker/images/springboot
          docker build --pull -t gusamaal/gamificationengine .
      - name : test image builded
-       run: | 
+       run: |
+          cd ./docker
+          sh deploy.sh
           cd ./docker/topologiepiplinetest
           docker-compose build --no-cache
           docker-compose up mvnruntest 
