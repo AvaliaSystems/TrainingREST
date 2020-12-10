@@ -30,3 +30,5 @@ services:
     build: ../images/mvnruntest
     environment:
       - URL=http://amtspringboot:8080
+    depends_on:
+      - amtspringboot
