@@ -1,10 +1,7 @@
-FROM maven:latest
-COPY apps/*.jar app.jar
-ENV SPRING_SERVER_ADDRESS=amtdb
-ENV SPRING_SERVER_PORT=8080
-ENV DATABASE_SERVER_PORT=3306
-ENV DATABASE_USERNAME=amtdb
-ENV DATABASE_PASSWORD=amtdb
-ENV DATABASE_NAME=amtdb
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM maven:3.6.3-openjdk-11
+COPY gamification-specs  gamification-specs
+COPY test.sh test.sh
+ENV URL=http://amtspringboot:8080
+RUN ["chmod", "+x", "test.sh"]
+ENTRYPOINT ["sh","test.sh"]
 
