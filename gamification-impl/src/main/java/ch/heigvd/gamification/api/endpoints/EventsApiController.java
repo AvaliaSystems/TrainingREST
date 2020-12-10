@@ -48,8 +48,8 @@ public class EventsApiController implements EventsApi {
         event.setTimestamp(date.getTime());
 
         System.out.println("receive event type "+ event.getEventType() +" at " + event.getTimestamp());
-        eventProcessorService.addBadgetoUser(X_API_KEY.toString(),username);
-
+        //eventProcessorService.addBadgetoUser(X_API_KEY.toString(),username);
+        eventProcessorService.applyRules(X_API_KEY.toString(),event);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }

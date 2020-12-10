@@ -76,6 +76,7 @@ public class EventProcessorServiceImpl implements EventProcessorService{
             case "addBadge":
                 BadgeEntity badgeEntity = badgeRepository.findByApplicationEntity_ApiKeyAndName(apikey,ruleEntity.getActionTarget());
                 userEntity.getBadgeEntitys().add(badgeEntity);
+                userRepository.save(userEntity);
                 break;
             case "addPoint":
                 break;
