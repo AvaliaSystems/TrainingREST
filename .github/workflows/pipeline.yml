@@ -64,7 +64,7 @@ jobs:
        run: |
           cd ./docker
           sh deploy.sh
-          cd ./docker/topologiepiplinetest
+          cd topologiepiplinetest
           docker-compose build --no-cache
           docker-compose up mvnruntest 
      - name: publish images
