@@ -102,6 +102,56 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Badge'
+
+  /users/{id}/pointscale:
+    get:
+      description: get all user's pointScales
+      operationId: getUsersPointScales
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pointscale'
+  /pointscale:
+    post:
+      description: get all user's pointScales
+      operationId: createPointScales
+      security:
+        - apiKeyAuth: [ ]
+      parameters:
+        - in: header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Pointscale'
+      responses:
+        '201':
+          description: created
+
   /events:
     post:
       description: submit an event
@@ -119,8 +169,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Event'
       responses:
-        '200':
-          description: Event successfully processed
+        '201':
+          description: created
   /badges:
     post:
       description: create a badge
@@ -223,6 +273,13 @@ components:
           properties:
             username: # identity convention between client and GameEngine to identify uniquely a user
               type: string
+    Pointscale:
+      type: object
+      properties:
+        label:
+          type: string
+        pointCounter:
+          type: integer
 
     # Scheme for Badges
     Badge:
