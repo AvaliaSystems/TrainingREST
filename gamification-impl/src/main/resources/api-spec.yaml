@@ -169,8 +169,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Event'
       responses:
-        '201':
-          description: created
+        '202':
+          description: accepted
   /badges:
     post:
       description: create a badge
@@ -248,6 +248,49 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Application'
+  /rules:
+    get:
+      description: get rules for an application
+      operationId: getRules
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rule'
+    post:
+      description: create a rule for an application
+      operationId: createRule
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Rule'
+      responses:
+        '201':
+          description: created
+
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -267,12 +310,32 @@ components:
           type: integer
           format: int64
         eventType:
-          type: integer
+          type: string
         eventparams:
           type: object
           properties:
             username: # identity convention between client and GameEngine to identify uniquely a user
               type: string
+    Rule:
+      type: object
+      properties:
+        if:
+          type: object
+          properties:
+            eventType:
+              type: string
+        then:
+          type: object
+          properties:
+            action:
+              type: object
+              properties:
+                name:
+                  type: string
+                target:
+                  type: string
+                amount:
+                  type: integer
     Pointscale:
       type: object
       properties:
