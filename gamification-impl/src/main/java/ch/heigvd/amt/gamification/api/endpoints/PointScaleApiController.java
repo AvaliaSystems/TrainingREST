@@ -1,10 +1,8 @@
 package ch.heigvd.amt.gamification.api.endpoints;
 
 import ch.heigvd.amt.gamification.api.PointscaleApi;
-import ch.heigvd.amt.gamification.api.model.Badge;
 import ch.heigvd.amt.gamification.api.model.PointScale;
 import ch.heigvd.amt.gamification.entities.ApplicationEntity;
-import ch.heigvd.amt.gamification.entities.BadgeEntity;
 import ch.heigvd.amt.gamification.entities.PointscaleEntity;
 import ch.heigvd.amt.gamification.repositories.PointScaleRepository;
 import io.swagger.annotations.ApiParam;
