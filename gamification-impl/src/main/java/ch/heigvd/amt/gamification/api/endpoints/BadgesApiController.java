@@ -36,7 +36,7 @@ public class BadgesApiController implements BadgesApi {
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
         newBadgeEntity.setApplicationEntity((ApplicationEntity) request.getAttribute("applicationEntity"));
         badgeRepository.save(newBadgeEntity);
-        Long id = newBadgeEntity.getId();
+        Long id = newBadgeEntity.getId(); // FIXME remove
 
         URI location = ServletUriComponentsBuilder
             .fromCurrentRequest().path("/{id}")

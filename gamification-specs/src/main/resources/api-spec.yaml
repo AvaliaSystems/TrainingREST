@@ -85,8 +85,8 @@ paths:
         '201':
           description: created
     get:
-      description: get the list of all pointScale
-      operationId: getPointScales
+      description: get the list of all point scales
+      operationId: getPointscales
       responses:
         '200':
           description: success
@@ -99,7 +99,7 @@ paths:
   /pointscale/{id}:
     get:
       description: get one point scale, by id
-      operationId: getPointScale
+      operationId: getPointscale
       parameters:
         - in: path
           name: id
@@ -197,7 +197,7 @@ components:
           type: string
         description:
           type: string
-    PointScale:
+    Pointscale:
       type: object
       properties:
         name:

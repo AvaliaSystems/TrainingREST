@@ -8,7 +8,7 @@ import java.io.Serializable;
 // This tells Hibernate to make a table out of this class
 @Entity
 @Data
-public class PointScaleEntity implements Serializable {
+public class PointscaleEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
