@@ -1,6 +1,5 @@
 package ch.heigvd.amt.gamification.services;
 
-import ch.heigvd.amt.gamification.api.model.Badge;
 import ch.heigvd.amt.gamification.entities.*;
 import ch.heigvd.amt.gamification.repositories.BadgeRepository;
 import ch.heigvd.amt.gamification.repositories.EventRepository;
@@ -8,7 +7,6 @@ import ch.heigvd.amt.gamification.repositories.RuleRepository;
 import ch.heigvd.amt.gamification.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,9 @@ public class EventProcessorService {
         String eventUserId = eventEntity.getUserId();
         ApplicationEntity applicationEntity = eventEntity.getApplicationEntity();
 
+        // Récupère l'utilisateur à partir de l'Event
         UserEntity user = userRepository.findByUserIdAndApplicationEntity(eventUserId, applicationEntity);
+        // S'il n'existe pas encore on le créé
         if(user == null) {
             user = new UserEntity();
             user.setUserId(eventUserId);
@@ -39,19 +39,26 @@ public class EventProcessorService {
             user.setNbBadges(0);
         }
 
-        // TODO : Récupérer et parcourir la liste des Rules du type de l'Event
+        // Récupère et parcourt la liste des Rules du type de l'Event
         List<RuleEntity> eventRulesOfType = ruleRepository.findAllByApplicationEntityAndType(applicationEntity, eventEntity.getEventType());
 
         for(RuleEntity ruleOfType : eventRulesOfType) {
-            // TODO : Attribuer un badge si la Rule l'indique
+            // Attribue un badge si la Rule l'indique
             if(ruleOfType.getAwardBadge() != null) {
                 BadgeEntity badgeEntityOfApp = badgeRepository.findByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardBadge());
 
+                // Récupère les badges existants et ajoute le nouveau si nécessaire
                 List<BadgeEntity> currentBadges = user.getBadges();
+                if(currentBadges == null) {
+                    currentBadges = new ArrayList<>();
+                }
                 currentBadges.add(badgeEntityOfApp);
-                System.out.println(currentBadges);
 
                 user.setBadges(currentBadges);
+
+                // Incrémente le compteur de badges
+                int nbBadges = user.getNbBadges();
+                user.setNbBadges(++nbBadges);
             }
 
             // TODO : Attribuer des points si la Rule l'indique
@@ -59,14 +66,6 @@ public class EventProcessorService {
                 // TODO
             }
         }
-
-        //List<BadgeEntity> badges = new ArrayList<>();
-        // Attribue seulement le premier badge (temporaire FIXME)
-        //badges.add(badgeRepository.findAllByApplicationEntity(eventEntity.getApplicationEntity()).get(0));
-        //user.setBadges(badges);
-
-        int nbBadges = user.getNbBadges();
-        user.setNbBadges(++nbBadges);
 
         userRepository.save(user);
 
