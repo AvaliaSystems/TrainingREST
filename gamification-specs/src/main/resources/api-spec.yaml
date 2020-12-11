@@ -24,7 +24,7 @@ paths:
             #operationId: getApplications
             #responses:
             #  '200':
-            #   description: success
+          #   description: success
           #  content:
           #   'application/json':
           #    schema:
@@ -85,8 +85,8 @@ paths:
         '201':
           description: created
     get:
-      description: get the list of all point scales
-      operationId: getPointscales
+      description: get the list of all pointScale
+      operationId: getPointScales
       responses:
         '200':
           description: success
@@ -99,7 +99,7 @@ paths:
   /pointscale/{id}:
     get:
       description: get one point scale, by id
-      operationId: getPointscale
+      operationId: getPointScale
       parameters:
         - in: path
           name: id
@@ -197,13 +197,15 @@ components:
           type: string
         description:
           type: string
-    Pointscale:
+    PointScale:
       type: object
       properties:
         name:
           type: string
         description:
           type: string
+        points:
+          type: integer
     Event:
       type: object
       properties:

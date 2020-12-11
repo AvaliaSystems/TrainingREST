@@ -15,6 +15,7 @@ public class PointscaleEntity implements Serializable {
 
     private String name;
     private String description;
+    private int points;
 
     @ManyToOne
     private ApplicationEntity applicationEntity;

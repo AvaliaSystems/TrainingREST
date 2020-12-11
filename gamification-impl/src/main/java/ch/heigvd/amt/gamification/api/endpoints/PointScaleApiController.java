@@ -56,6 +56,7 @@ public class PointScaleApiController implements PointscaleApi {
         PointScale pointScale = new PointScale();
         pointScale.setName(pointscaleEntity.getName());
         pointScale.setDescription(pointscaleEntity.getDescription());
+        pointScale.setPoints(pointscaleEntity.getPoints());
         return pointScale;
     }
 
@@ -63,6 +64,7 @@ public class PointScaleApiController implements PointscaleApi {
         PointscaleEntity entity = new PointscaleEntity();
         entity.setName(pointScale.getName());
         entity.setDescription(pointScale.getDescription());
+        entity.setPoints(pointScale.getPoints());
         return entity;
     }
 }
