@@ -204,8 +204,6 @@ components:
           type: string
         description:
           type: string
-        points:
-          type: integer
     Event:
       type: object
       properties:
