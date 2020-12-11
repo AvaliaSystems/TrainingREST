@@ -14,5 +14,3 @@ Feature: Basic operations on applications
     Given I have a application payload
     When I POST the application payload to the /applications endpoint
     Then I receive a 200 status code with an x-api-key header
-    When I send a GET to the /applications endpoint
-    Then I receive a 200 status code
