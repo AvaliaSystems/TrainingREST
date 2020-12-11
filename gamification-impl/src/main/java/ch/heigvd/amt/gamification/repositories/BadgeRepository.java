@@ -9,4 +9,5 @@ import java.util.List;
 public interface BadgeRepository extends CrudRepository<BadgeEntity, Long> {
 
     List<BadgeEntity> findAllByApplicationEntity(ApplicationEntity applicationEntity);
+    BadgeEntity findByApplicationEntityAndName(ApplicationEntity applicationEntity, String name);
 }

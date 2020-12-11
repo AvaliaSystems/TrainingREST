@@ -10,7 +10,7 @@ server.port=8080
 logging.level.org.springframework.web=INFO
 SPRING_DATASOURCE_URL (docker-compose)
 spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:mysql://impl_db:3306/amt-db
+spring.datasource.url=jdbc:mysql://localhost:3306/amt-db
 spring.datasource.username=amt-usr
 spring.datasource.password=amt-pw
 spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
