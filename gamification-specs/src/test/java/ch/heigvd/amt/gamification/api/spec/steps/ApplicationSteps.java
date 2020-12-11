@@ -36,7 +36,7 @@ public class ApplicationSteps {
     }
 
     // TODO : L'endpoint GET n'existe plus
-    @When("I send a GET to the \\/applications endpoint")
+   /* @When("I send a GET to the \\/applications endpoint")
     public void i_send_a_get_to_the_applications_endpoint() {
         try {
             lastApiResponse = api.getApplicationsWithHttpInfo();
@@ -44,7 +44,7 @@ public class ApplicationSteps {
         } catch (ApiException e) {
             environment.processApiException(e);
         }
-    }
+    }*/
 
     @Given("I have a application payload")
     public void i_have_a_application_payload() {
