@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/Gusamaal/Gamification-Engine-AMT/workflows/GitHub%20CI/badge.svg?branch=master)](https://github.com/Gusamaal/Gamification-Engine-AMT/actions)
+[![Actions Status](https://github.com/Gusamaal/Gamification-Engine-AMT/workflows/Greet%20Everyone/badge.svg?branch=master)](https://github.com/Gusamaal/Gamification-Engine-AMT/actions)
 # AMT 2020 Gamification Engine
 
 | Nom               | email                        |
