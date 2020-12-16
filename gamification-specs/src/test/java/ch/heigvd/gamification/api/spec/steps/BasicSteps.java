@@ -191,7 +191,7 @@ public class BasicSteps {
         eventparams = new ch.heigvd.gamification.api.dto.EventEventparams()
                 .username("Jean");
         event = new ch.heigvd.gamification.api.dto.Event()
-                .eventType(0)
+                .eventType("generic_descritpion")
                 .eventparams(eventparams)
                 .timestamp((long)0);
     }
