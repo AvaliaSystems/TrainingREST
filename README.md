@@ -20,12 +20,11 @@ Our application is build over the Jakarta EE standard (Java EE). We are using th
 | IDE                           | [IntelliJ Idea Ultimate](https://www.jetbrains.com/idea/) | __>=2020.2__ |
 | Build/dependency Manager      | [Maven](https://maven.apache.org/)                        | __>= 3.6__   |
 | testing tools                 | [cucumber](https://cucumber.io/)                          | __>=2.6__    |
-| Unit Testing Framework        | [Junit](https://junit.org/junit5/)                        | __>= 5.6__   |
 | Containerization tools        | [Docker](https://www.docker.com/)                         | __>= 19.03__ |
 
 # Build and run the Gamification MicroService
 
-You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8080.
+You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8086.
 
 ```
 cd gamification-impl/
@@ -36,8 +35,8 @@ mvn spring-boot:run
 
 You can then access:
 
-* the [API documentation](http://localhost:8080/swagger-ui.html), generated from annotations in the code
-* the [API endpoint](http://localhost:8080/), accepting GET and POST requests
+* the [API documentation](http://localhost:8086/swagger-ui.html), generated from annotations in the code
+* the [API endpoint](http://localhost:8086/), accepting GET and POST requests
 
 You can use curl to invoke the endpoints:
 
@@ -46,7 +45,8 @@ You can use curl to invoke the endpoints:
 You can use the Cucumber project to validate the API implementation. Do this when the server is running.
 
 ```
-cd cd gamification-specs/
+cd gamification-specs/
+cp ../.envexample .env
 mvn clean test
 ```
 You will see the test results in the console, but you can also open the file located in `./target/cucumber`

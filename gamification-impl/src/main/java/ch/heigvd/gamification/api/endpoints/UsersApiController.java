@@ -4,11 +4,14 @@ package ch.heigvd.gamification.api.endpoints;
 import ch.heigvd.gamification.api.UsersApi;
 import ch.heigvd.gamification.api.model.Application;
 import ch.heigvd.gamification.api.model.Badge;
+import ch.heigvd.gamification.api.model.Pointscale;
 import ch.heigvd.gamification.api.model.User;
 import ch.heigvd.gamification.entities.ApplicationEntity;
+import ch.heigvd.gamification.entities.PointscaleEntity;
 import ch.heigvd.gamification.entities.UserEntity;
 
 import ch.heigvd.gamification.repositories.ApplicationRepository;
+import ch.heigvd.gamification.repositories.PointscaleRepository;
 import ch.heigvd.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +44,19 @@ public class UsersApiController implements UsersApi {
     @Autowired
     ApplicationRepository applicationRepository;
 
+    @Autowired
+    PointscaleRepository pointscaleRepository;
+
     @Override
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createUser(UUID X_API_KEY, @Valid User user) {
         UserEntity newUserEntity = toUserEntity(user);
         ApplicationEntity applicationEntity = applicationRepository.findByApiKey(X_API_KEY.toString());
         newUserEntity.setApplicationEntity(applicationEntity);
+
+        List<PointscaleEntity> pointscaleEntities = new ArrayList<>();
+        pointscaleRepository.findByApplicationEntity_ApiKey(X_API_KEY.toString()).forEach(pointscaleEntities::add);
+        newUserEntity.setPointscaleEntitys(pointscaleEntities);
 
         userRepository.save(newUserEntity);
 
@@ -96,4 +106,21 @@ public class UsersApiController implements UsersApi {
         return ResponseEntity.ok(badges);
     }
 
+    @Override
+    public ResponseEntity<List<Pointscale>> getUsersPointScales(Integer id, UUID X_API_KEY) {
+        UserEntity existingUserEntity = userRepository
+                .findByApplicationEntity_ApiKeyAndId(X_API_KEY.toString(),Long.valueOf(id))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        List<Pointscale> pointscales =  new ArrayList<>();
+
+        existingUserEntity.getPointscaleEntitys().forEach(pointscaleEntity -> {
+            Pointscale pointscale = new Pointscale();
+            pointscale.setPointCounter(pointscaleEntity.getCounter());
+            pointscale.setLabel(pointscaleEntity.getLabel());
+            pointscales.add(pointscale);
+        });
+
+        return ResponseEntity.ok(pointscales);
+    }
 }
