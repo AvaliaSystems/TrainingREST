@@ -13,6 +13,7 @@ services:
     ports:
       - "3306:3306"
   amtspringboot:
+    restart: always
     image: amtspringboot
     build: ../images/springboot
     environment:
@@ -32,3 +33,4 @@ services:
       - URL=http://amtspringboot:8080
     depends_on:
       - amtspringboot
+      - amtdb
