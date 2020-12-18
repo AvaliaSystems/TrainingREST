@@ -25,7 +25,7 @@ public class EventProcessorService {
     @Autowired
     private RuleRepository ruleRepository;
 
-    public void processEvent(EventEntity eventEntity) {
+    public long processEvent(EventEntity eventEntity) {
         String eventUserId = eventEntity.getUserId();
         ApplicationEntity applicationEntity = eventEntity.getApplicationEntity();
 
@@ -73,6 +73,8 @@ public class EventProcessorService {
 
         // TODO : Besoin de sauvegarder tous les events ou juste les traiter? (la plupart seront "vides")
         //eventRepository.save(eventEntity);
+
+        return user.getId();
     }
 
 }
