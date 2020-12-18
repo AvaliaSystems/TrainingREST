@@ -7,10 +7,11 @@ Feature: Basic operations on events
     Given I have an event payload
     When I POST the event payload to the /events endpoint
     Then I receive a 401 status code
-
-     #TODO 201
+    #TODO 201
+    
   Scenario: create an event authenticated
     Given I have successfully registered my app
     Given I have an event payload
     When I POST the event payload to the /events endpoint
     Then I receive a 200 status code
+

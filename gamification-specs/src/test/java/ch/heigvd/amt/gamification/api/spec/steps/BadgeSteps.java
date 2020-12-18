@@ -10,6 +10,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -89,5 +93,19 @@ public class BadgeSteps {
     @And("I receive a payload that is the same as the badge payload")
     public void iReceiveAPayloadThatIsTheSameAsTheBadgePayload() {
         assertEquals(badge, lastReceivedBadge);
+    }
+
+    @Given("I have a badge payload named {string}")
+    public void i_have_a_badge_payload_named(String name) {
+        badge = new ch.heigvd.amt.gamification.api.dto.Badge()
+                .name(name)
+                .description("mockdesc");
+    }
+
+    @Then("I receive a list of {int} badges")
+    public void i_receive_a_list_of_badges(Integer nbBadges) {
+        List<Badge> badgeList = (ArrayList) lastApiResponse.getData();
+        assertEquals((long) nbBadges, badgeList.size());
+
     }
 }
