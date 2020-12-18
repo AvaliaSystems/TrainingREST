@@ -3,7 +3,6 @@ package ch.heigvd.amt.gamification.api.spec.steps;
 import ch.heigvd.amt.gamification.ApiException;
 import ch.heigvd.amt.gamification.ApiResponse;
 import ch.heigvd.amt.gamification.api.DefaultApi;
-import ch.heigvd.amt.gamification.api.dto.Badge;
 import ch.heigvd.amt.gamification.api.dto.Event;
 import ch.heigvd.amt.gamification.api.dto.EventProperties;
 import ch.heigvd.amt.gamification.api.dto.User;
@@ -25,7 +24,10 @@ public class UsersSteps {
 
     private ApiResponse lastApiResponse;
     private Event event;
-    private String lastUserId;
+    private User user;
+
+    private String lastReceivedUserLocationHeader;
+    private User lastReceivedUser;
 
 
     public UsersSteps(Environment environment) {
@@ -49,7 +51,7 @@ public class UsersSteps {
                 .eventType("mockType")
                 .userId(userId);
 
-        lastUserId = userId;
+        user = new User().userId(userId);
     }
 
     //TODO refactor w method from events
@@ -79,4 +81,23 @@ public class UsersSteps {
         List<User> userList = (ArrayList) lastApiResponse.getData();
         assertEquals((long) nbUsers, userList.size());
     }
+
+    @When("I send a GET to the URL in the userLocation header")
+    public void i_send_a_get_to_the_url_in_the_user_location_header() {
+        lastReceivedUserLocationHeader = environment.getLastReceivedUserLocationHeader();
+        Integer id = Integer.parseInt(lastReceivedUserLocationHeader.substring(lastReceivedUserLocationHeader.lastIndexOf('/') + 1));
+        try {
+            lastApiResponse = api.getUserWithHttpInfo(id);
+            environment.processApiResponse(lastApiResponse);
+            lastReceivedUser = (User) lastApiResponse.getData();
+        } catch (ApiException e) {
+            environment.processApiException(e);
+        }
+    }
+
+    @Then("I receive a payload for user with userId")
+    public void i_receive_a_payload_for_user_with_userId() {
+        assertEquals(user.getUserId(), lastReceivedUser.getUserId());
+    }
+
 }
