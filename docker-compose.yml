@@ -1,4 +1,9 @@
 version: "3.7"
+
+# pour que bashwait vienne après dessus
+networks:
+  web:
+
 services:
     api:
         build: docker/api
@@ -16,6 +21,8 @@ services:
           - DATABASE_PASSWORD=amt-pw
           - DATABASE_PORT=3306
           - SPRING_SERVER_PORT=8080
+        networks:
+          - web
 
     impl_db:
       image: mysql
@@ -30,6 +37,8 @@ services:
         - MYSQL_PASSWORD=amt-pw
       expose:
         - '3306'
+      networks:
+        - web
 
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
@@ -41,6 +50,8 @@ services:
         - 8888:80
       depends_on:
         - impl_db
+      networks:
+        - web
 
     testcucumber:
         build: docker/testCucumber
@@ -49,3 +60,5 @@ services:
           - 8081:8081
         depends_on:
           - api
+        networks:
+          - web
