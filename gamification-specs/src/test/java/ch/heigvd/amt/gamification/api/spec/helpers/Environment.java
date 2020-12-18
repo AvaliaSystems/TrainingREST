@@ -23,6 +23,7 @@ public class Environment {
     private int lastStatusCode;
 
     private String lastReceivedLocationHeader;
+    private String lastReceivedUserLocationHeader;
 
     public Environment() throws IOException {
         Properties properties = new Properties();
@@ -40,6 +41,8 @@ public class Environment {
         lastStatusCode = lastApiResponse.getStatusCode();
         List<String> locationHeaderValues = (List<String>)lastApiResponse.getHeaders().get("Location");
         lastReceivedLocationHeader = locationHeaderValues != null ? locationHeaderValues.get(0) : null;
+        List<String> userLocationHeaderValues = (List<String>)lastApiResponse.getHeaders().get("userLocation");
+        lastReceivedUserLocationHeader = locationHeaderValues != null ? userLocationHeaderValues.get(0) : null;
     }
 
     public void processApiException(ApiException apiException) {
