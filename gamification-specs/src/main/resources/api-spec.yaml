@@ -236,7 +236,7 @@ components:
         if:
           type: object
           properties:
-            ruleType:
+            eventType:
               type: string
         then:
           type: object

@@ -1,23 +1,25 @@
 package ch.heigvd.amt.gamification.services;
 
 import ch.heigvd.amt.gamification.entities.*;
-import ch.heigvd.amt.gamification.repositories.BadgeRepository;
-import ch.heigvd.amt.gamification.repositories.EventRepository;
-import ch.heigvd.amt.gamification.repositories.RuleRepository;
-import ch.heigvd.amt.gamification.repositories.UserRepository;
+import ch.heigvd.amt.gamification.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class EventProcessorService {
     @Autowired
-    private EventRepository eventRepository;
+    private BadgeRepository badgeRepository;
 
     @Autowired
-    private BadgeRepository badgeRepository;
+    private PointScaleRepository pointscaleRepository;
+
+    @Autowired
+    private BadgeRewardRepository badgeRewardRepository;
+    @Autowired
+    private PointRewardRepository pointRewardRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -37,42 +39,53 @@ public class EventProcessorService {
             user.setUserId(eventUserId);
             user.setApplicationEntity(eventEntity.getApplicationEntity());
             user.setNbBadges(0);
+            userRepository.save(user);
         }
 
         // Récupère et parcourt la liste des Rules du type de l'Event
-        List<RuleEntity> eventRulesOfType = ruleRepository.findAllByApplicationEntityAndType(applicationEntity, eventEntity.getEventType());
+        List<RuleEntity> eventRulesOfType = ruleRepository.findAllByApplicationEntityAndEventType(applicationEntity, eventEntity.getEventType());
 
         for(RuleEntity ruleOfType : eventRulesOfType) {
             // Attribue un badge si la Rule l'indique
             if(ruleOfType.getAwardBadge() != null) {
                 BadgeEntity badgeEntityOfApp = badgeRepository.findByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardBadge());
 
-                // Récupère les badges existants et ajoute le nouveau si nécessaire
-                List<BadgeEntity> currentBadges = user.getBadges();
-                if(currentBadges == null) {
-                    currentBadges = new ArrayList<>();
-                }
-                currentBadges.add(badgeEntityOfApp);
+                // La règle attribue un badge à l'utilisateur
+                BadgeRewardEntity badgeRewardEntity = new BadgeRewardEntity();
+                badgeRewardEntity.setBadgeEntity(badgeEntityOfApp);
+                badgeRewardEntity.setUserEntity(user);
+                badgeRewardEntity.setTimestamp(LocalDateTime.now());
+                badgeRewardRepository.save(badgeRewardEntity);
 
-                user.setBadges(currentBadges);
-
-                // Incrémente le compteur de badges
+                /*
+                // FIXME: Incrémente le compteur de badges
                 int nbBadges = user.getNbBadges();
                 user.setNbBadges(++nbBadges);
+                 */
             }
 
+            PointscaleEntity pointscaleEntityOfApp;
             // TODO : Attribuer des points si la Rule l'indique
             if(ruleOfType.getAwardPoints() != null) {
-                // TODO
+                pointscaleEntityOfApp = pointscaleRepository.findAllByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardPoints());
+
+                PointRewardEntity pointRewardEntity = new PointRewardEntity();
+                pointRewardEntity.setPointscaleEntity(pointscaleEntityOfApp);
+                pointRewardEntity.setUserEntity(user);
+                pointRewardEntity.setTimestamp(LocalDateTime.now());
+                pointRewardEntity.setPoints(ruleOfType.getAmount());
+                pointRewardRepository.save(pointRewardEntity);
+
+                // TODO : Issue #37 - Vérifier le nombre de points de l'user et lui attribuer un badge s'il a atteint un palier de points
+                PointRewardEntity userPointRewardEntity = pointRewardRepository.findByUserEntityAndPointscaleEntity(user, pointscaleEntityOfApp);
+                int userPoints = userPointRewardEntity.getPoints();
+
+                //if(userPoints == ruleOfType.get)
             }
         }
 
-        userRepository.save(user);
+        //userRepository.save(user);
 
-        // TODO : Issue #37 - Vérifier le nombre de points de l'user et lui attribuer un badge s'il a atteint un palier de points
 
-        // TODO : Besoin de sauvegarder tous les events ou juste les traiter? (la plupart seront "vides")
-        //eventRepository.save(eventEntity);
     }
-
 }
