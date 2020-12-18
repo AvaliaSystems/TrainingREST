@@ -3,4 +3,4 @@
 
 cd ../gamification-specs
 
-../scripts/wait-for-it.sh -t 30 apirest:8080 -- mvn clean package verify
+../scripts/wait-for-it.sh -t 30 localhost:8080 -- mvn clean package verify
