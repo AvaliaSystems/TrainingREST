@@ -14,7 +14,3 @@ Feature: Basic operations on events
     Given I have an event payload
     When I POST the event payload to the /events endpoint
     Then I receive a 200 status code
-
-  Scenario: fail
-    Given i do shit
-
