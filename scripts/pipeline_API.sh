@@ -1,4 +1,6 @@
 #!/bin/bash
 ./runREST_API.sh
 
-./wait-for-it.sh apirest:8080 -- cd ../gamification-specs && mvn clean package verify
+cd ../gamification-specs
+
+../scripts/wait-for-it.sh apirest:8080 -- mvn clean package verify
