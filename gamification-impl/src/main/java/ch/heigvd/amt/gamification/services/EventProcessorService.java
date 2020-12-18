@@ -27,7 +27,7 @@ public class EventProcessorService {
     @Autowired
     private RuleRepository ruleRepository;
 
-    public void processEvent(EventEntity eventEntity) {
+    public long processEvent(EventEntity eventEntity) {
         String eventUserId = eventEntity.getUserId();
         ApplicationEntity applicationEntity = eventEntity.getApplicationEntity();
 
@@ -80,9 +80,13 @@ public class EventProcessorService {
                 PointRewardEntity userPointRewardEntity = pointRewardRepository.findByUserEntityAndPointscaleEntity(user, pointscaleEntityOfApp);
                 int userPoints = userPointRewardEntity.getPoints();
 
+                // TODO : Besoin de sauvegarder tous les events ou juste les traiter? (la plupart seront "vides")
+                //eventRepository.save(eventEntity);
+
                 //if(userPoints == ruleOfType.get)
             }
         }
+        return user.getId();
 
         //userRepository.save(user);
 
