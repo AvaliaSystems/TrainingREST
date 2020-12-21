@@ -31,3 +31,8 @@ services:
     build: ../images/failsafe
     environment:
       - URL=http://amtspringboot:8080
+    volumes:
+      - failsafedep:/root/.m2
+
+volumes:
+  failsafedep:

@@ -3,8 +3,9 @@ cd ..
 readonly BASE_DIR="$PWD"
 cd gamification-impl/
 mvn install
-rm -f "$BASE_DIR"/docker/images/springboot/apps/gamification-impl-1.0.0.jar
-cp target/gamification-impl-1.0.0.jar "$BASE_DIR"/docker/images/springboot/apps
+rm -rf "$BASE_DIR"/docker/images/springboot/apps
+mkdir "$BASE_DIR"/docker/images/springboot/apps
+cp target/gamification-impl-1.0.0.jar "$BASE_DIR"/docker/images/springboot/apps/gamification-impl-1.0.0.jar
 
 cd "$BASE_DIR"/gamification-specs
 rm -rf "$BASE_DIR"/docker/images/failsafe/pom.xml
