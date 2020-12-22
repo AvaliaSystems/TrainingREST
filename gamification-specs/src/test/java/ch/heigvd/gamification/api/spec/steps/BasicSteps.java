@@ -6,6 +6,8 @@ import ch.heigvd.gamification.api.DefaultApi;
 import ch.heigvd.gamification.api.dto.ApiKey;
 import ch.heigvd.gamification.api.dto.Application;
 import ch.heigvd.gamification.api.dto.Badge;
+import ch.heigvd.gamification.api.dto.Event;
+import ch.heigvd.gamification.api.dto.EventEventparams;
 import ch.heigvd.gamification.api.dto.User;
 import ch.heigvd.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.And;
@@ -28,6 +30,8 @@ public class BasicSteps {
     Application application;
     UUID apiKey;
     Badge badge;
+    Event event;
+    EventEventparams eventparams;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
@@ -84,7 +88,7 @@ public class BasicSteps {
     public void iReceiveAStatusCodeWithALocationHeader(int arg0) {
     }
 
-    @When("I send a GET to the URL in the location header")
+    /*@When("I send a GET to the URL in the location header")
     public void iSendAGETToTheURLInTheLocationHeader() {
         Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
         try {
@@ -94,7 +98,7 @@ public class BasicSteps {
         } catch (ApiException e) {
             processApiException(e);
         }
-    }
+    }*/
 
     @And("I receive a payload that is the same as the user payload")
     public void iReceiveAPayloadThatIsTheSameAsTheUserPayload() {
@@ -156,7 +160,7 @@ public class BasicSteps {
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
         badge = new ch.heigvd.gamification.api.dto.Badge()
-                .id(24)
+                .id(0)
                 .color("red")
                 .description("for good bois only")
                 .name("good boi badge");
@@ -176,6 +180,26 @@ public class BasicSteps {
     public void iSendAGETToTheBadgesEndpoint() {
         try {
             lastApiResponse = api.getBadgesWithHttpInfo(apiKey);
+            processApiResponse(lastApiResponse);
+        } catch (ApiException e) {
+            processApiException(e);
+        }
+    }
+
+    @Given("I have an event payload")
+    public void i_have_an_event_payload() throws Throwable {
+        eventparams = new ch.heigvd.gamification.api.dto.EventEventparams()
+                .username("Jean");
+        event = new ch.heigvd.gamification.api.dto.Event()
+                .eventType("generic_descritpion")
+                .eventparams(eventparams)
+                .timestamp((long)0);
+    }
+
+    @When("^I POST the event payload to the /events endpoint$")
+    public void i_POST_the_event_payload_to_the_events_endpoint() throws Throwable {
+        try {
+            lastApiResponse = api.processEventWithHttpInfo(apiKey, event);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             processApiException(e);
