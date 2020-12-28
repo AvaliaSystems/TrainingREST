@@ -1,19 +1,13 @@
 package ch.heigvd.gamification.api.services;
 
 import ch.heigvd.gamification.api.model.Event;
-import ch.heigvd.gamification.api.model.Rule;
-import ch.heigvd.gamification.api.model.RuleThenAction;
 import ch.heigvd.gamification.entities.*;
-import ch.heigvd.gamification.repositories.ApplicationRepository;
-import ch.heigvd.gamification.repositories.BadgeRepository;
-import ch.heigvd.gamification.repositories.RuleRepository;
-import ch.heigvd.gamification.repositories.UserRepository;
+import ch.heigvd.gamification.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EventProcessorServiceImpl implements EventProcessorService{
@@ -76,7 +70,7 @@ public class EventProcessorServiceImpl implements EventProcessorService{
         userEntity.setApplicationEntity(applicationEntity);
 
         List<PointscaleEntity> pointscaleEntities = new ArrayList<>();
-        pointscaleRepository.findByApplicationEntity_ApiKey(X_API_KEY.toString()).forEach(pointscaleEntities::add);
+        pointscaleRepository.findByApplicationEntity_ApiKey(applicationEntity.getApiKey()).forEach(pointscaleEntities::add);
         userEntity.setPointscaleEntitys(pointscaleEntities);
 
         return userEntity;
