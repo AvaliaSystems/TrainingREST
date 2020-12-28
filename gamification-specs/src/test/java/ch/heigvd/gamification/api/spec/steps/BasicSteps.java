@@ -3,7 +3,6 @@ package ch.heigvd.gamification.api.spec.steps;
 import ch.heigvd.gamification.ApiException;
 import ch.heigvd.gamification.ApiResponse;
 import ch.heigvd.gamification.api.DefaultApi;
-import ch.heigvd.gamification.api.dto.Application;
 import ch.heigvd.gamification.api.dto.Badge;
 import ch.heigvd.gamification.api.dto.Event;
 import ch.heigvd.gamification.api.dto.EventEventparams;
@@ -44,19 +43,12 @@ public class BasicSteps {
         this.api = environment.getApi();
     }
 
-
-    public void setLastApiResponse(ApiResponse apiResponse){
-
-        lastApiResponse = apiResponse;
-        processApiResponse(lastApiResponse);
-    }
+    
 
     @Given("there is a Gamification server")
     public void there_is_a_Gamification_server() throws Throwable {
         assertNotNull(api);
     }
-
-
 
 
 
@@ -110,35 +102,6 @@ public class BasicSteps {
         return lastApiResponse;
     }
 
-
-    @Given("I have a badge payload")
-    public void i_have_a_badge_payload() throws Throwable {
-        badge = new ch.heigvd.gamification.api.dto.Badge()
-                .id(0)
-                .color("red")
-                .description("for good bois only")
-                .name("good boi badge");
-    }
-
-    @When("^I POST the badge payload to the /badges endpoint$")
-    public void i_POST_the_badge_payload_to_the_badges_endpoint() throws Throwable {
-        try {
-            lastApiResponse = api.createBadgeWithHttpInfo(apiKey, badge);
-            processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
-
-    @When("^I send a GET to the /badges endpoint$")
-    public void iSendAGETToTheBadgesEndpoint() {
-        try {
-            lastApiResponse = api.getBadgesWithHttpInfo(apiKey);
-            processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
 
     @Given("I have an event payload")
     public void i_have_an_event_payload() throws Throwable {

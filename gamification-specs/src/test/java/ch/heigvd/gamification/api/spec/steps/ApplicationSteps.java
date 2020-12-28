@@ -42,7 +42,7 @@ public class ApplicationSteps {
 
 
     @When("^I POST the application payload to the /applications endpoint$")
-    public void i_POST_the_application_payload_to_the_applications_endpoint() throws Throwable {
+    public void i_POST_the_application_payload_to_the_applications_endpoint() {
         try {
             basicSteps.processApiResponse(api.createApplicationWithHttpInfo(application));
         } catch (ApiException e) {
