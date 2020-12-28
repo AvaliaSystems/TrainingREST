@@ -56,38 +56,16 @@ public class BasicSteps {
         assertNotNull(api);
     }
 
-    @Given("I have a user payload")
-    public void i_have_a_user_payload() throws Throwable {
-        user = new ch.heigvd.gamification.api.dto.User()
-          .id(37)
-          .username("Jean");
 
-    }
 
-    @When("^I POST the user payload to the /users endpoint$")
-    public void i_POST_the_user_payload_to_the_users_endpoint() throws Throwable {
-        try {
-            lastApiResponse = api.createUserWithHttpInfo(apiKey, user);
-            processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
+
 
     @Then("I receive a {int} status code")
     public void i_receive_a_status_code(int expectedStatusCode) throws Throwable {
         assertEquals(expectedStatusCode, lastStatusCode);
     }
 
-    @When("^I send a GET to the /users endpoint$")
-    public void iSendAGETToTheUsersEndpoint() {
-        try {
-            lastApiResponse = api.getUsersWithHttpInfo(apiKey);
-            processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
+
 
     @Then("I receive a {int} status code with a location header")
     public void iReceiveAStatusCodeWithALocationHeader(int arg0) {

@@ -23,18 +23,14 @@ import static org.junit.Assert.assertNotNull;
 
 public class UserSteps {
 
-    /*
+
     private Environment environment;
     private DefaultApi api;
     private BasicSteps basicSteps;
-    private
+    private ApplicationSteps applicationSteps;
 
     User user;
-    Application application;
-    UUID apiKey;
-    Badge badge;
-    Event event;
-    EventEventparams eventparams;
+
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
@@ -44,9 +40,37 @@ public class UserSteps {
     private String lastReceivedLocationHeader;
     private User lastReceivedUser;
 
-    public BasicSteps(Environment environment) {
+    public  UserSteps(Environment environment, BasicSteps basicSteps, ApplicationSteps applicationSteps) {
         this.environment = environment;
         this.api = environment.getApi();
+        this.basicSteps = basicSteps;
+        this.applicationSteps = applicationSteps;
     }
-*/
+
+    @Given("I have a user payload")
+    public void i_have_a_user_payload() throws Throwable {
+        user = new ch.heigvd.gamification.api.dto.User()
+                .id(37)
+                .username("Jean");
+
+    }
+
+    @When("^I POST the user payload to the /users endpoint$")
+    public void i_POST_the_user_payload_to_the_users_endpoint() throws Throwable {
+        try {
+            basicSteps.processApiResponse(api.createUserWithHttpInfo(applicationSteps.getApiKey(), user));
+        } catch (ApiException e) {
+            basicSteps.processApiException(e);
+        }
+    }
+
+    @When("^I send a GET to the /users endpoint$")
+    public void iSendAGETToTheUsersEndpoint() {
+        try {
+            basicSteps.processApiResponse(api.getUsersWithHttpInfo(applicationSteps.getApiKey()));
+        } catch (ApiException e) {
+            basicSteps.processApiException(e);
+        }
+    }
+
 }
