@@ -61,6 +61,10 @@ jobs:
         mv ./docker/images/failsafe/.envexample ./docker/images/failsafe/.env
      - name: Login to github registry
        run: echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
+     - name: build infrastructure
+       run: |
+         cd ./docker/workflows_topologie
+         docker-compose build --pull amtspringboot
      - name: up infrastructure
        run: |
          cd ./docker/workflows_topologie
@@ -76,7 +80,6 @@ jobs:
          docker-compose down
      - name: deploy amtspringboottestimage
        run:  |
-        docker tag  ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest:latest
         docker push ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest:latest
          
   #deploy:
