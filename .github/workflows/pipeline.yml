@@ -60,7 +60,20 @@ jobs:
         cp -r ./gamification-specs/pom.xml ./docker/images/failsafe/pom.xml
      - name: Login to github registry
        run: echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
-
+     - name: up infrastructure
+       run: |
+         cd ./docker/workflows_topologie
+         docker-compose up -d amtdb amtspringboot
+     - name: run failsafe image
+       run: |
+         cd ./docker/workflows_topologie
+         docker-compose up failsafe
+          - name: run failsafe image
+     - name: down infrastructure
+       run: |
+         cd ./docker/workflows_topologie
+         docker-compose down
+         
   #deploy:
   #  runs-on: ubuntu-latest
   #  needs: test
