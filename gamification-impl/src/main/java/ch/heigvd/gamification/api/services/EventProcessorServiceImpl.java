@@ -53,8 +53,8 @@ public class EventProcessorServiceImpl implements EventProcessorService{
                     if (pointscaleEntity.getLabel().equals(ruleEntity.getActionTarget())){
                         pointscaleEntity.setCounter(pointscaleEntity.getCounter() + 1);
                     }
-                    userRepository.save(userEntity);
                 });
+                userRepository.save(userEntity);
                 break;
             default:
                 break;
@@ -72,6 +72,7 @@ public class EventProcessorServiceImpl implements EventProcessorService{
         List<PointscaleEntity> pointscaleEntities = new ArrayList<>();
         pointscaleRepository.findByApplicationEntity_ApiKey(applicationEntity.getApiKey()).forEach(pointscaleEntities::add);
         userEntity.setPointscaleEntitys(pointscaleEntities);
+        userRepository.save(userEntity);
 
         return userEntity;
     }
