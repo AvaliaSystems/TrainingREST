@@ -3,7 +3,6 @@ package ch.heigvd.gamification.api.spec.steps;
 import ch.heigvd.gamification.ApiException;
 import ch.heigvd.gamification.ApiResponse;
 import ch.heigvd.gamification.api.DefaultApi;
-import ch.heigvd.gamification.api.dto.ApiKey;
 import ch.heigvd.gamification.api.dto.Application;
 import ch.heigvd.gamification.api.dto.Badge;
 import ch.heigvd.gamification.api.dto.Event;
@@ -27,7 +26,6 @@ public class BasicSteps {
     private DefaultApi api;
 
     User user;
-    Application application;
     UUID apiKey;
     Badge badge;
     Event event;
@@ -44,6 +42,13 @@ public class BasicSteps {
     public BasicSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
+    }
+
+
+    public void setLastApiResponse(ApiResponse apiResponse){
+
+        lastApiResponse = apiResponse;
+        processApiResponse(lastApiResponse);
     }
 
     @Given("there is a Gamification server")
@@ -105,7 +110,7 @@ public class BasicSteps {
         assertEquals(user, lastReceivedUser);
     }
 
-    private void processApiResponse(ApiResponse apiResponse) {
+    public void processApiResponse(ApiResponse apiResponse) {
         lastApiResponse = apiResponse;
         lastApiCallThrewException = false;
         lastApiException = null;
@@ -114,48 +119,19 @@ public class BasicSteps {
         lastReceivedLocationHeader = locationHeaderValues != null ? locationHeaderValues.get(0) : null;
     }
 
-    private void processApiException(ApiException apiException) {
+    public void processApiException(ApiException apiException) {
+
         lastApiCallThrewException = true;
         lastApiResponse = null;
         lastApiException = apiException;
         lastStatusCode = lastApiException.getCode();
     }
 
-    @Given("I have an application payload")
-    public void iHaveAnApplicationPayload() {
-        application = new ch.heigvd.gamification.api.dto.Application()
-                .name("testApp");
+
+    public ApiResponse getlastApiResponse(){
+        return lastApiResponse;
     }
 
-    @When("^I POST the application payload to the /applications endpoint$")
-    public void i_POST_the_application_payload_to_the_applications_endpoint() throws Throwable {
-        try {
-            lastApiResponse = api.createApplicationWithHttpInfo(application);
-            processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
-
-    @When("^I send a GET to the /applications endpoint with an API Key")
-    public void iSendAGETToTheApplicationsEndpointWithAnAPIKey() {
-        try {
-            lastApiResponse = api.getApplicationWithHttpInfo(apiKey);
-            processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
-
-    @Given("I have a random API Key")
-    public void iHaveARandomAPIKey() {
-        apiKey = UUID.randomUUID();
-    }
-
-    @Given("I have a correct API key")
-    public void iHaveACorrectAPIKey(){
-        apiKey = ((ApiKey) lastApiResponse.getData()).getKey();
-    }
 
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
@@ -205,4 +181,5 @@ public class BasicSteps {
             processApiException(e);
         }
     }
+
 }
