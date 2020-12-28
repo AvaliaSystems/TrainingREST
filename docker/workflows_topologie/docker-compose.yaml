@@ -14,7 +14,7 @@ services:
       - "3306:3306"
   amtspringboot:
     restart: always
-    image: ghcr.io/gusamaal/gamification-engine-amt/gamificationengine
+    image: ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest
     build: ../images/springboot
     environment:
       - DATABASE_SERVER_ADDRESS=amtdb
