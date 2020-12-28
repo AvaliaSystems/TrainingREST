@@ -66,6 +66,7 @@ jobs:
          docker-compose up -d amtdb amtspringboot
      - name: run failsafe image
        run: |
+         ls -la ./docker/images/failsafe
          cd ./docker/workflows_topologie
          docker-compose up failsafe
           - name: run failsafe image
