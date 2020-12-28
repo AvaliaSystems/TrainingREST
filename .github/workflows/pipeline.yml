@@ -54,10 +54,11 @@ jobs:
        run: mkdir ./docker/images/springboot/apps
      - name: move jar ./docker/images/springboot/apps
        run: cp staging/gamification-impl-1.0.0.jar ./docker/images/springboot/apps/gamification-impl-1.0.0.jar
-     - name: move src and pom.xml into failsafe image
+     - name: move src, pom.xml and add .env into failsafe image
        run: |
         cp -r ./gamification-specs/src ./docker/images/failsafe/src
         cp -r ./gamification-specs/pom.xml ./docker/images/failsafe/pom.xml
+        mv ./docker/images/failsafe/.envexample ./docker/images/failsafe/.env
      - name: Login to github registry
        run: echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
      - name: up infrastructure
