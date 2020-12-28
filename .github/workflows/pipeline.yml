@@ -74,6 +74,10 @@ jobs:
        run: |
          cd ./docker/workflows_topologie
          docker-compose down
+     - name: deploy amtspringboottestimage
+       run:  |
+        docker tag  ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest:latest
+        docker push ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest:latest
          
   #deploy:
   #  runs-on: ubuntu-latest
