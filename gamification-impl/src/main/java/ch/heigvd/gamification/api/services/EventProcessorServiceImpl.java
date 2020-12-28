@@ -30,6 +30,9 @@ public class EventProcessorServiceImpl implements EventProcessorService{
     @Autowired
     RuleRepository ruleRepository;
 
+    @Autowired
+    PointscaleRepository pointscaleRepository;
+
     @Override
     public void applyRules(String apikey,Event event) {
 
@@ -71,6 +74,10 @@ public class EventProcessorServiceImpl implements EventProcessorService{
         userEntity.setBadgeEntitys(new ArrayList<>());
         userEntity.setUsername(username);
         userEntity.setApplicationEntity(applicationEntity);
+
+        List<PointscaleEntity> pointscaleEntities = new ArrayList<>();
+        pointscaleRepository.findByApplicationEntity_ApiKey(X_API_KEY.toString()).forEach(pointscaleEntities::add);
+        userEntity.setPointscaleEntitys(pointscaleEntities);
 
         return userEntity;
     }
