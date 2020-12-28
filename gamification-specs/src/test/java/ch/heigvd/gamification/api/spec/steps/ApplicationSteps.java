@@ -7,12 +7,9 @@ import ch.heigvd.gamification.api.dto.Application;
 import ch.heigvd.gamification.api.spec.helpers.Environment;
 
 import io.cucumber.java.en.Given;
-
 import io.cucumber.java.en.When;
 
-
 import java.util.UUID;
-
 
 public class ApplicationSteps {
 
@@ -22,7 +19,6 @@ public class ApplicationSteps {
 
     private Application application;
     private UUID apiKey;
-
 
     public ApplicationSteps(Environment environment, BasicSteps basicSteps) {
         this.environment = environment;
@@ -39,7 +35,6 @@ public class ApplicationSteps {
         application = new ch.heigvd.gamification.api.dto.Application()
                 .name("testApp");
     }
-
 
     @When("^I POST the application payload to the /applications endpoint$")
     public void i_POST_the_application_payload_to_the_applications_endpoint() {

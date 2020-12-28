@@ -1,17 +1,13 @@
 package ch.heigvd.gamification.api.spec.steps;
 
 import ch.heigvd.gamification.ApiException;
-import ch.heigvd.gamification.ApiResponse;
 import ch.heigvd.gamification.api.DefaultApi;
 import ch.heigvd.gamification.api.dto.Badge;
-import ch.heigvd.gamification.api.dto.User;
 import ch.heigvd.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
-
 public class BadgeSteps {
-
 
     private Environment environment;
     private DefaultApi api;
@@ -19,7 +15,6 @@ public class BadgeSteps {
     private ApplicationSteps applicationSteps;
 
     private Badge badge;
-
 
     public BadgeSteps(Environment environment, BasicSteps basicSteps, ApplicationSteps applicationSteps) {
         this.environment = environment;
@@ -54,5 +49,4 @@ public class BadgeSteps {
             basicSteps.processApiException(e);
         }
     }
-
 }

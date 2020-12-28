@@ -3,18 +3,11 @@ package ch.heigvd.gamification.api.spec.steps;
 import ch.heigvd.gamification.ApiException;
 import ch.heigvd.gamification.ApiResponse;
 import ch.heigvd.gamification.api.DefaultApi;
-import ch.heigvd.gamification.api.dto.Badge;
-import ch.heigvd.gamification.api.dto.Event;
-import ch.heigvd.gamification.api.dto.EventEventparams;
-import ch.heigvd.gamification.api.dto.User;
 import ch.heigvd.gamification.api.spec.helpers.Environment;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,41 +17,30 @@ public class BasicSteps {
     private Environment environment;
     private DefaultApi api;
 
-    User user;
-    UUID apiKey;
-    Badge badge;
-    Event event;
-    EventEventparams eventparams;
-
+    // the four basicSteps variable
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
     private boolean lastApiCallThrewException;
     private int lastStatusCode;
 
     private String lastReceivedLocationHeader;
-    private User lastReceivedUser;
 
     public BasicSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
     }
 
-    
-
     @Given("there is a Gamification server")
-    public void there_is_a_Gamification_server() throws Throwable {
+    public void there_is_a_Gamification_server() {
         assertNotNull(api);
     }
 
-
-
     @Then("I receive a {int} status code")
-    public void i_receive_a_status_code(int expectedStatusCode) throws Throwable {
+    public void i_receive_a_status_code(int expectedStatusCode) {
         assertEquals(expectedStatusCode, lastStatusCode);
     }
 
-
-
+    // this is never used
     @Then("I receive a {int} status code with a location header")
     public void iReceiveAStatusCodeWithALocationHeader(int arg0) {
     }
@@ -75,11 +57,6 @@ public class BasicSteps {
         }
     }*/
 
-    @And("I receive a payload that is the same as the user payload")
-    public void iReceiveAPayloadThatIsTheSameAsTheUserPayload() {
-        assertEquals(user, lastReceivedUser);
-    }
-
     public void processApiResponse(ApiResponse apiResponse) {
         lastApiResponse = apiResponse;
         lastApiCallThrewException = false;
@@ -90,37 +67,13 @@ public class BasicSteps {
     }
 
     public void processApiException(ApiException apiException) {
-
         lastApiCallThrewException = true;
         lastApiResponse = null;
         lastApiException = apiException;
         lastStatusCode = lastApiException.getCode();
     }
 
-
     public ApiResponse getlastApiResponse(){
         return lastApiResponse;
     }
-
-
-    @Given("I have an event payload")
-    public void i_have_an_event_payload() throws Throwable {
-        eventparams = new ch.heigvd.gamification.api.dto.EventEventparams()
-                .username("Jean");
-        event = new ch.heigvd.gamification.api.dto.Event()
-                .eventType("generic_descritpion")
-                .eventparams(eventparams)
-                .timestamp((long)0);
-    }
-
-    @When("^I POST the event payload to the /events endpoint$")
-    public void i_POST_the_event_payload_to_the_events_endpoint() throws Throwable {
-        try {
-            lastApiResponse = api.processEventWithHttpInfo(apiKey, event);
-            processApiResponse(lastApiResponse);
-        } catch (ApiException e) {
-            processApiException(e);
-        }
-    }
-
 }
