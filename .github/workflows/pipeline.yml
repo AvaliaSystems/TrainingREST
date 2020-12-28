@@ -69,7 +69,6 @@ jobs:
          ls -la ./docker/images/failsafe
          cd ./docker/workflows_topologie
          docker-compose up failsafe
-          - name: run failsafe image
      - name: down infrastructure
        run: |
          cd ./docker/workflows_topologie
