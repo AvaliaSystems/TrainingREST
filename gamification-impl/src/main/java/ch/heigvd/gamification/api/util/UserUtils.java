@@ -1,7 +1,10 @@
 package ch.heigvd.gamification.api.util;
 
 import ch.heigvd.gamification.api.model.User;
+import ch.heigvd.gamification.entities.ApplicationEntity;
 import ch.heigvd.gamification.entities.UserEntity;
+
+import java.util.ArrayList;
 
 public abstract class UserUtils {
 
