@@ -24,7 +24,7 @@ paths:
             #operationId: getApplications
             #responses:
             #  '200':
-            #   description: success
+          #   description: success
           #  content:
           #   'application/json':
           #    schema:
@@ -72,10 +72,10 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Badge'
-  /pointscale:
+  /pointScales:
     post:
       description: create a point scale
-      operationId: createPointscale
+      operationId: createPointScale
       requestBody:
         content:
           'application/json':
@@ -96,7 +96,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PointScale'
-  /pointscale/{id}:
+  /pointScales/{id}:
     get:
       description: get one point scale, by id
       operationId: getPointScale
@@ -232,7 +232,7 @@ components:
       type: object
       properties:
         name:
-          type : string
+          type: string
         if:
           type: object
           properties:

@@ -16,7 +16,7 @@ public class PointRewardEntity {
     private LocalDateTime timestamp;
 
     @ManyToOne
-    private PointscaleEntity pointscaleEntity;
+    private PointScaleEntity pointScaleEntity;
 
     @ManyToOne
     private UserEntity userEntity;

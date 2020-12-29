@@ -14,10 +14,11 @@ public class EventProcessorService {
     private BadgeRepository badgeRepository;
 
     @Autowired
-    private PointScaleRepository pointscaleRepository;
+    private PointScaleRepository pointScaleRepository;
 
     @Autowired
     private BadgeRewardRepository badgeRewardRepository;
+
     @Autowired
     private PointRewardRepository pointRewardRepository;
 
@@ -63,24 +64,26 @@ public class EventProcessorService {
                 userRepository.save(user);
             }
 
-            PointscaleEntity pointscaleEntityOfApp = pointscaleRepository.findByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardPoints());
+            PointScaleEntity pointScaleEntityOfApp = pointScaleRepository.findByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardPoints());
 
             // Attribuer des points si la Rule l'indique
-            if(pointscaleEntityOfApp != null) {
-                // La règle attribue des points à l'utilisateur sur la pointscale définie
+            if(pointScaleEntityOfApp != null) {
+                // La règle attribue des points à l'utilisateur sur la pointScale définie
                 PointRewardEntity pointRewardEntity = new PointRewardEntity();
-                pointRewardEntity.setPointscaleEntity(pointscaleEntityOfApp);
+                pointRewardEntity.setPointScaleEntity(pointScaleEntityOfApp);
                 pointRewardEntity.setUserEntity(user);
                 pointRewardEntity.setTimestamp(LocalDateTime.now());
                 pointRewardEntity.setPoints(ruleOfType.getAmount());
                 pointRewardRepository.save(pointRewardEntity);
 
+                /*
                 // TODO : Issue #37 - Vérifier le nombre de points de l'user et lui attribuer un badge s'il a atteint un palier de points
-                //PointRewardEntity userPointRewardEntity = pointRewardRepository.findByUserEntityAndPointscaleEntity(user, pointscaleEntityOfApp);
-                //int userPoints = userPointRewardEntity.getPoints();
-
-                // TODO : Besoin de sauvegarder tous les events ou juste les traiter? (la plupart seront "vides")
-                //eventRepository.save(eventEntity);
+                List<PointRewardEntity> userPointRewardEntityList = pointRewardRepository.findAllByUserEntityAndPointScaleEntity(user, pointScaleEntityOfApp);
+                int userPoints = 0;
+                for(PointRewardEntity userPointRewardEntity : userPointRewardEntityList) {
+                    userPoints += userPointRewardEntity.getPoints();
+                }
+                */
 
                 //if(userPoints == ruleOfType.get)
             }
