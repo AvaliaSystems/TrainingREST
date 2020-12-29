@@ -31,14 +31,21 @@ public class PointScaleApiController implements PointscaleApi {
 
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createPointscale(@ApiParam(value = "", required = true) @Valid @RequestBody PointScale pointscale) {
+        // Récupère l'application associée à partir de l'API Key
+        ApplicationEntity applicationEntity = (ApplicationEntity) request.getAttribute("applicationEntity");
+
+        // Vérifie que le badge n'existe pas déjà pour l'application donnée
+        // Retourne un 409 - Conflict si c'est le cas
+        if(pointScaleRepository.findByApplicationEntityAndName(applicationEntity, pointscale.getName()) != null)
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
         PointscaleEntity newPointscaleEntity = toPointscaleEntity(pointscale);
-        newPointscaleEntity.setApplicationEntity((ApplicationEntity) request.getAttribute("applicationEntity"));
+        newPointscaleEntity.setApplicationEntity(applicationEntity);
         pointScaleRepository.save(newPointscaleEntity);
-        Long id = newPointscaleEntity.getId(); // FIXME remove
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newPointscaleEntity.getId()).toUri();
+            .fromCurrentRequest().path("/{id}")
+            .buildAndExpand(newPointscaleEntity.getId()).toUri();
 
         return ResponseEntity.created(location).build();
     }
@@ -46,7 +53,7 @@ public class PointScaleApiController implements PointscaleApi {
     public ResponseEntity<List<PointScale>> getPointScales() {
         List<PointScale> pointscales = new ArrayList<>();
         for(PointscaleEntity newPointscaleEntity : pointScaleRepository.findAllByApplicationEntity((ApplicationEntity)
-                request.getAttribute("applicationEntity"))) {
+            request.getAttribute("applicationEntity"))) {
             pointscales.add(toPointscale(newPointscaleEntity));
         }
         return ResponseEntity.ok(pointscales);

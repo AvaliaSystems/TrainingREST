@@ -44,12 +44,12 @@ public class EventProcessorService {
 
         // Récupère et parcourt la liste des Rules du type de l'Event
         List<RuleEntity> eventRulesOfType = ruleRepository.findAllByApplicationEntityAndEventType(applicationEntity, eventEntity.getEventType());
-
         for(RuleEntity ruleOfType : eventRulesOfType) {
-            // Attribue un badge si la Rule l'indique
-            if(ruleOfType.getAwardBadge() != null) {
-                BadgeEntity badgeEntityOfApp = badgeRepository.findByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardBadge());
 
+            BadgeEntity badgeEntityOfApp = badgeRepository.findByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardBadge());
+
+            // Attribue un badge si la Rule l'indique
+            if(badgeEntityOfApp != null) {
                 // La règle attribue un badge à l'utilisateur
                 BadgeRewardEntity badgeRewardEntity = new BadgeRewardEntity();
                 badgeRewardEntity.setBadgeEntity(badgeEntityOfApp);
@@ -64,11 +64,11 @@ public class EventProcessorService {
                  */
             }
 
-            PointscaleEntity pointscaleEntityOfApp;
-            // TODO : Attribuer des points si la Rule l'indique
-            if(ruleOfType.getAwardPoints() != null) {
-                pointscaleEntityOfApp = pointscaleRepository.findAllByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardPoints());
+            PointscaleEntity pointscaleEntityOfApp = pointscaleRepository.findByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardPoints());
 
+            // Attribuer des points si la Rule l'indique
+            if(pointscaleEntityOfApp != null) {
+                // La règle attribue des points à l'utilisateur sur la pointscale définie
                 PointRewardEntity pointRewardEntity = new PointRewardEntity();
                 pointRewardEntity.setPointscaleEntity(pointscaleEntityOfApp);
                 pointRewardEntity.setUserEntity(user);
