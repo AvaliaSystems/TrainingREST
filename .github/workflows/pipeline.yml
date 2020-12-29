@@ -82,45 +82,21 @@ jobs:
        run:  |
         docker push ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest:latest
          
-  #deploy:
-  #  runs-on: ubuntu-latest
-  #  needs: test
-  #  steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Set up JDK 11
-  #     uses: actions/setup-java@v1
-   #    with:
-  #       java-version: 11
-  #   - uses: actions/cache@v1
-  #     with:
-  #       path: ~/.m2/repository
-  #       key: ${{runner.os}}-maven-${{hashFiles('**/pom.xml')}}
-  #       restore-keys:
-  #        ${{runner.os}}-maven-
-  #   - uses: actions/download-artifact@v2
-  #     with:
-  #      name: Package
-  #      path: staging
-  #   - name: Login to github registry
-  #     run: echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
-  #   - name: mkdir apps into springboot
-  #     run: mkdir ./docker/images/springboot/apps
-  #   - name: move jar ./docker/images/springboot/apps
-   #    run: cp staging/gamification-impl-1.0.0.jar ./docker/images/springboot/apps/gamification-impl-1.0.0.jar
-
-#     - name: build images
-#       run: |
-#         cd ./docker/images/springboot
-#         docker build --pull -t gusamaal/gamificationengine .
-#     - name : test image builded
-#       run: |
-#          cd ./docker
-#          sh deploy.sh
-#          cd topologiepiplinetest
-#          docker-compose build --no-cache
-#          docker-compose up mvnruntest 
-#     - name: publish images
-#       run: |
-#         docker tag gusamaal/gamificationengine ghcr.io/gusamaal/gamification-engine-amt/gamificationengine:latest
-#         docker push ghcr.io/gusamaal/gamification-engine-amt/gamificationengine:latest
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+     - uses: actions/checkout@v2
+     - name: Set up JDK 11
+       uses: actions/setup-java@v1
+       with:
+         java-version: 11
+     - name: Login to github registry
+       run: echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
+     - name: pull image tested
+       run: docker pull ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest:latest   
+     - name: publish images
+       run: |
+         docker tag ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest:latest ghcr.io/gusamaal/gamification-engine-amt/gamificationengine:latest
+         docker push ghcr.io/gusamaal/gamification-engine-amt/gamificationengine:latest
              
