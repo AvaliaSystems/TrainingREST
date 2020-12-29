@@ -32,7 +32,7 @@ public class PointScalesApiController implements PointScalesApi {
     ServletRequest request;
 
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> createPointscale(@ApiParam(value = "", required = true) @Valid @RequestBody PointScale pointScale) {
+    public ResponseEntity<Void> createPointScale(@ApiParam(value = "", required = true) @Valid @RequestBody PointScale pointScale) {
         // Récupère l'application associée à partir de l'API Key
         ApplicationEntity applicationEntity = (ApplicationEntity) request.getAttribute("applicationEntity");
 
@@ -56,17 +56,17 @@ public class PointScalesApiController implements PointScalesApi {
         List<PointScale> pointScales = new ArrayList<>();
         for(PointScaleEntity newPointScaleEntity : pointScaleRepository.findAllByApplicationEntity((ApplicationEntity)
             request.getAttribute("applicationEntity"))) {
-            pointScales.add(toPointscale(newPointScaleEntity));
+            pointScales.add(toPointScale(newPointScaleEntity));
         }
         return ResponseEntity.ok(pointScales);
     }
 
     public ResponseEntity<PointScale> getPointScale(@ApiParam(value = "", required = true) @PathVariable("id") Integer id) {
-        PointScaleEntity existingPointscaleEntity = pointScaleRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return ResponseEntity.ok(toPointscale(existingPointscaleEntity));
+        PointScaleEntity existingPointScaleEntity = pointScaleRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return ResponseEntity.ok(toPointScale(existingPointScaleEntity));
     }
 
-    private PointScale toPointscale(PointScaleEntity pointScaleEntity) {
+    private PointScale toPointScale(PointScaleEntity pointScaleEntity) {
         PointScale pointScale = new PointScale();
         pointScale.setName(pointScaleEntity.getName());
         pointScale.setDescription(pointScaleEntity.getDescription());
