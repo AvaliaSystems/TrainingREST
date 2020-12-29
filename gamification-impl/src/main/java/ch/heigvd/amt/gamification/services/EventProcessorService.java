@@ -57,11 +57,10 @@ public class EventProcessorService {
                 badgeRewardEntity.setTimestamp(LocalDateTime.now());
                 badgeRewardRepository.save(badgeRewardEntity);
 
-                /*
-                // FIXME: Incrémente le compteur de badges
+                // Incrémente le compteur de badges de l'utilisateur
                 int nbBadges = user.getNbBadges();
                 user.setNbBadges(++nbBadges);
-                 */
+                userRepository.save(user);
             }
 
             PointscaleEntity pointscaleEntityOfApp = pointscaleRepository.findByApplicationEntityAndName(applicationEntity, ruleOfType.getAwardPoints());
@@ -77,8 +76,8 @@ public class EventProcessorService {
                 pointRewardRepository.save(pointRewardEntity);
 
                 // TODO : Issue #37 - Vérifier le nombre de points de l'user et lui attribuer un badge s'il a atteint un palier de points
-                PointRewardEntity userPointRewardEntity = pointRewardRepository.findByUserEntityAndPointscaleEntity(user, pointscaleEntityOfApp);
-                int userPoints = userPointRewardEntity.getPoints();
+                //PointRewardEntity userPointRewardEntity = pointRewardRepository.findByUserEntityAndPointscaleEntity(user, pointscaleEntityOfApp);
+                //int userPoints = userPointRewardEntity.getPoints();
 
                 // TODO : Besoin de sauvegarder tous les events ou juste les traiter? (la plupart seront "vides")
                 //eventRepository.save(eventEntity);
@@ -87,9 +86,5 @@ public class EventProcessorService {
             }
         }
         return user.getId();
-
-        //userRepository.save(user);
-
-
     }
 }
