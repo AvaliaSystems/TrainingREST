@@ -41,17 +41,9 @@ public class UsersApiController implements UsersApi {
         return ResponseEntity.ok(toUser(existingUserEntity));
     }
 
-/*
-    private BadgeEntity toBadgeEntity(Badge badge) {
-        BadgeEntity entity = new BadgeEntity();
-        entity.setName(badge.getName());
-        entity.setDescription(badge.getDescription());
-        return entity;
-    }*/
-
     private User toUser(UserEntity entity) {
         User user = new User();
-        user.setUserId(entity.getUserId());
+        user.setAppUserId(entity.getAppUserId());
         user.setNbBadges(entity.getNbBadges());
         return user;
     }

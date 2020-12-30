@@ -20,10 +20,10 @@ paths:
         '201':
           description: created
             #get:
-            # description: get the list of all applications
-            #operationId: getApplications
-            #responses:
-            #  '200':
+          # description: get the list of all applications
+          #operationId: getApplications
+          #responses:
+          #  '200':
           #   description: success
           #  content:
           #   'application/json':
@@ -167,6 +167,31 @@ paths:
       responses:
         '201':
           description: created
+  /leaderboards/{pointScale}:
+    get:
+      description: Get the leaderboard for the given point scale
+      operationId: getLeaderboard
+      parameters:
+        - in: path
+          name: pointScale
+          schema:
+            type: string
+          required: true
+          description: Name of the point scale in the application
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The number of users to return in the leaderboard
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaderboardEntry'
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -224,7 +249,7 @@ components:
     User:
       type: object
       properties:
-        userId:
+        appUserId:
           type: string
         nbBadges:
           type: integer
@@ -250,3 +275,10 @@ components:
                   type: string
                 amount:
                   type: integer
+    LeaderboardEntry:
+      type: object
+      properties:
+        appUserId:
+          type: string
+        pointsSum:
+          type: integer

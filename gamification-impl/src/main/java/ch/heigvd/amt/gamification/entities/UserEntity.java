@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Data
@@ -14,7 +13,7 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String userId;
+    private String appUserId;
     private int nbBadges;
 
     // TODO : Ajouter les FetchType.LAZY et JoinColumn partout ?

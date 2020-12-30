@@ -9,7 +9,9 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
     List<UserEntity> findAllByApplicationEntity(ApplicationEntity applicationEntity);
-    UserEntity findByUserId(String userId);
+
+    UserEntity findByAppUserId(String appUserId);
+
     // TODO : Optimiser en ne passant que l'applicationId et pas toute l'application?
-    UserEntity findByUserIdAndApplicationEntity(String userId, ApplicationEntity applicationEntity);
+    UserEntity findByAppUserIdAndApplicationEntity(String appUserId, ApplicationEntity applicationEntity);
 }

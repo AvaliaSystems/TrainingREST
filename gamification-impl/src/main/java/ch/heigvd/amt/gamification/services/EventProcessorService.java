@@ -33,11 +33,11 @@ public class EventProcessorService {
         ApplicationEntity applicationEntity = eventEntity.getApplicationEntity();
 
         // Récupère l'utilisateur à partir de l'Event
-        UserEntity user = userRepository.findByUserIdAndApplicationEntity(eventUserId, applicationEntity);
+        UserEntity user = userRepository.findByAppUserIdAndApplicationEntity(eventUserId, applicationEntity);
         // S'il n'existe pas encore on le créé
         if(user == null) {
             user = new UserEntity();
-            user.setUserId(eventUserId);
+            user.setAppUserId(eventUserId);
             user.setApplicationEntity(eventEntity.getApplicationEntity());
             user.setNbBadges(0);
             userRepository.save(user);
