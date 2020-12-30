@@ -130,7 +130,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Pointscale'
-  /users/{username}:
+  /users/{username}/reputation:
     get:
       description: get full user reputation
       operationId: getUserReputation
@@ -140,7 +140,7 @@ paths:
         - in: path
           name: username
           schema:
-            type: integer
+            type: string
           required: true
         - in : header
           name: X-API-KEY

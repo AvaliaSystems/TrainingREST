@@ -2,37 +2,33 @@ package ch.heigvd.gamification.api.endpoints;
 
 
 import ch.heigvd.gamification.api.UsersApi;
-import ch.heigvd.gamification.api.model.Application;
 import ch.heigvd.gamification.api.model.Badge;
 import ch.heigvd.gamification.api.model.Pointscale;
+import ch.heigvd.gamification.api.model.Reputation;
 import ch.heigvd.gamification.api.model.User;
 import ch.heigvd.gamification.entities.ApplicationEntity;
 import ch.heigvd.gamification.entities.PointscaleEntity;
 import ch.heigvd.gamification.entities.UserEntity;
-
 import ch.heigvd.gamification.repositories.ApplicationRepository;
 import ch.heigvd.gamification.repositories.PointscaleRepository;
 import ch.heigvd.gamification.repositories.UserRepository;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static ch.heigvd.gamification.api.util.UserUtils.*;
-import static ch.heigvd.gamification.api.util.BadgeUtils.*;
+import static ch.heigvd.gamification.api.util.BadgeUtils.toBadge;
+import static ch.heigvd.gamification.api.util.UserUtils.toUser;
+import static ch.heigvd.gamification.api.util.UserUtils.toUserEntity;
 
 
 @Controller
@@ -93,6 +89,38 @@ public class UsersApiController implements UsersApi {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ResponseEntity.ok(toUser(existingUserEntity));
+    }
+
+    @Override
+    public ResponseEntity<Reputation> getUserReputation(String username, UUID X_API_KEY) {
+        Reputation rep = new Reputation();
+
+        UserEntity ue = userRepository
+                .findByApplicationEntity_ApiKeyAndUsername(X_API_KEY.toString(),username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+
+        List<Badge> badges = new ArrayList<>();
+        ue.getBadgeEntitys().forEach(badgeEntity -> badges.add(toBadge(badgeEntity)));
+
+        List<Pointscale> pointscales = new ArrayList<>();
+        ue.getPointscaleEntitys().forEach(pointscaleEntity -> pointscales.add(toPointscale(pointscaleEntity)));
+
+        rep.setId(ue.getId().intValue());
+        rep.setUsername(ue.getUsername());
+        rep.setBagdes(badges);
+        rep.setPointscales(pointscales);
+
+        return ResponseEntity.ok(rep);
+    }
+
+    private Pointscale toPointscale(PointscaleEntity pointscaleEntity) {
+        Pointscale ps = new Pointscale();
+
+        ps.setLabel(pointscaleEntity.getLabel());
+        ps.setPointCounter(pointscaleEntity.getCounter());
+
+        return ps;
     }
 
     @Override
