@@ -93,23 +93,13 @@ public class UsersApiController implements UsersApi {
 
     @Override
     public ResponseEntity<Reputation> getUserReputation(String username, UUID X_API_KEY) {
-        Reputation rep = new Reputation();
 
         UserEntity ue = userRepository
                 .findByApplicationEntity_ApiKeyAndUsername(X_API_KEY.toString(),username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
 
-        List<Badge> badges = new ArrayList<>();
-        ue.getBadgeEntitys().forEach(badgeEntity -> badges.add(toBadge(badgeEntity)));
-
-        List<Pointscale> pointscales = new ArrayList<>();
-        ue.getPointscaleEntitys().forEach(pointscaleEntity -> pointscales.add(toPointscale(pointscaleEntity)));
-
-        rep.setId(ue.getId().intValue());
-        rep.setUsername(ue.getUsername());
-        rep.setBagdes(badges);
-        rep.setPointscales(pointscales);
+        Reputation rep = toReputation(ue);
 
         return ResponseEntity.ok(rep);
     }
@@ -150,5 +140,32 @@ public class UsersApiController implements UsersApi {
         });
 
         return ResponseEntity.ok(pointscales);
+    }
+
+    @Override
+    public ResponseEntity<List<Reputation>> getReputations(UUID X_API_KEY) {
+        List<Reputation> reputations = new ArrayList<>();
+        for (UserEntity ue : userRepository.findByApplicationEntity_ApiKey(X_API_KEY.toString())){
+            Reputation rep = toReputation(ue);
+            reputations.add(rep);
+        }
+
+        return ResponseEntity.ok(reputations);
+    }
+
+    private Reputation toReputation(UserEntity ue) {
+        Reputation rep = new Reputation();
+        List<Badge> badges = new ArrayList<>();
+        ue.getBadgeEntitys().forEach(badgeEntity -> badges.add(toBadge(badgeEntity)));
+
+        List<Pointscale> pointscales = new ArrayList<>();
+        ue.getPointscaleEntitys().forEach(pointscaleEntity -> pointscales.add(toPointscale(pointscaleEntity)));
+
+        rep.setId(ue.getId().intValue());
+        rep.setUsername(ue.getUsername());
+        rep.setBagdes(badges);
+        rep.setPointscales(pointscales);
+
+        return rep;
     }
 }
