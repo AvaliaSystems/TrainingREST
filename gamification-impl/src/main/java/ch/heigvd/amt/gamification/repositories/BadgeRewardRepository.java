@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface BadgeRewardRepository extends CrudRepository<BadgeRewardEntity, Long> {
-    //List<BadgeRewardEntity> findAllByUserEntity(UserEntity userEntity);
+    List<BadgeRewardEntity> findAllByUserEntity(UserEntity userEntity);
 }

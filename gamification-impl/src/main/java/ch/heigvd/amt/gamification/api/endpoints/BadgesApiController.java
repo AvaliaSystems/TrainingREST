@@ -61,6 +61,7 @@ public class BadgesApiController implements BadgesApi {
         return ResponseEntity.ok(badges);
     }
 
+    // TODO : à garder? Inutile?
     public ResponseEntity<Badge> getBadge(@ApiParam(value = "", required = true) @PathVariable("id") Integer id) {
         BadgeEntity existingBadgeEntity = badgeRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return ResponseEntity.ok(toBadge(existingBadgeEntity));

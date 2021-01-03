@@ -16,6 +16,7 @@ public class BadgeEntity implements Serializable {
 
     private String name;
     private String description;
+    // TODO : Ajouter un path pour une image ou un visuel du badge (dans l'optique de l'afficher dans la page de stats de l'application)
 
     @ManyToOne
     private ApplicationEntity applicationEntity;

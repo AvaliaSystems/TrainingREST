@@ -155,6 +155,25 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/User'
+  /users/{appUserId}/badges:
+    get:
+      description: get badges earned by a user
+      operationId: getUserBadges
+      parameters:
+        - in: path
+          name: appUserId
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
   /rules:
     post:
       description: create a rule

@@ -61,6 +61,7 @@ public class PointScalesApiController implements PointScalesApi {
         return ResponseEntity.ok(pointScales);
     }
 
+    // TODO : GET par nom plutôt que par ID de gamification engine?
     public ResponseEntity<PointScale> getPointScale(@ApiParam(value = "", required = true) @PathVariable("id") Integer id) {
         PointScaleEntity existingPointScaleEntity = pointScaleRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return ResponseEntity.ok(toPointScale(existingPointScaleEntity));
