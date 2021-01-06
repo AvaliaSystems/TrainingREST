@@ -8,6 +8,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class UserSteps {
@@ -32,7 +34,7 @@ public class UserSteps {
     @Given("I have a user payload")
     public void i_have_a_user_payload() {
         user = new ch.heigvd.gamification.api.dto.User()
-                .id(37)
+                .id(37) // this is actually pointless as id is decided by app
                 .username("Jean");
     }
 
@@ -41,8 +43,10 @@ public class UserSteps {
     public void i_POST_the_user_payload_to_the_users_endpoint() {
         try {
             basicSteps.processApiResponse(api.createUserWithHttpInfo(applicationSteps.getApiKey(), user));
-            // lastReceivedUser= ( (User) basicSteps.getlastApiResponse().getData() );
-            //lastCreatedUserId = (basicSteps.getlastApiResponse().
+            String location = ((ArrayList<String>) basicSteps.getlastApiResponse().getHeaders().get("location")).get(0);
+            String[] elements = location.split("/");
+            lastCreatedUserId = Integer.parseInt(elements[elements.length-1]);
+
         } catch (ApiException e) {
             basicSteps.processApiException(e);
         }
@@ -57,33 +61,19 @@ public class UserSteps {
         }
     }
 
-    // this is not finished, it needs refining
     @When("^I send a GET to the /user endpoint$")
     public void iSendAGETToTheUserEndpoint() {
         try {
-            basicSteps.processApiResponse(api.getUsersWithHttpInfo(applicationSteps.getApiKey()));
+            basicSteps.processApiResponse(api.getUserWithHttpInfo(lastCreatedUserId,applicationSteps.getApiKey()));
             lastReceivedUser = (User) basicSteps.getlastApiResponse().getData();
         } catch (ApiException e) {
             basicSteps.processApiException(e);
         }
     }
 
-    // this is not finished
     @And("I receive a payload that is the same as the user payload")
     public void iReceiveAPayloadThatIsTheSameAsTheUserPayload() {
-        // assertEquals(user, lastReceivedUser);
-        assertEquals(1,1);
+        assertEquals(user.getUsername(), lastReceivedUser.getUsername());
     }
 
-    /*
-      Scenario: get one user
-    Given I have an application payload
-    When I POST the application payload to the /applications endpoint
-    Given I have a correct API key
-    Given I have a user payload
-    When I POST the user payload to the /users endpoint
-    And I receive a payload that is the same as the user payload
-    When I send a GET to the /user endpoint
-    Then I receive a 200 status code
-     */
 }
