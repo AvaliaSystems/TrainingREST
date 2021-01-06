@@ -130,6 +130,53 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Pointscale'
+  /users/{username}/reputation:
+    get:
+      description: get full user reputation
+      operationId: getUserReputation
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Reputation'
+  /users/reputations:
+    get:
+      description: get all user reputation
+      operationId: getReputations
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in : header
+          name: X-API-KEY
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reputation'
   /pointscale:
     post:
       description: get all user's pointScales
@@ -377,3 +424,16 @@ components:
         key:
           type: string
           format: uuid
+    Reputation:
+      allOf:
+        - type: object
+        - $ref: '#/components/schemas/User'
+      properties:
+        bagdes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Badge'
+        pointscales:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pointscale'
