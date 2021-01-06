@@ -1,7 +1,5 @@
 version: '2.0'
 services:
-
-
   amtadminer:
     image: amtadminer
     build: ../images/adminer
@@ -15,7 +13,8 @@ services:
     ports:
       - "3306:3306"
   amtspringboot:
-    image: amtspringboot
+    restart: always
+    image: ghcr.io/gusamaal/gamification-engine-amt/gamificationenginetest
     build: ../images/springboot
     environment:
       - DATABASE_SERVER_ADDRESS=amtdb
@@ -26,3 +25,14 @@ services:
       - DATABASE_NAME=amtdb
     ports:
      - "8081:8080"
+
+  failsafe:
+    image: failsafe
+    build: ../images/failsafe
+    environment:
+      - URL=http://amtspringboot:8080
+    depends_on:
+      - amtspringboot
+      - amtdb
+    volumes:
+      - ~/.m2/repository:/root/.m2
