@@ -1,5 +1,7 @@
 version: '2.0'
 services:
+
+
   amtadminer:
     image: amtadminer
     build: ../images/adminer
@@ -24,11 +26,13 @@ services:
       - DATABASE_NAME=amtdb
     ports:
      - "8081:8080"
-
-  mvnruntest:
-    image: amtruntest
-    build: ../images/mvnruntest
+  failsafe:
+    image: failsafe
+    build: ../images/failsafe
     environment:
       - URL=http://amtspringboot:8080
-    depends_on:
-      - amtspringboot
+    volumes:
+      - failsafedep:/root/.m2
+
+volumes:
+  failsafedep:
