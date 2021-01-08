@@ -27,7 +27,7 @@ public class ApplicationsApiController implements ApplicationsApi {
         ApplicationEntity newApplicationEntity = toApplicationEntity(applicationRegistration);
         applicationRepository.save(newApplicationEntity);
 
-        return ResponseEntity.ok().header("X-API-KEY", newApplicationEntity.getApiKey()).build();
+        return ResponseEntity.status(HttpStatus.CREATED).header("X-API-KEY", newApplicationEntity.getApiKey()).build();
     }
 
     // FIXME : Enlever l'endpoint GET sur /applications (on le laisse pour le debug)

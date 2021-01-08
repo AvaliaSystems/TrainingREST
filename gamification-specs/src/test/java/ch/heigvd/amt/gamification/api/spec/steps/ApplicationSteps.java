@@ -73,7 +73,7 @@ public class ApplicationSteps {
     public void i_have_successfully_registered_my_app() {
         i_have_a_application_payload();
         i_post_the_application_payload_to_the_applications_endpoint();
-        i_receive_a_status_code_with_an_x_api_key_header(200);
+        i_receive_a_status_code_with_an_x_api_key_header(201);
     }
 
     @Then("I receive a {int} status code with another x-api-key header")
