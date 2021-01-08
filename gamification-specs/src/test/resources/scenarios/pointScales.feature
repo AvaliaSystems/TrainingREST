@@ -16,8 +16,10 @@ Feature: Basic operations on point scales
 
   Scenario: get the list of multiple point scales
     Given I have successfully registered my app
+    Given I have a pointScale payload "pointScale1"
     When I POST the pointScale payload to the /pointScales endpoint
     Then I receive a 201 status code
+    Given I have a pointScale payload "pointScale2"
     When I POST the pointScale payload to the /pointScales endpoint
     Then I receive a 201 status code
     When I send a GET to the /pointScales endpoint

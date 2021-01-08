@@ -87,4 +87,9 @@ public class PointScaleSteps {
         List<PointScale> pointScaleList = (ArrayList) lastApiResponse.getData();
         assertEquals((long) nbPointScales, pointScaleList.size());
     }
+
+    @Given("I have a pointScale payload {string}")
+    public void i_have_a_point_scale_payload(String name) {
+        pointScale = new PointScale().name(name).description(name + "mockDesc");
+    }
 }
