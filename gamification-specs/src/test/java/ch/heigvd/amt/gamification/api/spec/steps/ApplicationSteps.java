@@ -11,8 +11,7 @@ import io.cucumber.java.en.When;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class ApplicationSteps {
     private Environment environment;
@@ -75,5 +74,13 @@ public class ApplicationSteps {
         i_have_a_application_payload();
         i_post_the_application_payload_to_the_applications_endpoint();
         i_receive_a_status_code_with_an_x_api_key_header(200);
+    }
+
+    @Then("I receive a {int} status code with another x-api-key header")
+    public void i_receive_a_status_code_with_another_x_api_key_header(Integer expectedStatusCode) {
+        List<String> apiKeyHeaderValues = (List<String>)lastApiResponse.getHeaders().get(API_KEY_HEADER);
+        String newApiKey = apiKeyHeaderValues != null ? apiKeyHeaderValues.get(0) : null;
+        assertNotEquals(myApiKey, newApiKey);
+        assertEquals((long)expectedStatusCode, environment.getLastStatusCode());
     }
 }

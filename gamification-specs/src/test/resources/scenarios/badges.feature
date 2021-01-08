@@ -43,6 +43,14 @@ Feature: Basic operations on badges
     Then I receive a 200 status code
     And I receive a list of 2 badges
 
+  Scenario: can't create 2 badges with same payload
+    Given I have successfully registered my app
+    Given I have a badge payload
+    When I POST the badge payload to the /badges endpoint
+    Then I receive a 201 status code
+    When I POST the badge payload to the /badges endpoint
+    Then I receive a 409 status code
+
 
   Scenario: check app can't see badges from other apps
     #Post 1

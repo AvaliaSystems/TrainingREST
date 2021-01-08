@@ -35,6 +35,16 @@ Feature: Basic operations on point scales
     Then I receive a 200 status code
     And I receive a payload that is the same as the pointScale payload
 
+
+  Scenario: can't create 2 pointScales with same payload
+    Given I have successfully registered my app
+    Given I have a pointScale payload
+    When I POST the pointScale payload to the /pointScales endpoint
+    Then I receive a 201 status code
+    When I POST the pointScale payload to the /pointScales endpoint
+    Then I receive a 409 status code
+
+
   Scenario: check app can't see pointScales from other apps
     #Post 1
     Given I have successfully registered my app
