@@ -44,7 +44,7 @@ public class RulesApiController implements RulesApi {
     private RuleEntity toRuleEntity(Rule rule) {
         RuleEntity entity = new RuleEntity();
         entity.setName(rule.getName());
-        entity.setType(rule.getIf().getRuleType());
+        entity.setEventType(rule.getIf().getEventType());
         entity.setAwardBadge(rule.getThen().getAwardBadge());
         entity.setAwardPoints(rule.getThen().getAwardPoints().getPointScale());
         entity.setAmount(rule.getThen().getAwardPoints().getAmount());
@@ -56,7 +56,7 @@ public class RulesApiController implements RulesApi {
         rule.setName(entity.getName());
 
         RuleIf ruleIf = new RuleIf();
-        rule.setIf(ruleIf.ruleType(entity.getType()));
+        rule.setIf(ruleIf.eventType(entity.getEventType()));
 
         RuleThen ruleThen = new RuleThen();
         ruleThen.setAwardBadge(entity.getAwardBadge());

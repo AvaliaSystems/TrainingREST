@@ -33,6 +33,14 @@ public class BadgesApiController implements BadgesApi {
 
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge) {
+        // Récupère l'application associée à partir de l'API Key
+        ApplicationEntity applicationEntity = (ApplicationEntity) request.getAttribute("applicationEntity");
+
+        // Vérifie que l'échelle de points n'existe pas déjà pour l'application donnée
+        // Retourne un 409 - Conflict si c'est le cas
+        if(badgeRepository.findByApplicationEntityAndName(applicationEntity, badge.getName()) != null)
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
         newBadgeEntity.setApplicationEntity((ApplicationEntity) request.getAttribute("applicationEntity"));
         badgeRepository.save(newBadgeEntity);
@@ -53,7 +61,7 @@ public class BadgesApiController implements BadgesApi {
         return ResponseEntity.ok(badges);
     }
 
-    @Override
+    // TODO : à garder? Inutile?
     public ResponseEntity<Badge> getBadge(@ApiParam(value = "", required = true) @PathVariable("id") Integer id) {
         BadgeEntity existingBadgeEntity = badgeRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return ResponseEntity.ok(toBadge(existingBadgeEntity));

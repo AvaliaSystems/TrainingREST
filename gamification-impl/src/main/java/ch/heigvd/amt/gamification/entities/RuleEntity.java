@@ -14,7 +14,7 @@ public class RuleEntity implements Serializable {
     private long id;
 
     private String name;
-    private String type;
+    private String eventType;
     private String awardBadge;
     private String awardPoints;
     private int amount;
