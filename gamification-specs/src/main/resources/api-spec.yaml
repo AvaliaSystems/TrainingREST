@@ -19,11 +19,11 @@ paths:
       responses:
         '201':
           description: created
-            #get:
-            # description: get the list of all applications
-            #operationId: getApplications
-            #responses:
-            #  '200':
+          #get:
+          # description: get the list of all applications
+          #operationId: getApplications
+          #responses:
+          #  '200':
           #   description: success
           #  content:
           #   'application/json':
@@ -72,10 +72,10 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Badge'
-  /pointscale:
+  /pointScales:
     post:
       description: create a point scale
-      operationId: createPointscale
+      operationId: createPointScale
       requestBody:
         content:
           'application/json':
@@ -96,7 +96,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PointScale'
-  /pointscale/{id}:
+  /pointScales/{id}:
     get:
       description: get one point scale, by id
       operationId: getPointScale
@@ -155,6 +155,44 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/User'
+  /users/{appUserId}/badges:
+    get:
+      description: get badges earned by a user
+      operationId: getUserBadges
+      parameters:
+        - in: path
+          name: appUserId
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+  /users/{appUserId}/scores:
+    get:
+      description: get score of user on every point scales he has points on
+      operationId: getPointScalesScores
+      parameters:
+        - in: path
+          name: appUserId
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointScalesScores'
   /rules:
     post:
       description: create a rule
@@ -167,6 +205,31 @@ paths:
       responses:
         '201':
           description: created
+  /leaderboards/{pointScale}:
+    get:
+      description: Get the leaderboard for the given point scale
+      operationId: getLeaderboard
+      parameters:
+        - in: path
+          name: pointScale
+          schema:
+            type: string
+          required: true
+          description: Name of the point scale in the application
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The number of users to return in the leaderboard
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaderboardEntry'
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -224,7 +287,7 @@ components:
     User:
       type: object
       properties:
-        userId:
+        appUserId:
           type: string
         nbBadges:
           type: integer
@@ -232,11 +295,11 @@ components:
       type: object
       properties:
         name:
-          type : string
+          type: string
         if:
           type: object
           properties:
-            ruleType:
+            eventType:
               type: string
         then:
           type: object
@@ -250,3 +313,17 @@ components:
                   type: string
                 amount:
                   type: integer
+    LeaderboardEntry:
+      type: object
+      properties:
+        appUserId:
+          type: string
+        pointsSum:
+          type: integer
+    PointScalesScores:
+      type: object
+      properties:
+        pointScale:
+          type: string
+        score:
+          type: integer
