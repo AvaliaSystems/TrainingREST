@@ -3,11 +3,15 @@ package ch.heigvd.amt.gamification.api.spec.steps;
 import ch.heigvd.amt.gamification.ApiException;
 import ch.heigvd.amt.gamification.ApiResponse;
 import ch.heigvd.amt.gamification.api.DefaultApi;
+import ch.heigvd.amt.gamification.api.dto.Badge;
 import ch.heigvd.amt.gamification.api.dto.PointScale;
 import ch.heigvd.amt.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -76,5 +80,11 @@ public class PointScaleSteps {
     @Then("I receive a payload that is the same as the pointScale payload")
     public void i_receive_a_payload_that_is_the_same_as_the_point_scale_payload() {
         assertEquals(pointScale, lastReceivedPointScale);
+    }
+
+    @Then("I receive a list of {int} pointScales")
+    public void i_receive_a_list_of_point_scales(Integer nbPointScales) {
+        List<PointScale> pointScaleList = (ArrayList) lastApiResponse.getData();
+        assertEquals((long) nbPointScales, pointScaleList.size());
     }
 }
