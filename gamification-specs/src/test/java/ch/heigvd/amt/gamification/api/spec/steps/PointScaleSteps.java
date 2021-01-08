@@ -3,7 +3,6 @@ package ch.heigvd.amt.gamification.api.spec.steps;
 import ch.heigvd.amt.gamification.ApiException;
 import ch.heigvd.amt.gamification.ApiResponse;
 import ch.heigvd.amt.gamification.api.DefaultApi;
-import ch.heigvd.amt.gamification.api.dto.Badge;
 import ch.heigvd.amt.gamification.api.dto.PointScale;
 import ch.heigvd.amt.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.Given;
@@ -21,8 +20,8 @@ public class PointScaleSteps {
     private ApiResponse lastApiResponse;
     private String lastReceivedLocationHeader;
 
-    private PointScale lastReceivedBadge;
-    private PointScale badge;
+    private PointScale lastReceivedPointScale;
+    private PointScale pointScale;
 
     public PointScaleSteps(Environment environment) {
         this.environment = environment;
@@ -36,7 +35,7 @@ public class PointScaleSteps {
 
     @Given("I have a pointScale payload")
     public void i_have_a_point_scale_payload() {
-        badge = new PointScale()
+        pointScale = new PointScale()
                 .name("scaleMockName")
                 .description("scalemockdesc");
     }
@@ -44,7 +43,7 @@ public class PointScaleSteps {
     @When("I POST the pointScale payload to the \\/pointScales endpoint")
     public void i_post_the_point_scale_payload_to_the_point_scales_endpoint() {
         try {
-            lastApiResponse = api.createPointscaleWithHttpInfo(badge);
+            lastApiResponse = api.createPointScaleWithHttpInfo(pointScale);
             environment.processApiResponse(lastApiResponse);
         } catch (ApiException e) {
             environment.processApiException(e);
@@ -68,7 +67,7 @@ public class PointScaleSteps {
         try {
             lastApiResponse = api.getPointScaleWithHttpInfo(id);
             environment.processApiResponse(lastApiResponse);
-            lastReceivedBadge = (PointScale) lastApiResponse.getData();
+            lastReceivedPointScale = (PointScale) lastApiResponse.getData();
         } catch (ApiException e) {
             environment.processApiException(e);
         }
@@ -76,6 +75,6 @@ public class PointScaleSteps {
 
     @Then("I receive a payload that is the same as the pointScale payload")
     public void i_receive_a_payload_that_is_the_same_as_the_point_scale_payload() {
-        assertEquals(badge, lastReceivedBadge);
+        assertEquals(pointScale, lastReceivedPointScale);
     }
 }
