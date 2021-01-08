@@ -43,3 +43,16 @@ Feature: Basic operations on users
     When I send a GET to /users endpoint
     Then I receive a 200 status code
     And I receive a list of 1 users
+
+  Scenario: can create 2 events with same payload, creates only 1 user
+    Given I have successfully registered my app
+    Given I have an event payload
+    When I POST the event payload to the /events endpoint
+    Then I receive a 201 status code
+    When I POST the event payload to the /events endpoint
+    Then I receive a 201 status code
+
+    #retrieval
+    When I send a GET to /users endpoint
+    Then I receive a 200 status code
+    And I receive a list of 1 users

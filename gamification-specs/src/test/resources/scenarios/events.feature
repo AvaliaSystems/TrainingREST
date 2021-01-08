@@ -14,10 +14,10 @@ Feature: Basic operations on events
     When I POST the event payload to the /events endpoint
     Then I receive a 201 status code
 
-    #TODO
-#  Scenario: can create 2 events with same payload
-#    Given I have an event payload
-#    When I POST the event payload to the /events endpoint
-#    Then I receive a 201 status code
-#    When I POST the event payload to the /events endpoint
-#    Then I receive a 201 status code
+  Scenario: can create 2 events with same payload
+    Given I have successfully registered my app
+    Given I have an event payload
+    When I POST the event payload to the /events endpoint
+    Then I receive a 201 status code
+    When I POST the event payload to the /events endpoint
+    Then I receive a 201 status code
