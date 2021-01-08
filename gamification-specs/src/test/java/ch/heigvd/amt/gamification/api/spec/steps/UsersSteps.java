@@ -51,7 +51,7 @@ public class UsersSteps {
                 .eventType("mockType")
                 .userId(userId);
 
-        user = new User().userId(userId);
+        user = new User().appUserId(userId);
     }
 
     //TODO refactor w method from events
@@ -97,7 +97,7 @@ public class UsersSteps {
 
     @Then("I receive a payload for user with userId")
     public void i_receive_a_payload_for_user_with_userId() {
-        assertEquals(user.getUserId(), lastReceivedUser.getUserId());
+        assertEquals(user.getAppUserId(), lastReceivedUser.getAppUserId());
     }
 
 }
