@@ -40,9 +40,8 @@ jobs:
 
       - name: cucumber tests
         run: |
-          ls
           cd scripts
-          sh testREST_API.sh
+          sh pipeline_API.sh
 
       - name: Build Docker image and push it to ghcr
         # build a partir d'une image officielle mais tag renomme cette image
