@@ -163,7 +163,7 @@ public class UsersApiController implements UsersApi {
 
         rep.setId(ue.getId().intValue());
         rep.setUsername(ue.getUsername());
-        rep.setBagdes(badges);
+        rep.setBadges(badges);
         rep.setPointscales(pointscales);
 
         return rep;

@@ -429,7 +429,7 @@ components:
         - type: object
         - $ref: '#/components/schemas/User'
       properties:
-        bagdes:
+        badges:
           type: array
           items:
             $ref: '#/components/schemas/Badge'
