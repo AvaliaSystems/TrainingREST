@@ -1,6 +1,7 @@
-## Technical detail
+## Technical detail (Prerequisites)
 
 Our application is build over the Jakarta EE standard (Java EE). We are using the following tools/technology to bring this project up:)
+The following prerequisites must be installed to run this project.
 
 | Component                     | Name                                                      | Version      |
 | ----------------------------- | --------------------------------------------------------- | ------------ |
@@ -9,8 +10,25 @@ Our application is build over the Jakarta EE standard (Java EE). We are using th
 | Build/dependency Manager      | [Maven](https://maven.apache.org/)                        | __>= 3.6__   |
 | testing tools                 | [cucumber](https://cucumber.io/)                          | __>=2.6__    |
 | Containerization tools        | [Docker](https://www.docker.com/)                         | __>= 19.03__ |
+| Docker compose                | [Docker](https://docs.docker.com/compose/)                         | __>= 19.03__ |
 
-# Build and run the Gamification MicroService
+
+## Run the project
+### Clone the repository
+```sh
+# Clone the repository
+git clone https://github.com/Gusamaal/Gamification-Engine-AMT.git
+
+# Move to the cloned direcory
+cd Gamification-Engine-AMT
+
+# Execute the deployment sh script
+cd docker/prod_topologie
+docker-compose pull
+docker-compose up
+```
+
+## Build and run the Gamification MicroService
 
 You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8086.
 
@@ -21,7 +39,7 @@ docker-compose -f ./docker/topologies/docker-compose.yaml up -d amtdb amtadminer
 mvn spring-boot:run
 ```
 
-You can then access:
+## You can then access:
 
 * the [API documentation](http://localhost:8086/swagger-ui.html), generated from annotations in the code
 * the [API endpoint](http://localhost:8086/), accepting GET and POST requests
