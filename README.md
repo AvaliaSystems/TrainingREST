@@ -12,9 +12,12 @@
 The aim of this project is to bring to application developper a basic Gamification Engine through an API Rest. With this API you can gamifie an application.
 
 ## Documentation
-
 More documentation for this repository can be found in the [`docs`](docs)
 directory.
+
+### Getting started see the [`docs`](docs) directory.
+
+
 
 ## License
 
