@@ -16,6 +16,15 @@ The aim of this project is to bring to application developper a basic Gamificati
 More documentation for this repository can be found in the [`docs`](docs)
 directory.
 
+## License
+
+The code is licensed under the **MIT License** - see the
+[`LICENSE`](docs/LICENSE) file for details.
+
+The content is licensed under the **Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+License** - see the [Creative Commons](https://creativecommons.org/licenses/by-nc-sa/4.0/)website for details.
+
 ## Contributing
 
 Thank you for considering contributing to Gamification engine amt! Here is some help
