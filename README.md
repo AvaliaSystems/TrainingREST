@@ -9,46 +9,19 @@
 | Maximillian Vogel | maximillian.vogel@heig-vd.ch  |
 
 ## Introduction
-The aim of this project is to bring to application developper a basic Gamification Engine through an API Rest
+The aim of this project is to bring to application developper a basic Gamification Engine through an API Rest. With this API you can gamifie an application.
 
-## Technical detail
+## Documentation
 
-Our application is build over the Jakarta EE standard (Java EE). We are using the following tools/technology to bring this project up:)
+More documentation for this repository can be found in the [`docs`](docs)
+directory.
 
-| Component                     | Name                                                      | Version      |
-| ----------------------------- | --------------------------------------------------------- | ------------ |
-| Web FrameWork                 | [Spring-Boot](https://spring.io/projects/spring-boot)     | __>=2.3__    |
-| IDE                           | [IntelliJ Idea Ultimate](https://www.jetbrains.com/idea/) | __>=2020.2__ |
-| Build/dependency Manager      | [Maven](https://maven.apache.org/)                        | __>= 3.6__   |
-| testing tools                 | [cucumber](https://cucumber.io/)                          | __>=2.6__    |
-| Containerization tools        | [Docker](https://www.docker.com/)                         | __>= 19.03__ |
+## Contributing
 
-# Build and run the Gamification MicroService
+Thank you for considering contributing to Gamification engine amt! Here is some help
+to get you started to contribute to the project:
 
-You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8086.
-
-```
-cd gamification-impl/
-cp ../.envexample .env
-docker-compose -f ./docker/topologies/docker-compose.yaml up -d amtdb amtadminer
-mvn spring-boot:run
-```
-
-You can then access:
-
-* the [API documentation](http://localhost:8086/swagger-ui.html), generated from annotations in the code
-* the [API endpoint](http://localhost:8086/), accepting GET and POST requests
-
-You can use curl to invoke the endpoints:
-
-# Test the Gamification microservice by running the executable specification
-
-You can use the Cucumber project to validate the API implementation. Do this when the server is running.
-
-```
-cd gamification-specs/
-cp ../.envexample .env
-mvn clean test
-```
-You will see the test results in the console, but you can also open the file located in `./target/cucumber`
-
+1. Please start by reading our code of conduct available in the
+   [`CODE_OF_CONDUCT.md`](docs/CODE_OF_CONDUCT.md) file.
+2. All contribution information is available in the
+   [`CONTRIBUTING.md`](docs/CONTRIBUTING.md) file.
