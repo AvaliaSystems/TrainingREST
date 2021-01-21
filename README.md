@@ -8,6 +8,10 @@
 | Sacha Perdrizat   | sacha.perdrizat@heig-vd.ch   |
 | Maximillian Vogel | maximillian.vogel@heig-vd.ch  |
 
+## Linked applications and depedencies
+
+StackOwerflow gamified project : see [`AMT2020-StackOverflowSimpleVersionGamified`](https://github.com/Gusamaal/AMT2020-StackOverflowSimpleGamified)
+
 ## Introduction
 The aim of this project is to bring to application developper a basic Gamification Engine through an API Rest. With this API you can gamifie an application.
 
